@@ -1,0 +1,53 @@
+/*カーソルを乗せた時の色*/
+tr:hover #number{
+    background-color:#FFCC99; !important;
+}
+tr:hover #patronusername{
+    background-color:#FFCC99; !important;
+}
+tr:hover #childusername{
+    background-color:#FFCC99; !important;
+}
+tr:hover #reasondetail{
+    background-color:#FFCC99; !important;
+}
+tr:hover #photoid{
+    background-color:#FFCC99; !important;
+}
+
+/*対応済みのテーブルの色*/
+tr.already_info #number{
+    background-color:#AAAAAA;
+}
+tr.already_info #patronusername{
+    background-color:#AAAAAA;
+}
+tr.already_info #childusername{
+    background-color:#AAAAAA;
+}
+tr.already_info #reasondetail{
+    background-color:#AAAAAA;
+}
+tr.already_info #photoid{
+    background-color:#AAAAAA;
+}
+
+/*カーソルを乗せた時のポインタ*/
+.inquirylist{
+    cursor : pointer;
+}
+
+/*ボタンサイズ*/
+.full{
+    width: 100%;
+}
+
+/*td内のチェックボックスを真ん中に*/
+table .checkbox input[name="check"].custom-checkbox{
+    position: inherit; !important;
+}
+
+/*文字を全てセルの中央に*/
+.table > tbody > tr > td{
+    vertical-align: middle;
+}

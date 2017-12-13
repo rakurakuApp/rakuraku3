@@ -1,0 +1,52 @@
+.header-container {
+    background-color: #6BCD8B;
+}
+
+.head-pic{
+    width: 300px;
+    height: 100px;
+    text-align: left;
+}
+
+.header-container.row.user_info{
+    vertical-align: bottom;
+}
+
+hr{
+    margin: 0;
+    padding: 0;
+    height: 1px;
+    border: none;
+    border-top: 3px #f4d313 dotted;
+}
+
+.user_info p{
+    margin: 0;
+    text-align: right;
+}
+
+.navbar-default{
+    background-color: #6BCD8B;
+}
+
+.navbar-default .navbar-collapse li{
+    border-right: dotted 3px #f4d313;
+    border-left: dotted 3px #f4d313;
+}
+
+.navbar-default .navbar-collapse li+li{
+    border-left: 0;
+    border-right: dotted 3px #f4d313;
+}
+
+.navbar-default .navbar-collapse li:hover{
+    border-radius: .5em;
+    border-bottom: solid #f4d313 5px;
+}
+
+.weed_label{
+    background:image("/../../../img/common/weed.png");
+    background:repeat-x;
+    height: 150px;
+    width: 800px;
+}

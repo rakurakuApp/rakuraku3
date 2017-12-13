@@ -1,0 +1,18 @@
+# Uncomment the following to prevent the httpoxy vulnerability
+# See: https://httpoxy.org/
+#<IfModule mod_headers.c>
+#    RequestHeader unset Proxy
+#</IfModule>
+
+php_value max_execution_time 120
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+
+	RewriteRule ^phpMyAdmin$ phpMyAdmin/
+	RewriteRule ^phpmyadmin$ phpMyAdmin/
+	RewriteRule ^phpMyAdmin/(.*)$ - [L]
+
+    RewriteRule    ^$    webroot/    [L]
+    RewriteRule    (.*) webroot/$1    [L]
+</IfModule>

@@ -1,0 +1,5 @@
+{
+	"PHP_VERSION": "{PHP_71_LATEST}",
+    "PHP_EXTENSIONS": ["bz2", "pdo", "zlib", "curl", "mcrypt", "mbstring", "mysqli","gd", "zip", "pdo_mysql", "pgsql", "pdo_pgsql"],
+    "COMPOSER_VENDOR_DIR": "/home/vcap/app/htdocs"
+}

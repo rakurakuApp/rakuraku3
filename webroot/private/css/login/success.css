@@ -1,0 +1,39 @@
+.back{
+    margin:50px auto auto auto;
+    width:450px;
+    height: 410px;
+    padding-top:30px ;
+    background-color: #efefef;
+    border-radius: 10px;
+}
+
+#message{
+    margin:auto;
+}
+#confirmation-mail{
+    margin:auto;
+}
+
+label {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 2.3;
+}
+
+.message
+{
+    width: 400px;
+}
+
+#message
+{
+    width: 400px;
+}
+.a{
+    color: red;
+    text-align: left;
+    padding-left:10px ;
+}
+#successText{
+    font-size: 16px;
+}

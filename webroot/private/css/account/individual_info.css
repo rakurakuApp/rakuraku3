@@ -1,0 +1,42 @@
+.title{
+    background-color:#f7df36;
+    color:white;
+    /*font-family: ;*/
+    text-align: center;
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+}
+.label-layout{
+    width: 30%;
+}
+
+.font_center{
+    text-align: center;
+}
+
+.input-layout{
+    width:60%;
+    display: inline;
+}
+
+.form_edit_chk{
+    display: inline;
+    width:40%;
+    margin-right: 10%;
+}
+
+table .checkbox input[type="checkbox"].custom-checkbox{
+    position: inherit; !important;
+}
+
+.table > tbody > tr > td{
+    vertical-align: middle;
+}
+
+.validate{
+    color: #ff0000;
+    font-size: 12px;
+    margin: 0;
+    text-align: right;
+}
