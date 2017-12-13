@@ -1,17 +1,38 @@
+/* 画像一覧を表示する範囲 */
+.container{
+    max-width: 100%;
+}
+
+/* rowの高さを統一する */
+.row-eq-height {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .Photo-Box{
     margin: auto;
-    width: 1120px;
-    height: 450px;
+    width: 100%;
+    height: 100%;
     /*opacity: 0.3;*/
-
+    z-index: 1;
+    background-image: url("http://localhost/rakuraku/img/common/background.jpg");
+    text-align: center;
+    position: relative;
 }
-.Photo-margin{
-    margin:auto;
+/* ピン留め設定 */
+.pin{
+    width: 10%;
+    height: 10%;
+    z-index: 3;
+    position: absolute;
 }
+/* 画像の設定 */
 .photo{
-    width:200px;
-    heigth:200px;
-    z-index: 11;
+    width:150px;
+    height:150px;
+    margin:auto;
+    z-index: 2;
+    position: relative;
 }
 .photo-size{
     width: 70%;
@@ -23,19 +44,14 @@
     margin: auto;
 }
 
-.a{
-    background-image: url("http://localhost/rakuraku/img/common/background.jpg")
-}
-
-
 /*モーダル*/
 /* ContentsArea
 -------------------------- */
-#contents {
-    margin: 0 auto;
-    padding: 0px;
-    width: 100%;
-}
+/*#contents {*/
+/*margin: 0 auto;*/
+/*padding: 0px;*/
+/*width: 100%;*/
+/*}*/
 
 #open02 {
     top: 0;
@@ -120,6 +136,7 @@ div#modal div:target .modal_window {
     opacity: 1;
     display: block;
 }
+
 .text-hight{
     line-height: 35%;
 }

@@ -1,38 +1,43 @@
-<header>
-    <?php
-    echo $this->Html->css('../private/css/common/photolist.css');
-    echo $this->Html->script('../private/js/common/PhotoList/ColorChange.js');
-    echo $this->Html->script('../private/js/common/PhotoList/inquiry.js');
-    echo $this->Html->script('../private/js/common/PhotoList/InquiryForm.js');
-    ?>
-    <div>
-        <?= $this->element('common\header') ?>
-    </div>
-    <div>
-        <?= $this->element('common\sidemenu') ?>
-    </div>
-</header>
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var $photoList //画像情報の入った配列
+ * @var $inquiryReason //通報理由一覧配列
+ *
+ */
+?>
 
-<body>
-<!--画像-->
-<div id="contents">
-    <p><a href="#open02">
-    <div class="Photo-Box a">
-            <?php
-            foreach ($array as $image) {
-                echo $this->Html->image($image['path'],['class'=>'photo photo-margin']);
-            }
-            ?>
-    </div>
-        </a></p>
-<!--モーダル-->
+<?php $this->start('css'); ?>
+<?= $this->Html->css('/private/css/common/header.css') ?>
+<?= $this->Html->css('/private/css/common/photolist.css') ?>
+<?php $this->end(); ?>
+
+<?php $this->start('script'); ?>
+<?= $this->Html->script('/private/js/common/PhotoList/ColorChange.js') ?>
+<?= $this->Html->script('/private/js/common/PhotoList/inquiry.js') ?>
+<?= $this->Html->script('/private/js/common/PhotoList/InquiryForm.js') ?>
+<?php $this->end(); ?>
+
+<?= $this->element('common\header') ?>
+
+<div class="container-fluid">
+    <div id="contents" class="col-md-12">
+        <div class="Photo-Box">
+            <?php foreach ($photoList as $key => $image) {
+                echo '<div class = "col-md-3">';
+                echo $this->Html->image('common/pin.png', ['class' => 'pin']);
+                echo $this->Html->image($image['path'], ['class' => 'photo']);
+                echo '</div>';
+            } ?>
+        </div>
+        <!--モーダル-->
         <div id="modal">
             <div id="open02">
                 <a href="#" class="close_overlay">×</a>
                 <div class="example">
                     <div class="modal_window">
                         <h2 id="list">picture</h2>
-                        <p id="star" class=" size" onclick="star()" >★</p>
+                        <p id="star" class=" size" onclick="star()">★</p>
 
                         <!--問い合わせ一覧-->
                         <ul id="left-to-right" class="dropmenu">
@@ -40,33 +45,27 @@
                                 <p id="flag" class="size">🏴</p>
                                 <ul id="drop">
                                     <div class="balloon1-left">
-                                        <li><a id="drop0">画像が不適切</a></li>
-                                        <li><a id="drop1">写りが悪い</a></li>
-                                        <li><a id="drop2">画像が不適切</a></li>
-                                        <li><a id="drop3">//////</a></li>
-<!--                                        <a class="square_btn">送信</a>-->
-                                        <button type="submit" class="margin btn btn-default">送信</button>
+                                        <?php foreach ($inquiryReason as $key => $reasonData):; ?>
+                                            <li><a id='drop<?= $key; ?>'><?= $reasonData->detail; ?></a></li>
+                                        <?php endforeach; ?>
                                     </div>
                                 </ul>
                             </li>
                         </ul>
                         <!--モーダルのがぞう-->
-                        <?php
-                        echo $this->Html->image($image,['class'=>'photo-size photo-auto']);
-                        ?>
                         <br/>
                         <a href="#" class="text-hight">【×】CLOSE</a>
                     </div><!--/.modal_window-->
                 </div>
             </div><!--/#open02-->
         </div><!--/#modal-->
-</div><!--/#contents-->
+    </div><!--/#contents-->
+
+    <?= $this->Paginator->first('<<first'); ?>
+    <?= $this->Paginator->prev('<prev'); ?>
+    <?= $this->Paginator->numbers(); ?>
+    <?= $this->Paginator->next('next>'); ?>
+    <?= $this->Paginator->last('last>>'); ?>
 
 
-<?= $this->Paginator->first('<<first'); ?>
-<?= $this->Paginator->prev('<prev'); ?>
-<?= $this->Paginator->numbers(); ?>
-<?= $this->Paginator->next('next>'); ?>
-<?= $this->Paginator->last('last>>'); ?>
-
-</body>
+</div>

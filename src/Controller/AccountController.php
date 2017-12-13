@@ -27,8 +27,8 @@ class AccountController extends AppController
 
     public function index()
     {
-      $this->loadComponent('TOOL');
-      $this->loadComponent('SQL');
+        $this->loadComponent('TOOL');
+        $this->loadComponent('SQL');
     }
 
     //アカウント一覧表示アクション
@@ -48,11 +48,6 @@ class AccountController extends AppController
                     if (!empty($this->request->getData('child_age'))) {
                         $q->where(['Children.age' => $this->request->getData('child_age')]);
                     }
-                    if (!empty($this->request->getData('remove_chk'))) {
-                        $q->where(['Children.deleted' => '1']);
-                    } else {
-                        $q->where(['Children.deleted' => '0']);
-                    }
                     return $q;
                 })
                 ->matching('Children.ChildClass', function ($q) {
@@ -66,9 +61,10 @@ class AccountController extends AppController
                 $query->where(['Patron.username' => $this->request->getData('parent_name')]);
             }
             if (!empty($this->request->getData('remove_chk'))) {
-                $query->where(['Patron.deleted' => '1']);
+                $query->Where(['Patron.deleted' => '1'])
+                    ->orWhere(['Children.deleted' => '1']);
             } else {
-                $query->where(['Patron.deleted' => '0']);
+                $query->where(['Patron.deleted' => '0','Children.deleted' => '0']);
             }
             $query->order(['Patron.number' => 'ASC']);
             $this->set('patrons', $query->toArray());
@@ -154,59 +150,60 @@ class AccountController extends AppController
         }
         $this->redirect($this->referer());
     }
-      // ランダム文字列生成 (英数字)
-      //$length: 生成する文字数
-      public function makeRandStr($length) {
-          $str = array_merge(range('a', 'z'), range('0', '9'), range('A', 'Z'));
-          $r_str = null;
-          for ($i = 0; $i < $length; $i++) {
-              $r_str .= $str[rand(0, count($str) - 1)];
-          }
-          return $r_str;
-      }
-      protected function _setPassword($password)
-      {
-          if (strlen($password) > 0) {
-              return (new DefaultPasswordHasher)->hash($password);
-          }
-          return 0 ;
-      }
+    // ランダム文字列生成 (英数字)
+    //$length: 生成する文字数
+    public function makeRandStr($length) {
+        $str = array_merge(range('a', 'z'), range('0', '9'), range('A', 'Z'));
+        $r_str = null;
+        for ($i = 0; $i < $length; $i++) {
+            $r_str .= $str[rand(0, count($str) - 1)];
+        }
+        return $r_str;
+    }
+    protected function _setPassword($password)
+    {
+        if (strlen($password) > 0) {
+            return (new DefaultPasswordHasher)->hash($password);
+        }
+        return 0 ;
+    }
 
     //アカウント追加
     public function addacount()
-      {
-          if ($this->request->is('post')) {
-              //email,patronName,childName,childAge,childClass
+    {
+        if ($this->request->is('post')) {
+            //email,patronName,childName,childAge,childClass
 
-              //親情報の有無
-              $patronNumber = $this->Patron->find()
-                  ->select(['Patron.number'])
-                  ->where(['Patron.username LIKE' => $this->request->getData('patronName')])
-                  ->first();
+            //親情報の有無
+            $patronNumber = $this->Patron->find()
+                ->select(['Patron.number'])
+                ->where(['Patron.username LIKE' => $this->request->getData('patronName')])
+                ->where(['Patron.email LIKE' => $this->request->getData('email')])
+                ->first();
 
-              if(empty($patronNumber)) {
-                  //Patron　親情報追加
-                  $patronTable = TableRegistry::get('Patron');
-                  $patron = $patronTable->newEntity();
-                  $patron->id = $this->TOOL->makeRandStr(8);
-                  $patron->password = $this->TOOL->_setPassword($this->TOOL->makeRandStr(8));
-                  $patron->username = $this->request->getData('patronName');
-                  $patron->email = $this->request->getData('email');
-                  $patronTable->save($patron);
-              }
+            if(empty($patronNumber)) {
+                //Patron　親情報追加
+                $patronTable = TableRegistry::get('Patron');
+                $patron = $patronTable->newEntity();
+                $patron->id = $this->TOOL->makeRandStr(8);
+                $patron->password = $this->TOOL->_setPassword($this->TOOL->makeRandStr(8));
+                $patron->username = $this->request->getData('patronName');
+                $patron->email = $this->request->getData('email');
+                $patronTable->save($patron);
+            }
 
-              if($this->SQL->compAddress($this->request->getData('email')))
+            if($this->SQL->compAddress($this->request->getData('email')))
 
-              //children 子供情報追加
-              $childrenTable = TableRegistry::get('Child');
-              $children = $childrenTable->newEntity();
-              $children ->patron_number = $patronNumber;
-              $children ->username = $this->request->getData('childName');
-              $children ->age = $this->request->getData('childAge');
-              $children ->child_class_id = $this->request->getData('childAge');
-              $childrenTable->save($children);
-          }
-          $this->redirect(['action'=>'accountlist']);
-      }
+                //children 子供情報追加
+                $childrenTable = TableRegistry::get('Child');
+            $children = $childrenTable->newEntity();
+            $children ->patron_number = $patronNumber;
+            $children ->username = $this->request->getData('childName');
+            $children ->age = $this->request->getData('childAge');
+            $children ->child_class_id = $this->request->getData('childAge');
+            $childrenTable->save($children);
+        }
+        $this->redirect(['action'=>'accountlist']);
+    }
 
 }

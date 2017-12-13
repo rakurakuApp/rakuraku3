@@ -17,7 +17,6 @@
 <?= 'ユーザ一覧'; ?>
 <?php $this->end(); ?>
 <?= $this->element('common\header') ?>
-<?= $this->element('common\sidemenu'); ?>
 <div class="container container-fluid">
     <div class="col-md-12">
         <h1>ユーザ一覧</h1>

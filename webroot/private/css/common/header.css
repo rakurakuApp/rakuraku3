@@ -1,5 +1,12 @@
-.header-container {
-    background-color: #6BCD8B;
+.header-container.container.container-fluid{
+    background-color: #66ffb2;
+    width: 100%;
+    display: block;
+}
+
+.row-eq-height {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .head-pic{
@@ -8,45 +15,48 @@
     text-align: left;
 }
 
-.header-container.row.user_info{
-    vertical-align: bottom;
-}
-
-hr{
+.row.gradient{
+    height: 15px;
+    background: linear-gradient(rgba(102, 255, 178, 1), rgba(255, 255, 255, .8));
+    background-size: cover;
     margin: 0;
+}
+/* グローバルナビゲーション */
+.globalMenu{
     padding: 0;
-    height: 1px;
-    border: none;
-    border-top: 3px #f4d313 dotted;
-}
-
-.user_info p{
     margin: 0;
-    text-align: right;
+    text-align: center;
+    height: 100%;
+    position: relative;
 }
-
-.navbar-default{
-    background-color: #6BCD8B;
+.globalMenu li{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    display: inline-block;
+    border-right: dotted 3px #ff870f;
+    margin-top: 50px;
 }
-
-.navbar-default .navbar-collapse li{
-    border-right: dotted 3px #f4d313;
-    border-left: dotted 3px #f4d313;
+/* listの最初の要素のみにCSS追加 */
+.globalMenu li:first-child{
+    border-left: dotted 3px #ff870f;
 }
+/* リンクに対して */
+.globalMenu li a{
+    display: block;
+    color: #0f0f0f;
+    margin-bottom: 0;
 
-.navbar-default .navbar-collapse li+li{
-    border-left: 0;
-    border-right: dotted 3px #f4d313;
 }
-
-.navbar-default .navbar-collapse li:hover{
-    border-radius: .5em;
-    border-bottom: solid #f4d313 5px;
+/* ホバー時 */
+.globalMenu li a:hover{
+    opacity: .5;
 }
-
-.weed_label{
-    background:image("/../../../img/common/weed.png");
-    background:repeat-x;
-    height: 150px;
-    width: 800px;
+/* ログイン中ユーザ情報 */
+.login_status{
+    height: 100%;
+}
+.login_status *{
+    text-align: center;
+    margin: 3px;
 }
