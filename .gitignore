@@ -7,7 +7,7 @@
 /tmp/*
 /vendor/*
 /.idea/*
-/src/controller/Component/ConstComponent.php
+/src/Controller/Component/ConstComponent.php
 /src/ConstData/*
 
 # OS generated files #
