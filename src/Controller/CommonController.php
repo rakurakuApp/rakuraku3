@@ -25,21 +25,27 @@ class CommonController extends AppController
         $this->loadComponent('RequestHandler');
         $this->loadComponent('SQL');
         $this->loadComponent('TOOL');
+
+        $this->loadmodel('Reason');
     }
 
     public function photolist()
     {
+        //ページネーション設定
         $paginate = [
             'limit' => 8
         ];
-
+        //セッションID取得
         $id = $this->TOOL->loadSessionId();
-
+        //園児情報の取得
         $children = $this->SQL->getChildrenID($id);
+        //園児情報から関連する画像情報を取得
         $photo = $this->SQL->getPhotoID($children);
         $photo_path = $this->Paginator->paginate($this->SQL->getPhotoPath($photo),$paginate);
-
-        $this->set('array',$photo_path);
+        $this->set('photoList',$photo_path);
+        //通報理由一覧を取得
+        $inquiryReason = $this->Reason->find('all');
+        $this->set(compact('inquiryReason'));
     }
 
     public function inquirysend()

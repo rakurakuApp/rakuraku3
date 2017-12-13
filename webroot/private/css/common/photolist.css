@@ -7,6 +7,7 @@
 .row-eq-height {
     display: flex;
     flex-wrap: wrap;
+    text-align: center;
 }
 
 .Photo-Box{
@@ -15,9 +16,12 @@
     height: 100%;
     /*opacity: 0.3;*/
     z-index: 1;
-    background-image: url("http://localhost/rakuraku/img/common/background.jpg");
+    background-image: url("../../../img/common/background.jpg");
     text-align: center;
     position: relative;
+    padding-top: 10vh;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 /* ピン留め設定 */
 .pin{
@@ -25,11 +29,14 @@
     height: 10%;
     z-index: 3;
     position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 /* 画像の設定 */
 .photo{
-    width:150px;
-    height:150px;
+    width: 50%;
+    height: auto;
     margin:auto;
     z-index: 2;
     position: relative;
