@@ -1,29 +1,28 @@
-<?= $this->Html->css('/private/css/user/idchange.css') ?>
+<?= $this->Html->css('/private/css/user/account.css') ?>
 
 <!DOCTYPE html>
 <html lang="en">
 </html>
 <head>
     <div>
-        <?= $this->element('common\sidemenu') ?>
     </div>
 </head>
 <body>
 <div class="back">
-    <div class="change0" id="current">
+    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "","action"=>""]]); ?>
+    <div class="old" id="old-data">
         <label for="exampleInputPassword0">現在のID</label>
-        <input type="text"  class="form-control " id="exampleInputPassword0">
+        <input type="text"  class="form-control" id="exampleInputPassword0" readonly value = <?= $id ?>>
     </div>
 
-    <div class="change1" id="new">
+    <div class="new" id="new-data">
         <label for="exampleInputPassword1">新ID</label>
         <input type="text" class="form-control" id="exampleInputPassword1" placeholder="ID">
     </div>
 
-
     <div class="Cancelbtn">
         <p>
-            <button type="button" class="btn btn-default CancelBox">キャンセル</button>
+            <button formaction="javascript:history.back()" class="btn btn-default CancelBox">キャンセル</button>
             </a>
         </p>
     </div>
@@ -33,6 +32,7 @@
             <button type="submit" class="btn btn-default SaveBox">保存</button>
         </p>
     </div>
+    </form>
 </div>
 </body>
 </html>

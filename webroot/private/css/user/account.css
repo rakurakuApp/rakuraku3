@@ -12,11 +12,11 @@ body{
     border-radius: 10px;
 }
 
-#mail{
+#old-data{
     margin:auto;
 }
 
-#new-mail{
+#new-data{
     margin:auto;
 }
 
@@ -26,16 +26,13 @@ label{
     line-height: 2.3;
 }
 
-.mail0
-{
+.old{
     width: 400px;
 }
 
-.mail1
-{
+.new{
     width: 400px;
 }
-
 
 .Cancelbtn
 {
@@ -55,4 +52,9 @@ label{
 }
 .SaveBox{
     width:100px;
+}
+
+.old input[readonly]{
+    background-color: #FFFFFF;
+    color: #000000;
 }
