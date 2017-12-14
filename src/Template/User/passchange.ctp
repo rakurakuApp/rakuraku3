@@ -5,11 +5,11 @@
 </html>
 <head>
     <div>
-        <?= $this->element('common\sidemenu') ?>
     </div>
 </head>
 <body>
 <div class="back">
+    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "","action"=>""]]); ?>
     <div class="pass0" id="pw">
         <label for="exampleInputPassword0">現在のパスワード</label>
         <input type="text"  class="form-control " id="exampleInputPassword0">
@@ -27,16 +27,16 @@
 
     <div class="Cancelbtn">
         <p>
-            <a href="">
-            <button type="button" class="btn btn-default CancelBox">キャンセル</button>
+            <button formaction="javascript:history.back()" class="btn btn-default CancelBox">キャンセル</button>
         </p>
     </div>
 
     <div class="Savebtn">
         <p>
-            <button type="button" class="btn btn-default SaveBox">保存</button>
+            <button type="submit" class="btn btn-default SaveBox" name="Save" >保存</button>
         </p>
-    </div>ｃ
+    </div>
+    </form>
 </div>
 </body>
 </html>
