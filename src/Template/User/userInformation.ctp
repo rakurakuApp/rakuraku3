@@ -9,7 +9,6 @@
     <!--ユーザ名-->
     <div id="user" class="clear">
         <p  class="user-width float_l">保護者名:</p>
-        <!--<p class="wide margin-l">ながせあきお</p>-->
         <p class="wide margin-l"><?= $data['person_name'] ?></p>
     </div>
 
