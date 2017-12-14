@@ -145,20 +145,4 @@ class ManagerController extends AppController
 
     }
 
-    public function userinformation(){
-        $personData = $this->TOOL->loadPersonData();
-        $childData = $this->TOOL->loadChildData();
-
-        $set_data['person_name'] = $personData['username'];
-        $child_name = array();
-        foreach ($childData as $tmp){
-            $child_name[] = $tmp['username'];
-        }
-        $set_data['child_name'] = $child_name;
-        $set_data['mail'] = $personData['email'];
-        $set_data['ID'] = $personData['id'];
-        $set_data['pass'] = $personData['pass'];
-
-        $this->set('data',$set_data);
-    }
 }
