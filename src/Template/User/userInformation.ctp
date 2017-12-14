@@ -31,7 +31,7 @@
         <div id="mail" class="clear user_box">
             <p class="text_w float_l">メールアドレス:</p>
             <p class="wide"><?= $data['mail'] ?></p>
-            <form action="cgi-bin/abc.cgi" method="post">
+            <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"mailchange"]]); ?>
                 <input type="hidden" name="email" value=<?= $data['mail'] ?>>
                 <button type="submit" class="btn btn-default float_r margin-t">変更</button>
             </form>
@@ -42,7 +42,8 @@
         <div id="useid" class="clear user_box">
             <p class="text_w float_l">ID:</p>
             <p class="wide"><?= $data['ID'] ?></p>
-            <form action="cgi-bin/abc.cgi" method="post">
+            <!--<form action="cgi-bin/abc.cgi" method="post">-->
+            <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"idchange"]]); ?>
                 <input type="hidden" name="id" value=<?= $data['ID'] ?>>
                 <button type="submit" class="btn btn-default float_r margin-t">変更</button>
             </form>
@@ -52,7 +53,7 @@
         <div id="password" class="clear user_box">
             <p class="text_w float_l">パスワード:</p>
             <p class="wide">非表示設定です</p>
-            <button onclick="location.href='test" class="btn btn-default float_r margin-t">変更</button>
+            <button onclick="location.href='./passchange'" class="btn btn-default float_r margin-t">変更</button>
         </div>
     </div>
 </div>
