@@ -1,6 +1,5 @@
 <head>
     <?= $this->Html->css('/private/css/user/userinformation.css') ?>
-    <?= $this->Html->script('/private/js/user/userinformation.js') ?>
 </head>
 
 <body>
@@ -59,3 +58,11 @@
     </div>
 </div>
 </body>
+
+<script>
+    window.onload = function () {
+        var data = document.getElementById('data');
+        var div_height = data.clientHeight + 50;
+        $("#data").css('height',div_height);
+    }
+</script>
