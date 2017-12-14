@@ -1,12 +1,5 @@
 <?= $this->Html->css('/private/css/user/account.css') ?>
 
-<!DOCTYPE html>
-<html lang="en">
-</html>
-<head>
-    <div>
-    </div>
-</head>
 <body>
 <div class="back">
     <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "","action"=>""]]); ?>
