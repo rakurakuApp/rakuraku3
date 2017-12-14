@@ -1,26 +1,26 @@
+/* コンテナ */
 .header-container.container.container-fluid{
-    background-color: #66ffb2;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(102, 255, 178, 1)), color-stop(0.7, rgba(102, 255, 178, 1)), color-stop(1, rgba(255, 255, 255, .8)));
     width: 100%;
     display: block;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right:0 ;
+    padding-left: 0;
 }
 
+/* 同じ行のcolの高さを最大のコンテンツのものに統一する */
 .row-eq-height {
     display: flex;
     flex-wrap: wrap;
 }
 
-.head-pic{
-    width: 300px;
-    height: 100px;
-    text-align: left;
-}
+/* ヘッダー画像サイズ */
+/*.head-pic{*/
+    /*width: 300px;*/
+    /*height: 100px;*/
+/*}*/
 
-.row.gradient{
-    height: 15px;
-    background: linear-gradient(rgba(102, 255, 178, 1), rgba(255, 255, 255, .8));
-    background-size: cover;
-    margin: 0;
-}
 /* グローバルナビゲーション */
 .globalMenu{
     padding: 0;
@@ -29,18 +29,22 @@
     height: 100%;
     position: relative;
 }
+
+/* 各メニュー */
 .globalMenu li{
     font-size: 20px;
     font-weight: bold;
     padding: 10px;
     display: inline-block;
     border-right: dotted 3px #ff870f;
-    margin-top: 50px;
+    margin-top: 25px;
 }
+
 /* listの最初の要素のみにCSS追加 */
 .globalMenu li:first-child{
     border-left: dotted 3px #ff870f;
 }
+
 /* リンクに対して */
 .globalMenu li a{
     display: block;
@@ -48,14 +52,17 @@
     margin-bottom: 0;
 
 }
+
 /* ホバー時 */
 .globalMenu li a:hover{
     opacity: .5;
 }
+
 /* ログイン中ユーザ情報 */
 .login_status{
     height: 100%;
 }
+
 .login_status *{
     text-align: center;
     margin: 3px;
