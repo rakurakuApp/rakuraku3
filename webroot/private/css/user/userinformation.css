@@ -4,10 +4,10 @@ body{
 }
 .box{
     position:relative;
-    width: 500px;
-    height: auto;
+    /*width: auto;*/
+    /*height: auto;*/
     background-color: #efefef;
-    margin: 40px auto 0px auto;
+    /*margin: 40px auto 0px auto;*/
     border-radius:10px;
 }
 .title_p{
@@ -15,34 +15,32 @@ body{
 }
 .f-size{
     font-size:170%;
-    text-align:left;
+    text-align:center;
     border-bottom:solid 1px #fff;
 }
 .box_p{
     padding:5px 70px 20px 20px;
 }
 .float_l{
-    float:left;
+    /*float:left;*/
 }
 .float_r{
     float:right;
 }
 .text_w{
     text-align:right;
-    width:150px;
-    margin:0;
 }
 .wide{
-    width:300px;
-    margin: 0 0 0 160px;
-
+    text-align: left;
 }
+
 .user_box{
     wdith:400px;
     padding-top:20px;
 }
 .clear{
     clear:both;
+    /*text-align: right;*/
 }
 .margin-t{
     margin-top:10px;
@@ -50,19 +48,18 @@ body{
 .border{
     border-bottom:solid 1px #fff;
 }
-.user-width{
-    width:170px;
-    margin-top:0px;
-    text-align: right;
-}
+
 #child{
     padding-bottom:20px;
 }
-.child-width{
-    text-align:right;
-    width:170px;
-    margin:0;
+
+.data-width{
+    /*width: 150px;*/
+    margin-top: 0px;
+    text-align: right;
 }
+
 .margin-l{
-    margin:0 0 0 180px;
+    /*margin:0 0 0 160px;*/
+    margin: 0 0 0 0;
 }

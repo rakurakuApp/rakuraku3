@@ -16,10 +16,10 @@ echo $this->Html->css('../private/css/common/header.css');
         <nav class="navbar navbar-default col-md-8">
             <div id="gnavi" class="collapse navbar-collapse nav col-md-12">
                 <ul class="nav navbar-nav">
-                    <li><a href="">ユーザ一覧</a></li>
-                    <li><a href="">画像アップロード</a></li>
-                    <li><a href="">画像一覧</a></li>
-                    <li><a href="">問い合わせ一覧</a></li>
+                    <li><?= $this->Html->link("ユーザー一覧",['controller' => 'Account', 'action' => 'accountlist', '_full' => true]) ?></li>
+                    <li><?= $this->Html->link("画像アップロード",['controller' => 'Manager', 'action' => 'photoup', '_full' => true]) ?></li>
+                    <li><?= $this->Html->link("画像一覧",['controller' => 'Common', 'action' => 'photolist', '_full' => true]) ?></li>
+                    <li><?= $this->Html->link("問い合わせ一覧",['controller' => 'Manager', 'action' => 'inquiry', '_full' => true]) ?></li>
                 </ul>
             </div>
         </nav>

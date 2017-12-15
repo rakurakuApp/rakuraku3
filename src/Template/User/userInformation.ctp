@@ -2,67 +2,102 @@
     <?= $this->Html->css('/private/css/user/userinformation.css') ?>
 </head>
 
-<body>
-<div class="box" id="data">
-    <p class="f-size title_p">「ユーザ情報」</p>
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-offset-3 col-xs-6" id="data">
+            <div class="row box">
+                <div class="col-xs-12">
+                    <p class="f-size title_p">「ユーザ情報」</p>
+                </div>
 
-    <!--ユーザ名-->
-    <div id="user" class="clear">
-        <p  class="user-width float_l">保護者名:</p>
-        <p class="wide margin-l"><?= $data['person_name'] ?></p>
-    </div>
+                <div class="col-xs-12">
+                    <div class="row">
+                        <!--ユーザ名-->
+                        <div id="user" class="clear col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="data-width float_l">保護者名:</p>
+                                </div>
+                                <div class="col-xs-offset-1 col-xs-6">
+                                    <p class="wide margin-l"><?= h($data['person_name']) ?></p>
+                                </div>
+                            </div>
+                        </div>
 
-    <!--子供-->
-    <div id="child" class="clear border">
-        <p class="child-width float_l">お子様:</p>
+                        <!--子供-->
+                        <div id="child" class="clear border col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="data-width float_l">お子様:</p>
+                                </div>
+                                <div class="col-xs-offset-1 col-xs-6">
+                                    <?php
+                                    foreach ($data['child_name'] as $name){
+                                        ?>
+                                        <p class="wide margin-l"><?= h($name) ?></p>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
 
-        <?php
-        foreach ($data['child_name'] as $name){
-            ?>
-            <p class="wide margin-l"><?= $name ?></p>
-            <?php
-        }
-        ?>
-    </div>
+                        <!--メールアドレス-->
+                        <div id="mail" class="clear user_box col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="text_w">メールアドレス:</p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="wide"><?= h($data['mail']) ?></p>
+                                </div>
+                                <div class="col-xs-offset-9 col-xs-2">
+                                    <form action="./mailchange" method="post">
+                                        <input type="hidden" name="email" value=<?= $data['mail'] ?>>
+                                        <button type="submit" class="btn btn-default">変更</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="box_p">
+                        <!--ID-->
+                        <div id="useid" class="clear user_box col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="text_w">ID:</p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="wide"><?= h($data['ID']) ?></p>
+                                </div>
+                                <div class="col-xs-offset-9 col-xs-2">
+                                    <form action="./idchange" method="post">
+                                        <input type="hidden" name="id" value=<?= $data['ID'] ?>>
+                                        <button type="submit" class="btn btn-default">変更</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
-        <!--メールアドレス-->
-        <div id="mail" class="clear user_box">
-            <p class="text_w float_l">メールアドレス:</p>
-            <p class="wide"><?= $data['mail'] ?></p>
-            <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"mailchange"]]); ?>
-                <input type="hidden" name="email" value=<?= $data['mail'] ?>>
-                <button type="submit" class="btn btn-default float_r margin-t">変更</button>
-            </form>
+                        <!--パスワード-->
+                        <div id="password" class="clear user_box col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="text_w">パスワード:</p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="wide">非表示設定です</p>
+                                </div>
+                                <div class="col-xs-offset-9 col-xs-2">
+                                    <button onclick="location.href='./passchange'" class="btn btn-default">変更</button>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-        <!--ID-->
-        <div id="useid" class="clear user_box">
-            <p class="text_w float_l">ID:</p>
-            <p class="wide"><?= $data['ID'] ?></p>
-            <!--<form action="cgi-bin/abc.cgi" method="post">-->
-            <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"idchange"]]); ?>
-                <input type="hidden" name="id" value=<?= $data['ID'] ?>>
-                <button type="submit" class="btn btn-default float_r margin-t">変更</button>
-            </form>
-        </div>
-
-        <!--パスワード-->
-        <div id="password" class="clear user_box">
-            <p class="text_w float_l">パスワード:</p>
-            <p class="wide">非表示設定です</p>
-            <button onclick="location.href='./passchange'" class="btn btn-default float_r margin-t">変更</button>
-        </div>
     </div>
+    <br><br>
 </div>
-</body>
-
-<script>
-    window.onload = function () {
-        var data = document.getElementById('data');
-        var div_height = data.clientHeight + 50;
-        $("#data").css('height',div_height);
-    }
-</script>
