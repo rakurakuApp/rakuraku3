@@ -19,16 +19,17 @@ class AccountController extends AppController
         parent::initialize();
         $this->loadmodel('Patron');
         $this->loadmodel('Reason');
+        $this->loadmodel('Inquiries');
         $this->loadmodel('Children');
         $this->loadmodel('ChildClass');
-        $this->loadmodel('Inquiries');
         $this->loadComponent('Flash');
+        $this->loadComponent('TOOL');
+        $this->loadComponent('SQL');
     }
 
     public function index()
     {
-        $this->loadComponent('TOOL');
-        $this->loadComponent('SQL');
+
     }
 
     //アカウント一覧表示アクション
@@ -64,7 +65,7 @@ class AccountController extends AppController
                 $query->Where(['Patron.deleted' => '1'])
                     ->orWhere(['Children.deleted' => '1']);
             } else {
-                $query->where(['Patron.deleted' => '0','Children.deleted' => '0']);
+                $query->where(['Patron.deleted' => '0', 'Children.deleted' => '0']);
             }
             $query->order(['Patron.number' => 'ASC']);
             $this->set('patrons', $query->toArray());
@@ -80,7 +81,7 @@ class AccountController extends AppController
     {
         if (!empty($this->request->getParam('id'))) {
             $query = $this->Patron->find()
-                ->select(['Patron.number', 'Patron.id', 'Patron.password', 'Patron.username', 'Patron.email', 'Patron.deleted'])
+                ->select(['Patron.number', 'Patron.id', 'Patron.username', 'Patron.email', 'Patron.deleted'])
                 ->contain(['Children' => [
                     'fields' => [
                         'Children.id', 'Children.username', 'Children.deleted', 'Children.patron_number'
@@ -105,7 +106,6 @@ class AccountController extends AppController
                 $patronTable = TableRegistry::get('Patron');
                 $patron = $patronTable->get($this->request->getParam('editNum'));
                 $patron->id = $this->request->getData('account_id');
-                $patron->password = $this->request->getData('password');
                 $patron->email = $this->request->getData('email');
                 $patronTable->save($patron);
                 //園児情報の更新
@@ -152,7 +152,8 @@ class AccountController extends AppController
     }
     // ランダム文字列生成 (英数字)
     //$length: 生成する文字数
-    public function makeRandStr($length) {
+    public function makeRandStr($length)
+    {
         $str = array_merge(range('a', 'z'), range('0', '9'), range('A', 'Z'));
         $r_str = null;
         for ($i = 0; $i < $length; $i++) {
@@ -160,12 +161,13 @@ class AccountController extends AppController
         }
         return $r_str;
     }
+
     protected function _setPassword($password)
     {
         if (strlen($password) > 0) {
             return (new DefaultPasswordHasher)->hash($password);
         }
-        return 0 ;
+        return 0;
     }
 
     //アカウント追加
@@ -181,7 +183,7 @@ class AccountController extends AppController
                 ->where(['Patron.email LIKE' => $this->request->getData('email')])
                 ->first();
 
-            if(empty($patronNumber)) {
+            if (empty($patronNumber)) {
                 //Patron　親情報追加
                 $patronTable = TableRegistry::get('Patron');
                 $patron = $patronTable->newEntity();
@@ -192,18 +194,16 @@ class AccountController extends AppController
                 $patronTable->save($patron);
             }
 
-            if($this->SQL->compAddress($this->request->getData('email')))
-
+            if ($this->SQL->compAddress($this->request->getData('email')))
                 //children 子供情報追加
                 $childrenTable = TableRegistry::get('Child');
             $children = $childrenTable->newEntity();
-            $children ->patron_number = $patronNumber;
-            $children ->username = $this->request->getData('childName');
-            $children ->age = $this->request->getData('childAge');
-            $children ->child_class_id = $this->request->getData('childAge');
+            $children->patron_number = $patronNumber;
+            $children->username = $this->request->getData('childName');
+            $children->age = $this->request->getData('childAge');
+            $children->child_class_id = $this->request->getData('childAge');
             $childrenTable->save($children);
         }
-        $this->redirect(['action'=>'accountlist']);
+        $this->redirect(['action' => 'accountlist']);
     }
-
 }

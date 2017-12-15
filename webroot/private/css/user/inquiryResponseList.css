@@ -1,0 +1,5 @@
+/* 同じrowの中にあるcolの高さを最大のコンテンツのものに統一する */
+.row-eq-height {
+    display: flex;
+    flex-wrap: wrap;
+}

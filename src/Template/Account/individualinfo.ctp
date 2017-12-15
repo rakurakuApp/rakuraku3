@@ -13,12 +13,12 @@
 
 <?php $this->start('script'); ?>
 <?= $this->Html->script('/private/js/account/edit_form.js'); ?>
-
 <?php $this->end(); ?>
 
 <?php $this->start('title'); ?>
 <?= 'ユーザ管理'; ?>
 <?php $this->end(); ?>
+
 <div>
     <h2 class="title col-md-12 text-center">ユーザ管理</h2>
 </div>
@@ -49,17 +49,9 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <label for="password" class="control-label label-layout">PassWord:</label>
-                    <input type="password" class="form-control input-layout" id="password" name="password" disabled
-                           value="<?= $accountInfo[0]['password'] ?>">
-                </td>
             </tr>
         </table>
         <div class="row">
-            <label for="chk_show" class="checkbox control-label form_edit_chk">パスワードを表示
-                <input type="checkbox" id="chk_show" class="checkbox" data-toggle="checkbox">
-            </label>
             <label for="chk_edit" class="checkbox control-label form_edit_chk">編集可能にする
                 <input type="checkbox" id="chk_edit" class="checkbox" data-toggle="checkbox">
             </label>

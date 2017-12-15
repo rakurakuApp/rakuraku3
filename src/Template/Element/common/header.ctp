@@ -24,7 +24,7 @@
             <ul class="nav navbar-nav">
                 <li><?= $this->Html->link('画像一覧', ['controller' => 'common', 'action' => 'photolist']) ?></li>
                 <li><?= $this->Html->link('ユーザ情報', ['controller' => 'manager', 'action' => 'userinformation']) ?></li>
-                <li><a href="#">問い合わせ一覧</a></li>
+                <li><?= $this->Html->link('問い合わせ一覧', ['controller' => 'user', 'action' => 'inquiryresponselist']) ?></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
