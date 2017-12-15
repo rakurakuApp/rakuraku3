@@ -14,10 +14,10 @@
                 <div class="col-xs-12">
                     <div class="row">
                         <!--ユーザ名-->
-                        <div id="user" class="clear col-xs-12">
+                        <div class="clear col-xs-12">
                             <div class="row">
                                 <div class="col-xs-5">
-                                    <p class="data-width float_l">保護者名:</p>
+                                    <p class="data-width">保護者名:</p>
                                 </div>
                                 <div class="col-xs-offset-1 col-xs-6">
                                     <p class="wide margin-l"><?= h($data['person_name']) ?></p>
@@ -26,10 +26,10 @@
                         </div>
 
                         <!--子供-->
-                        <div id="child" class="clear border col-xs-12">
+                        <div class="clear border col-xs-12" id="child">
                             <div class="row">
                                 <div class="col-xs-5">
-                                    <p class="data-width float_l">お子様:</p>
+                                    <p class="data-width">お子様:</p>
                                 </div>
                                 <div class="col-xs-offset-1 col-xs-6">
                                     <?php
