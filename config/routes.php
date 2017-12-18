@@ -74,6 +74,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     /**
      * reset routing
      */
+    $routes->connect('/common/inquirysend', ['controller' => 'Common', 'action' => 'inquirysend']);
+    /**
+     * reset routing
+     */
     $routes->connect('/resetCheck', ['controller' => 'user', 'action' => 'reset']);
 
     /**
