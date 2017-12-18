@@ -35,18 +35,33 @@
         <?php foreach ($inquiries as $key => $data): ?>
             <div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
-                    <img src="<?= $data['_matchingData']['Photos']['path'] ?>" alt="イメージが見つかりません" style="width: 20rem">
+                    <img src="<?= $data['_matchingData']['Photos']['path']; ?>" alt="イメージが見つかりません" style="width: 20rem">
                     <div class="caption">
-                        <h3><?= $data['_matchingData']['Events']['event']?></h3>
+                        <h3><?= $data['_matchingData']['Events']['event']; ?></h3>
                         <!-- 対応済みかどうか -->
-                        <?php if ($data['already']){
-                            echo '<p>対応済み</p>';
-                        }else{
-                            echo '<p>未対応</p>';
+                        <?php if ($data['already']) {
+                            echo '<div class="row row-eq-height">
+                                  <div class="col-sm-6 col-md-6">
+                                  <p>対応済み</p>
+                                  </div>
+                                  <div class="col-sm-6 col-md-6 center-block">
+                                  <a class="btn btn-primary" id="doAlready_' . $key . '" href="#">取り消す</a>
+                                  </div>
+                                  </div>';
+                        } else {
+                            echo '<div class="row row-eq-height">
+                                  <div class="col-sm-6 col-md-6 status">
+                                  <p>対応済み</p>
+                                  </div>
+                                  <div class="col-sm-6 col-md-6">
+                                  <a class="btn btn-primary center-block test" id="doAlready_' . $key . '" href="#">取り消す</a>
+                                  </div>
+                                  </div>';
                         }
                         ?>
-                        <p>理由：<?= $data['_matchingData']['Reason']['detail']?></p>
-                        <p>問い合わせ日付：<?= substr($data['created'],0,strpos($data['created'],','))  ?></p>
+                        <p>理由：<?= $data['_matchingData']['Reason']['detail']; ?></p>
+                        <!-- timeから日付のみ出力 -->
+                        <p>問い合わせ日付：<?= substr($data['created'], 0, strpos($data['created'], ',')); ?></p>
                     </div><!-- /.caption -->
                 </div><!-- /.thumbnail -->
             </div><!-- /.col-sm-6.col-md-3 -->

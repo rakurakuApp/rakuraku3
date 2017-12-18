@@ -3,3 +3,9 @@
     display: flex;
     flex-wrap: wrap;
 }
+.status{
+    display: inline;
+}
+.test{
+    margin: 1rem;
+}
