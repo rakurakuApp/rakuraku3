@@ -1,23 +1,16 @@
 <?= $this->Html->css('/private/css/user/account.css') ?>
 
-<!DOCTYPE html>
-<html lang="en">
-</html>
-<head>
-    <div>
-    </div>
-</head>
 <body>
 <div class="back">
-    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "","action"=>""]]); ?>
+    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"idchange_logic"]]); ?>
     <div class="old" id="old-data">
         <label for="exampleInputPassword0">現在のID</label>
-        <input type="text"  class="form-control" id="exampleInputPassword0" readonly value = <?= $id ?>>
+        <input type="text"  class="form-control" id="exampleInputPassword0" name="oldData" readonly value = <?= $id ?>>
     </div>
 
     <div class="new" id="new-data">
         <label for="exampleInputPassword1">新ID</label>
-        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="ID">
+        <input type="text" class="form-control" id="exampleInputPassword1" name="newData" placeholder="ID">
     </div>
 
     <div class="Cancelbtn">

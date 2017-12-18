@@ -15,6 +15,7 @@ use App\Mailer\EmailMailer;
 use Cake\I18n\Time;
 use Cake\Chronos\Chronos;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
 
 class UserController extends AppController
 {
@@ -32,10 +33,9 @@ class UserController extends AppController
             try {
                 $patron = $this->request->getData('');
             } catch (Exception $e) {
-
             }
+          }
         }
-    }
 
     public function passhange()
     {
@@ -57,8 +57,25 @@ class UserController extends AppController
         $this->set('id',$id);
     }
 
-    public function upload()
-    {
+    public function idchangelogic(){
+        $this->autoRender = false;
+
+        $patron = TableRegistry::get('patron');
+
+        $old_id = $this->request->getData('oldData');
+        $new_id = $this->request->getData('newData');
+
+        //$result = $patron->query()->set(['id' => $new_id])->where(['id' => $old_id])->execute();
+
+        //print_r($result);
+
+        echo $old_id . "<br>";
+        echo $new_id;
+
+        $this->redirect(['action' => 'userinformation']);
+    }
+
+    public function upload(){
         //$mailer = new EmailMailer();
 
         //$mailer->resend('oic.k.koyama@gmail.com','kusamochi2','44444444','test');
