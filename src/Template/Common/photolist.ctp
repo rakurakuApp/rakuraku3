@@ -45,7 +45,7 @@
                                         <li><a id="drop2">画像が不適切</a></li>
                                         <li><a id="drop3">//////</a></li>
 <!--                                        <a class="square_btn">送信</a>-->
-                                        <button type="submit" class="margin btn btn-default">送信</button>
+                                        <button type="submit"  id="send" class="margin btn btn-default">送信</button>
                                     </div>
                                 </ul>
                             </li>
