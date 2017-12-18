@@ -16,6 +16,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Reset patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Reset[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Reset findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class ResetTable extends Table
 {
@@ -33,6 +35,8 @@ class ResetTable extends Table
         $this->setTable('reset');
         $this->setDisplayField('patron_number');
         $this->setPrimaryKey(['patron_number', 'uuid']);
+
+        $this->addBehavior('Timestamp');
     }
 
     /**
