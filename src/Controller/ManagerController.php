@@ -60,6 +60,25 @@ class ManagerController extends AppController
         }
     }
 
+    public function inquirydetailphotohide()
+    {
+//        $this->autoRender = false;
+        if ($this->request->is('post')) {
+            try {
+                $InquiriesTable = TableRegistry::get('Inquiries');
+                $parentInfo = $InquiriesTable->get(1);//クリックした時ナンバー取得
+                if (!($parentInfo->already)) {
+                    $parentInfo->already = true;
+                }else{
+                    $parentInfo->already = false;
+                }
+                $InquiriesTable->save($parentInfo);//ＤＢ更新
+//                $this->Flash->success("更新しました。");
+            } catch (Exception $e) {
+            }
+        }
+    }
+
     //問合せ一覧画面
     public function inquiry()
     {
@@ -106,6 +125,13 @@ class ManagerController extends AppController
                     $query->where(['photos.id' => $this->request->getData('photo-id')]);
                 }
                 $this->set('Inquiries', $query->toArray());
+                //問合わせ済チェックボックス
+                if (!empty($this->request->getData('remove_chk'))) {
+                    $query->where(['Inquiries.already' => '1']);
+                } else {
+                    $query->where(['Inquiries.already' => '0']);
+                }
+                $this->set('Inquiries', $query->toArray());
             } catch
             (Exception $e) {
                 $this->Flash->error('missing');
@@ -135,6 +161,11 @@ class ManagerController extends AppController
                         'type' => 'LEFT OUTER',
                         'conditions' => ' Inquiries.photos_id = photos.id '
                     ]);
+                if (!empty($this->request->getData('remove_chk'))) {
+                    $query->where(['Inquiries.already' => '1']);
+                } else {
+                    $query->where(['Inquiries.already' => '0']);
+                }
                 $this->set('Inquiries',$query->toArray());
             } catch (Exception $e) {
                 $this->Flash->error('missing');
