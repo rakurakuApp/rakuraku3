@@ -74,7 +74,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     /**
      * reset routing
      */
-    $routes->connect('/resetCheck', ['controller' => 'user', 'action' => 'reset']);
+    $routes->connect('/resetCheck', ['controller' => 'user', 'action' => 'resetCheck']);
 
     /**
      * Connect catchall routes for all controllers.
