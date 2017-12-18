@@ -24,17 +24,22 @@ class UserController extends AppController
     }
 
 
-    public  function  passchange(){
+    public  function  passChange(){
     }
 
     public  function  index(){}
 
-    public  function  mailchange(){
+    public  function  mailChange(){
         $mail = $this->request->getData('email');
         $this->set('email',$mail);
+
     }
 
-    public  function  idchange(){
+    public  function  mailChangelogic(){
+        
+    }
+
+    public  function  idChange(){
         $id = $this->request->getData('id');
         $this->set('id',$id);
     }
