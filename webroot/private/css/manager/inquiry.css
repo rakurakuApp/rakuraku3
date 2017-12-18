@@ -32,6 +32,23 @@ tr.already_info #photoid{
     background-color:#AAAAAA;
 }
 
+/*対応済みのテーブルにカーソルを乗せた時の色*/
+tr.already_info:hover #number{
+    background-color:#FFCC99;
+}
+tr.already_info:hover #patronusername{
+    background-color:#FFCC99;
+}
+tr.already_info:hover #childusername{
+    background-color:#FFCC99;
+}
+tr.already_info:hover #reasondetail{
+    background-color:#FFCC99;
+}
+tr.already_info:hover #photoid{
+    background-color:#FFCC99;
+}
+
 /*カーソルを乗せた時のポインタ*/
 .inquirylist{
     cursor : pointer;

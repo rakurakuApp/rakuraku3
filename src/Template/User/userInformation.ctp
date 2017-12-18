@@ -1,49 +1,103 @@
 <head>
-
     <?= $this->Html->css('/private/css/user/userinformation.css') ?>
-
 </head>
-<body>
-    <div class="box">
-        <p class="f-size title_p">「ユーザ情報」</p>
 
-            <!--ユーザ名-->
-            <div id="user" class="clear">
-                <p  class="user-width float_l">保護者名:</p>
-                <p class="wide margin-l">ながせあきお</p>
-            </div>
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-offset-3 col-xs-6" id="data">
+            <div class="row box">
+                <div class="col-xs-12">
+                    <p class="f-size title_p">「ユーザ情報」</p>
+                </div>
 
-            <!--子供-->
-            <div id="child" class="clear border">
-                <p class="child-width float_l">お子様:</p>
-                <p class="wide margin-l">○組　ながせ光宙</p>
-                <!--<p class="wide margin-l">○組　ながせ光宙</p>-->
-                <!--<p class="wide margin-l">○組　ながせ光宙</p>-->
-            </div>
+                <div class="col-xs-12">
+                    <div class="row">
+                        <!--ユーザ名-->
+                        <div class="clear col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="data-width">保護者名:</p>
+                                </div>
+                                <div class="col-xs-offset-1 col-xs-6">
+                                    <p class="wide margin-l"><?= h($data['person_name']) ?></p>
+                                </div>
+                            </div>
+                        </div>
 
-        <div class="box_p">
+                        <!--子供-->
+                        <div class="clear border col-xs-12" id="child">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="data-width">お子様:</p>
+                                </div>
+                                <div class="col-xs-offset-1 col-xs-6">
+                                    <?php
+                                    foreach ($data['child_name'] as $name){
+                                        ?>
+                                        <p class="wide margin-l"><?= h($name) ?></p>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
 
-            <!--メールアドレス-->
-            <div id="mail" class="clear user_box">
-                <p class="text_w float_l">メールアドレス:</p>
-                <p class="wide">oic.r.kunitomi@gmail.com</p>
-                <button type="button" class="btn btn-default float_r margin-t">変更</button>
-            </div>
+                        <!--メールアドレス-->
+                        <div id="mail" class="clear user_box col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="text_w">メールアドレス:</p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="wide"><?= h($data['mail']) ?></p>
+                                </div>
+                                <div class="col-xs-offset-9 col-xs-2">
+                                    <form action="./mailchange" method="post">
+                                        <input type="hidden" name="email" value=<?= $data['mail'] ?>>
+                                        <button type="submit" class="btn btn-default">変更</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
+                        <!--ID-->
+                        <div id="useid" class="clear user_box col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="text_w">ID:</p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="wide"><?= h($data['ID']) ?></p>
+                                </div>
+                                <div class="col-xs-offset-9 col-xs-2">
+                                    <form action="./idchange" method="post">
+                                        <input type="hidden" name="id" value=<?= $data['ID'] ?>>
+                                        <button type="submit" class="btn btn-default">変更</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
-            <!--ID-->
-            <div id="useid" class="clear user_box">
-                <p class="text_w float_l">ID:</p>
-                <p class="wide">toshio_0000</p>
-                <button type="button" class="btn btn-default float_r margin-t">変更</button>
-            </div>
-
-            <!--パスワード-->
-            <div id="password" class="clear user_box">
-                <p class="text_w float_l">パスワード:</p>
-                <p class="wide">***********</p>
-                <button type="button" class="btn btn-default float_r margin-t">変更</button>
+                        <!--パスワード-->
+                        <div id="password" class="clear user_box col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <p class="text_w">パスワード:</p>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="wide">非表示設定です</p>
+                                </div>
+                                <div class="col-xs-offset-9 col-xs-2">
+                                    <button onclick="location.href='./passchange'" class="btn btn-default">変更</button>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</body>
+    <br><br>
+</div>

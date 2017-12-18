@@ -1,6 +1,6 @@
 body{
-    height: 700px;
-    draggable:"false"
+    draggable:"false";
+    height: auto;;
 }
 .back{
     margin:50px auto auto auto;

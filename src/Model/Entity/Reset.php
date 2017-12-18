@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $patron_number
  * @property string $uuid
+ * @property \Cake\I18n\FrozenTime $created
  */
 class Reset extends Entity
 {
@@ -22,8 +23,6 @@ class Reset extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'patron_number' => false,
-        'uuid' => false
+        'created' => true
     ];
 }

@@ -1,21 +1,14 @@
-<?= $this->Html->css('/private/css/user/mailchange.css') ?>
+<?= $this->Html->css('/private/css/user/account.css') ?>
 
-<!DOCTYPE html>
-<html lang="en">
-</html>
-<head>
-    <div>
-        <?= $this->element('common\sidemenu') ?>
-    </div>
-</head>
 <body>
 <div class="back">
-    <div class="mail0" id="mail">
+    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "","action"=>""]]); ?>
+    <div class="old" id="old-data">
         <label for="exampleInputPassword0">現在のメールアドレス</label>
-        <input type="text"  class="form-control " id="exampleInputPassword0">
+        <input type="text"  class="form-control " id="exampleInputPassword0" readonly value = <?= $email ?>>
     </div>
 
-    <div class="mail1" id="new-mail">
+    <div class="new" id="new-data">
         <label for="exampleInputPassword1">新メールアドレス</label>
         <input type="text" class="form-control" id="exampleInputPassword1" placeholder="メールアドレス">
     </div>
@@ -23,16 +16,16 @@
 
     <div class="Cancelbtn">
         <p>
-            <a href="">
-            <button type="button" class="btn btn-default CancelBox">キャンセル</button>
+            <button formaction="javascript:history.back()" class="btn btn-default CancelBox">キャンセル</button>
         </p>
     </div>
 
     <div class="Savebtn">
         <p>
-            <button type="button" class="btn btn-default SaveBox">保存</button>
+            <button type="submit" class="btn btn-default SaveBox" name="Save">保存</button>
         </p>
     </div>
+    </form>
 </div>
 </body>
 </html>

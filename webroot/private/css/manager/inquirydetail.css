@@ -1,3 +1,13 @@
+.title{
+    background-color:#f7df36;
+    color:white;
+    margin-bottom:13%;
+    text-align: center;
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+}
+
 .font{
     font-size:130%;
 }
@@ -16,4 +26,9 @@
 
 .buttonlayout{
     margin-top:40px;
+}
+
+.btnsize{
+    width:40%;
+    height:20%;
 }

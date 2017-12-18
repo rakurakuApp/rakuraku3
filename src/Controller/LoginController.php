@@ -125,7 +125,7 @@ class LoginController extends AppController
     public function logout(){
 
        if(empty($this->request->getSession())){
-           $this->redirect([ 'controller' => 'Login','action' => 'index']);
+           $this->redirect([ 'controller' => 'Login','action' => 'login']);
        }
 
        $this->request->session()->destroy(); // セッションの破棄
@@ -180,9 +180,6 @@ class LoginController extends AppController
                    $this->set('errorMessage', $errorMessage);
                }
            }
-       } else {
-           $errorMessage = '確認用メールアドレスと一致しません';
-           $this->set('errorMessage', $errorMessage);
        }
    }
 
