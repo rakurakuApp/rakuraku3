@@ -93,7 +93,6 @@ class CommonController extends AppController
     {
         $this->autoRender = false;
         if ($this->request->is('ajax')) {
-            $this->find->
             $this->set(compact('data'));
             $this->set('_serialize', ['data']);
         } else {

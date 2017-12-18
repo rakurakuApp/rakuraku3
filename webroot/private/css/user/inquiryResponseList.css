@@ -3,3 +3,17 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+/* イベント */
+#event{
+    background-color: darkgrey;
+    border-radius: .25ex;
+    text-align: center;
+}
+
+/* 問い合わせ時刻 */
+#inqDate{
+    text-align: right;
+    margin-bottom: 0px;
+    font-size: small;
+}

@@ -49,13 +49,9 @@ class InquiriesTable extends Table
         $this->belongsTo('Patron',[
             'foreignKey'=>'patron_number']);
 
-        $this->belongsTo('reason', [
+        $this->belongsTo('Reason', [
             'foreignKey' => 'reason_id',
         ]);
-        $this->belongsTo('reason',[
-            'foreignKey'=>'reason_id'
-            ]);
-
     }
 
     /**

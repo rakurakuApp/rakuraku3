@@ -6,9 +6,9 @@ $(function () {
 		//クリック時に星の色を取得 色を反転する
 		$(this).toggleClass("active");
 		$.ajax({
-			url: "http://localhost/rakuraku/common/favorite",
+			url: "http://localhost/rakuraku3/common/favorite",
 			type: "get",
-			dataType: "json",
+			dataType: "json"
 		}).done(function (data) {
 			console.log('success');
 			console.log(data);

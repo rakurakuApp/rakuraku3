@@ -131,7 +131,6 @@ class UserController extends AppController
         //保護者の送信した問い合わせが管理者に対応されたかどうか確認する画面 徳山
         $query = $this->Inquiries->find()
             ->select(['Inquiries.already','Inquiries.created'])
-            //セッションIDからログインしている親のIDを取得
             ->matching('Reason', function ($q) {
                 $q->select(['Reason.id','Reason.detail']);
                 return $q;
@@ -145,8 +144,14 @@ class UserController extends AppController
                 $q->select(['Events.id','Events.event']);
                 return $q;
             })
+            //セッションIDからログインしている親のIDを取得
             ->where(['Inquiries.patron_number' => $this->TOOL->loadSessionId()])
             ->order(['Inquiries.already' => 'ASC','Inquiries.created'=>'DESC']);
         $this->set('inquiries', $query->toArray());
+    }
+
+    public function deleteInq(){
+        $this->autoRender = false;
+        $this->log("ルナだよ");
     }
 }
