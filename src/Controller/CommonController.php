@@ -37,7 +37,6 @@ class CommonController extends AppController
         ];
         //セッションID取得
         $id = $this->TOOL->loadSessionId();
-        //園児情報の取得
         $children = $this->SQL->getChildrenID($id);
         //園児情報から関連する画像情報を取得
         $photo = $this->SQL->getPhotoID($children);
@@ -50,26 +49,28 @@ class CommonController extends AppController
 
     public function inquirysend()
     {
+        $this->log('aaaa');
         $this->autoRender=FALSE; //ページの自動レンダリング機能をオフにする
-        $name=$this->request->getData(); //POSTで受け取った名前
-
+       $name=$this->request->getData(); //POSTで受け取った名前
         $name=htmlspecialchars($name); //フォーム欄のコード埋め込みを防ぐ
-
+        $name = 'aa';
+        $this->set(compact('data'));
+        $this->set('_serialize', ['data']);;
 
         try //実行
         {
-            $Inquirytable=TableRegistry::get('InquiryTable'); //テーブルを取得
-            $query=$Inquirytable->query(); //テーブルでクエリ文を使用することを宣言
-            $query->insert(['reason_id']) //NAMEとPWの二つのカラムにデータを挿入する文
+        $Inquirytable=TableRegistry::get('InquiryTable'); //テーブルを取得
+           $query=$Inquirytable->query(); //テーブルでクエリ文を使用することを宣言
+            $query->insert(['reason_id'])//NAMEとPWの二つのカラムにデータを挿入する文
 
-            ->execute(); //実行
+          ->eecute(); //実行
 
-            echo('0'); //データ登録成功
+           echo('0'); //データ登録成功
         }
         catch (Exception $e) //例外
         {
-            echo('1'); //データ登録失敗（0とか1に特に意味はない）
-        }
+           echo('1'); //データ登録失敗（0とか1に特に意味はない）
+       }
     }
 
     public function index(){}

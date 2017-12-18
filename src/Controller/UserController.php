@@ -2,6 +2,15 @@
 
 namespace App\Controller;
 
+use App\Controller\AppController;
+use App\Controller\Component\TOOLComponent;
+use Cake\Controller\Component;
+use App\Mailer\EmailMailer;
+use Cake\I18n\Time;
+use Cake\Chronos\Chronos;
+use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
+
 class UserController extends AppController
 {
     public function initialize()
@@ -18,23 +27,53 @@ class UserController extends AppController
 
     }
 
-    public  function  update(){
+    public function update()
+    {
         if ($this->request->is('post')) {
             try {
                 $patron = $this->request->getData('');
-            } catch (Exception $e){
-                
+            } catch (Exception $e) {
             }
+          }
         }
+
+    public function passhange()
+    {
+
     }
 
-    public  function  passchange(){}
+    public  function  mailChange(){
+        $mail = $this->request->getData('email');
+        $this->set('email',$mail);
 
-    public  function  index(){}
+    }
 
-    public  function  mailchange(){}
+    public  function  mailChangelogic(){
 
-    public  function  idchange(){}
+    }
+
+    public  function  idChange(){
+        $id = $this->request->getData('id');
+        $this->set('id',$id);
+    }
+
+    public function idchangelogic(){
+        $this->autoRender = false;
+
+        $patron = TableRegistry::get('patron');
+
+        $old_id = $this->request->getData('oldData');
+        $new_id = $this->request->getData('newData');
+
+        //$result = $patron->query()->set(['id' => $new_id])->where(['id' => $old_id])->execute();
+
+        //print_r($result);
+
+        echo $old_id . "<br>";
+        echo $new_id;
+
+        $this->redirect(['action' => 'userinformation']);
+    }
 
     public function upload(){
         //$mailer = new EmailMailer();
@@ -42,42 +81,42 @@ class UserController extends AppController
         //$mailer->resend('oic.k.koyama@gmail.com','kusamochi2','44444444','test');
     }
 
-    public function uploadlogic(){
+    public function uploadlogic()
+    {
         $this->autoRender = false;
 
-        $typeList = array('jpg','jpeg','gif','png');
-        if(!empty($_FILES)){
-            for($i = 0;$i < count($_FILES['upfile']['tmp_name']);$i++){
-                if(is_uploaded_file($_FILES['upfile']['tmp_name'][$i])){
+        $typeList = array('jpg', 'jpeg', 'gif', 'png');
+        if (!empty($_FILES)) {
+            for ($i = 0; $i < count($_FILES['upfile']['tmp_name']); $i++) {
+                if (is_uploaded_file($_FILES['upfile']['tmp_name'][$i])) {
                     $name = $_FILES['upfile']['name'][$i];
                     $filePath = $_FILES['upfile']['tmp_name'][$i];
 
                     $fileTypes = pathinfo($name);
 
                     // ファイル名がアルファベットのみかをチェック
-                    if ( preg_match("/^([a-zA-Z0-9\.\-\_])+$/ui", $name) == "0" ) {
+                    if (preg_match("/^([a-zA-Z0-9\.\-\_])+$/ui", $name) == "0") {
                         // アルファベット以外を含む場合はファイル名を日時とする
                         $saveFileName = date("Ymd_His", time());
                     } else {
-                        if ( preg_match("/\.jpg$/ui", $name) == true ) {
-                        $ret = explode('.jpg', $name);
-                        } elseif ( preg_match("/\.gif$/ui", $name) == true ) {
+                        if (preg_match("/\.jpg$/ui", $name) == true) {
+                            $ret = explode('.jpg', $name);
+                        } elseif (preg_match("/\.gif$/ui", $name) == true) {
                             $ret = explode('.gif', $name);
-                        } elseif ( preg_match("/\.png$/ui", $name) == true ) {
+                        } elseif (preg_match("/\.png$/ui", $name) == true) {
                             $ret = explode('.png', $name);
                         }
                         $saveFileName = $ret[0]; // 拡張子を除いたそのまま
                     }
 
-                    $saveFileName = @('['.(microtime()*1000000).']'.$saveFileName);
+                    $saveFileName = @('[' . (microtime() * 1000000) . ']' . $saveFileName);
 
-                    if(in_array($fileTypes['extension'],$typeList)){
+                    if (in_array($fileTypes['extension'], $typeList)) {
                         //アップロード処理
-                        $this->RAWS->AuthUpload($saveFileName .".". $fileTypes['extension'],$filePath);
+                        $this->RAWS->AuthUpload($saveFileName . "." . $fileTypes['extension'], $filePath);
 
                         $this->redirect($this->referer());
-                    }
-                    else{
+                    } else {
                         //ファイル種類外処理
                     }
                 }
@@ -85,17 +124,9 @@ class UserController extends AppController
         }
     }
 
-    public function inquiry(){
+    public function inquiry(){}
 
-    }
-
-    public function userInformation()
-    {
-
-    }
-
-
-    public function resetCheck()
+    public function userinformation()
     {
         $this->autoRender = false;
         $this->request->getQuery('check');
@@ -103,27 +134,73 @@ class UserController extends AppController
 
         //親情報の有無
         $Reset = $this->Reset->find()
-            ->select(['Reset.patron_number','Reset.uuid'])
+            ->select(['Reset.patron_number', 'Reset.created'])
             ->where(['Reset.uuid' => $this->request->getQuery('check')])
             ->first();
+        $number = $Reset['patron_number'];
+        $time = Time::parse($Reset['created']);
 
-        if(!empty($Reset)) {
+        if (!empty($Reset)) {
+            if ($time->wasWithinLast('1 days')) {
 
-            $this->Reset->query()
-                ->delete()
-                ->where(['Reset.uuid' => $this->request->getQuery('check')])
-                ->execute();
+                //親情報の取得
+                $Patron = $this->Patron->find()
+                    ->select(['Patron.id'])
+                    ->where(['Patron.number' => $Reset['patron_number']])
+                    ->first();
 
-            //resetpage
-            $this->redirect([ 'controller' => 'User','action' => 'reset']);
-        }else{
-            //error
+                //resetpage
+                $this->redirect(['controller' => 'User', 'action' => 'reset', $number]);
+            } else {
+                //期限切れerror
+                // $this->redirect([ 'controller' => 'Login','action' => 'login']);
+                echo '期限過ぎてんぞ';
+            }
+        } else {
+            //無効error
             //$this->redirect([ 'controller' => 'Login','action' => 'login']);
+            echo 'データ無い';
         }
     }
+    public function dataValidator($data)
+    {
+        $validator = new Validator();
+        $validator
+            ->ascii($data)
+            ->notBlank($data)
+            ->notEmpty($data);
+    }
 
-    public function reset(){
-        //パスワード変更処理｢枝松｣
+    //パスワード変更処理
+    public function reset($number)
+    {
+        if (!empty($number)) {
+            if (!empty($this->request->getData('password')) && !empty($this->request->getData('confirmation'))) {
+                if ($this->request->getData('password') === $this->request->getData('confirmation')) {
+
+                    //バリデーション
+                    if (true) {
+
+                        //uuid delete
+                        $this->Reset->query()
+                            ->delete()
+                            ->where(['Reset.uuid' => $this->request->getQuery('check')])
+                            ->execute();
+                    }else{
+
+                    }
+                } else {
+                    $errorMessage = 'パスワードが確認と異なります';
+                    $this->set('errorMessage', $errorMessage);
+                }
+            } else {
+                $errorMessage = 'パスワードを入力してください';
+                $this->set('errorMessage', $errorMessage);
+            }
+        } else {
+            $errorMessage = '不正なアクセスです';
+            $this->set('errorMessage', $errorMessage);
+        }
     }
 
     public function inquiryResponseList()

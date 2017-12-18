@@ -10,7 +10,7 @@
 ログイン画面にてパスワード等忘れのためパスワード再設定のURLを送信いたしました。
 リンク先でパスワードの再設定が可能です。
 
-有効期間は1時間です。
+有効期間は1日です。
 <?php
 echo 'URL : http://localhost/rakuraku/resetCheck?check='.$uuid;
 
