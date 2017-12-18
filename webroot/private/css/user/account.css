@@ -58,3 +58,8 @@ label{
     background-color: #FFFFFF;
     color: #000000;
 }
+
+.old input[disabled]{
+    background-color: #ffffff;
+    color: #000000
+}

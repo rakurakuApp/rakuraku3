@@ -49,9 +49,6 @@
         });
     </script>
     <div>
-        <?= $this->element('common\sidemenu') ?>
-    </div>
-    <div>
         <?= $this->element('common\header') ?>
     </div>
 

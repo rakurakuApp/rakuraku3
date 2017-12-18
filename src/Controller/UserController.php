@@ -12,6 +12,7 @@ use App\Controller\AppController;
 use App\Controller\Component\TOOLComponent;
 use Cake\Controller\Component;
 use App\Mailer\EmailMailer;
+use Cake\ORM\TableRegistry;
 
 class UserController extends AppController
 {
@@ -24,8 +25,7 @@ class UserController extends AppController
     }
 
 
-    public  function  passchange(){
-    }
+    public  function  passchange(){}
 
     public  function  index(){}
 
@@ -37,6 +37,24 @@ class UserController extends AppController
     public  function  idchange(){
         $id = $this->request->getData('id');
         $this->set('id',$id);
+    }
+
+    public function idchangelogic(){
+        $this->autoRender = false;
+
+        $patron = TableRegistry::get('patron');
+
+        $old_id = $this->request->getData('oldData');
+        $new_id = $this->request->getData('newData');
+
+        //$result = $patron->query()->set(['id' => $new_id])->where(['id' => $old_id])->execute();
+
+        //print_r($result);
+
+        echo $old_id . "<br>";
+        echo $new_id;
+
+        $this->redirect(['action' => 'userinformation']);
     }
 
     public function upload(){
