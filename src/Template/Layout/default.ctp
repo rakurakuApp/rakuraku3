@@ -23,6 +23,7 @@
     </title>
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
+
     <!--css-->
     <?= $this->Html->css('bootstrap/bootstrap.css') ?>
     <?= $this->Html->css('flat-ui/flat-ui.css') ?>
@@ -32,12 +33,8 @@
 
     <!--js-->
     <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js') ?>
-    <?= $this->Html->script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') ?>
     <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js') ?>
-    <?= $this->Html->script('flat-ui/flat-ui.js') ?>
-    <?= $this->Html->script('flat-ui/application.js') ?>
-    <?= $this->Html->script('flat-ui/prettify.js') ?>
-    <?= $this->Html->script('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') ?>
+    <?= $this->Html->script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') ?>
     <?= $this->fetch('script') ?>
 </head>
 
