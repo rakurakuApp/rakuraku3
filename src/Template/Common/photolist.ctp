@@ -22,17 +22,9 @@
                 <div class="row">
                     <?php
                     //                偶数
-                    for($i = 0;$i < 8;$i += 2){
+                    for($i = 0;$i < 8;$i++){
                         if(!empty($array[$i])) {
-                            echo $this->Html->image($array[$i]['path'], ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'class' => 'photo photo-margin col-md-3 ' ,'id'=>'image'.($i + ( ($this->Paginator->current() - 1) * 8))]);
-                        }
-                    }
-                    ?>
-                    <?php
-                    //                奇数
-                    for($i = 1;$i < 8;$i += 2){
-                        if(!empty($array[$i])) {
-                            echo $this->Html->image($array[$i]['path'], ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'class' => 'photo photo-margin col-md-3' , 'id'=>'image'.($i + ( ($this->Paginator->current() - 1) * 8))]);
+                            echo $this->Html->image($array[$i]['path'], ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'class' => 'contain photo photo-margin col-md-3 ' ,'id'=>'image'.$i]);
                         }
                     }
                     ?>

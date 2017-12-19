@@ -25,6 +25,8 @@ class CommonController extends AppController
         $this->loadComponent('RequestHandler');
         $this->loadComponent('SQL');
         $this->loadComponent('TOOL');
+        $this->loadModel('Children');
+        $this->loadModel('Patron');
     }
 
     public function photolist()
@@ -38,7 +40,7 @@ class CommonController extends AppController
         $photo = $this->SQL->getPhotoID($children);
         $photo_path = $this->Paginator->paginate($this->SQL->getPhotoPath($photo),$paginate);
 
-        $this->set('array',$photo_path);
+        $this->set('array',$photo_path->toList());
     }
 
     public function inquirysend()
