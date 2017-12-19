@@ -8,7 +8,6 @@
 
 <?php $this->start('css'); ?>
 <?= $this->Html->css('/private/css/account/individual_info.css'); ?>
-<?= $this->Html->css('/private/css/account/cake_flash.css'); ?>
 <?php $this->end() ?>
 
 <?php $this->start('script'); ?>

@@ -79,6 +79,7 @@ class AppController extends Controller
 
     public function beforeRender(Event $event)
     {
+        $this->loadComponent('Flash');
         $this->loadComponent('TOOL');
         $this->set('sessionData',$this->TOOL->loadSessinUser());
 

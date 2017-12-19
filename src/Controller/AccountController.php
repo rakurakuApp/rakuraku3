@@ -22,7 +22,6 @@ class AccountController extends AppController
         $this->loadmodel('Inquiries');
         $this->loadmodel('Children');
         $this->loadmodel('ChildClass');
-        $this->loadComponent('Flash');
         $this->loadComponent('TOOL');
         $this->loadComponent('SQL');
     }

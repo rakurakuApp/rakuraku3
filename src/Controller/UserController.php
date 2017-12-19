@@ -207,6 +207,13 @@ class UserController extends AppController
     // ユーザ問い合わせ一覧表示画面
     public function inquiryResponseList()
     {
+        if ($this->request->is("ajax")){
+            //問い合わせ情報を更新
+            $inquiryTable = TableRegistry::get('Inquiries');
+            $inquiry = $inquiryTable->get($this->request->getData('value'));
+            $inquiry->already = 1;
+            $inquiryTable->save($inquiry);
+        }
         //保護者の送信した問い合わせが管理者に対応されたかどうか確認する画面 徳山
         $query = $this->Inquiries->find()
             ->select(['Inquiries.id','Inquiries.already','Inquiries.created'])
@@ -227,15 +234,9 @@ class UserController extends AppController
             ->where(['Inquiries.patron_number' => $this->TOOL->loadSessionId()])
             ->order(['Inquiries.already' => 'ASC','Inquiries.created'=>'DESC']);
         $this->set('inquiries', $query->toArray());
-    }
-
-    // 問い合わせ取り消し時のajax処理アクション
-    public function deleteInq(){
         if ($this->request->is("ajax")){
-            $data = 123;
-            $this->set(compact('data'));
-            $this->set('_serialize',['data']);
-            $this->log(value);
+            // ajax内で行わないと他のコンテンツが非表示になってしまう
+            $this->render("/Element/user/inquiriesList");
         }
     }
 }

@@ -29,6 +29,7 @@
     <?= $this->Html->css('flat-ui/flat-ui.css') ?>
     <?= $this->Html->css('/private/css/common/sidemenu.css') ?>
     <?= $this->Html->css('/private/css/common/app.css') ?>
+    <?= $this->Html->css('/private/css/common/cake_flash.css'); ?>
     <?= $this->fetch('css') ?>
 
     <!--js-->
