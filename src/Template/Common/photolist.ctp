@@ -23,16 +23,16 @@
                     <?php
                     //                偶数
                     for($i = 0;$i < 8;$i += 2){
-                        if(!empty($array[$i])) {
-                            echo $this->Html->image($array[$i]['path'], ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'class' => 'photo photo-margin col-md-3 ' ,'id'=>'image'.($i + ( ($this->Paginator->current() - 1) * 8))]);
+                        if(!empty($array)) {
+                            echo $this->Html->image($array, ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'class' => 'photo photo-margin col-md-3 ' ,'id'=>'image'.($i + ( ($this->Paginator->current() - 1) * 8))]);
                         }
                     }
                     ?>
                     <?php
                     //                奇数
                     for($i = 1;$i < 8;$i += 2){
-                        if(!empty($array[$i])) {
-                            echo $this->Html->image($array[$i]['path'], ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'class' => 'photo photo-margin col-md-3' , 'id'=>'image'.($i + ( ($this->Paginator->current() - 1) * 8))]);
+                        if(!empty($array)) {
+                            echo $this->Html->image($array, ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'class' => 'photo photo-margin col-md-3' , 'id'=>'image'.($i + ( ($this->Paginator->current() - 1) * 8))]);
                         }
                     }
                     ?>

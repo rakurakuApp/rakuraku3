@@ -1,6 +1,3 @@
-/**
- * Created by 15110006 on 2017/12/06.
- */
 $(function() {
     "use strict";
 
@@ -27,6 +24,5 @@ $(function() {
             location.href = "/rakuraku/login";
         }, 4000);
     });
-
 
 });

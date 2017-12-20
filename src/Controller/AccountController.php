@@ -198,7 +198,7 @@ class AccountController extends AppController
               if($this->SQL->compAddress($this->request->getData('email')))
 
               //children 子供情報追加
-              $childrenTable = TableRegistry::get('Child');
+              $childrenTable = TableRegistry::get('Children');
               $children = $childrenTable->newEntity();
               $children ->patron_number = $patronNumber;
               $children ->username = $this->request->getData('childName');
@@ -208,5 +208,4 @@ class AccountController extends AppController
           }
           $this->redirect(['action'=>'accountlist']);
       }
-
 }

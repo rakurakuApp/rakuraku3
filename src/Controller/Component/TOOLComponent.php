@@ -68,7 +68,7 @@ class TOOLComponent extends Component
         if($tmp['role'] === "patron"){
             $result['role'] = '保護者';
         }
-        elseif ($tmp['role'] === "manager"){
+        elseif ($tmp['role'] === "teacher"){
             $result['role'] = '管理者';
         }
         else{

@@ -37,7 +37,7 @@ class UserController extends AppController
           }
         }
 
-    public function passhange()
+    public function passChange()
     {
 
     }
@@ -126,7 +126,7 @@ class UserController extends AppController
 
     public function inquiry(){}
 
-    public function userinformation()
+    public function resetCheck()
     {
         $this->autoRender = false;
         $this->request->getQuery('check');
@@ -143,33 +143,33 @@ class UserController extends AppController
         if (!empty($Reset)) {
             if ($time->wasWithinLast('1 days')) {
 
-                //親情報の取得
-                $Patron = $this->Patron->find()
-                    ->select(['Patron.id'])
-                    ->where(['Patron.number' => $Reset['patron_number']])
-                    ->first();
-
                 //resetpage
                 $this->redirect(['controller' => 'User', 'action' => 'reset', $number]);
+
             } else {
+
                 //期限切れerror
                 // $this->redirect([ 'controller' => 'Login','action' => 'login']);
+                $errorMessage = 'URLの有効期限が切れています';
+                $this->set('errorMessage', $errorMessage);
                 echo '期限過ぎてんぞ';
             }
         } else {
             //無効error
             //$this->redirect([ 'controller' => 'Login','action' => 'login']);
+            $errorMessage = 'そのメールアドレスは登録されていません。';
+            $this->set('errorMessage', $errorMessage);
             echo 'データ無い';
         }
     }
-    public function dataValidator($data)
-    {
-        $validator = new Validator();
-        $validator
-            ->ascii($data)
-            ->notBlank($data)
-            ->notEmpty($data);
-    }
+//    public function dataValidator($data)
+//    {
+//        $validator = new Validator();
+//        $validator
+//            ->ascii($data)
+//            ->notBlank($data)
+//            ->notEmpty($data);
+//    }
 
     //パスワード変更処理
     public function reset($number)
@@ -178,17 +178,11 @@ class UserController extends AppController
             if (!empty($this->request->getData('password')) && !empty($this->request->getData('confirmation'))) {
                 if ($this->request->getData('password') === $this->request->getData('confirmation')) {
 
-                    //バリデーション
-                    if (true) {
-
                         //uuid delete
                         $this->Reset->query()
                             ->delete()
                             ->where(['Reset.uuid' => $this->request->getQuery('check')])
                             ->execute();
-                    }else{
-
-                    }
                 } else {
                     $errorMessage = 'パスワードが確認と異なります';
                     $this->set('errorMessage', $errorMessage);
@@ -198,6 +192,7 @@ class UserController extends AppController
                 $this->set('errorMessage', $errorMessage);
             }
         } else {
+            //error page
             $errorMessage = '不正なアクセスです';
             $this->set('errorMessage', $errorMessage);
         }

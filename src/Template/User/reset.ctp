@@ -15,6 +15,7 @@
     <div class="pass2" id="re-pw">
         <label for="exampleInputPassword2">新パスワード(再入力)</label>
         <input type="password" name="confirmation" class="form-control" id="exampleInputPassword2" placeholder="パスワード">
+        <span id="errormessage"><?php if(!empty($this->viewVars['errorMessage'])){echo '<br>'.$this->viewVars['errorMessage'];}?></span>
     </div>
     <div class="Cancelbtn">
         <p>

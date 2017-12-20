@@ -179,7 +179,13 @@ class LoginController extends AppController
                    $errorMessage = 'メールアドレスを入力してください';
                    $this->set('errorMessage', $errorMessage);
                }
+           }else {
+               $errorMessage = '確認用メールアドレスと一致しません';
+               $this->set('errorMessage', $errorMessage);
            }
+       }else {
+           $errorMessage = 'メールアドレスを入力してください';
+           $this->set('errorMessage', $errorMessage);
        }
    }
 
