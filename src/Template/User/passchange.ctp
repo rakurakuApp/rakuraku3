@@ -26,7 +26,7 @@
 
     <div class="Savebtn">
         <p>
-            <button type="submit" class="btn btn-default SaveBox" name="Save" >保存</button>
+            <button type="submit" class="btn btn-default SaveBox" name="Save">保存</button>
         </p>
     </div>
     </form>
