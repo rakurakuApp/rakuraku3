@@ -54,9 +54,19 @@ tr.already_info:hover #photoid{
     cursor : pointer;
 }
 
-/*ボタンサイズ*/
-.full{
+/*文字を全てセルの中央に*/
+.table > tbody > tr > td{
+    vertical-align: middle;
+}
+
+/*検索ボタン*/
+.retrievalbtn{
     width: 100%;
+}
+
+/*問合わせ対応変更ボタン*/
+.inquirybtn{
+    float: right;
 }
 
 /*td内のチェックボックスを真ん中に*/
@@ -64,7 +74,3 @@ table .checkbox input[name="check"].custom-checkbox{
     position: inherit; !important;
 }
 
-/*文字を全てセルの中央に*/
-.table > tbody > tr > td{
-    vertical-align: middle;
-}

@@ -16,6 +16,7 @@ $this->end(); ?>
 
 <!--css設定-->
 <?= $this->Html->css('/private/css/manager/inquiry.css') ?>
+<?= $this->Html->css('/private/css/account/cake_flash.css'); ?>
 
 <!--js設定-->
 <?= $this->Html->script('/private/js/manager/check.js') ?>
@@ -63,9 +64,9 @@ $this->end(); ?>
                     <input type="text" id="photo-id" class="form-control" name="photo-id">
                 </td>
 
-                <!--問合わせ内容-->
+                <!--問合せ内容-->
                 <td class="col-md-3">
-                    <label class="control-label" for="inquiry-class">問合わせ内容:</label>
+                    <label class="control-label" for="inquiry-class">問合せ内容:</label>
                     <select id="inquiry_class" class="form-control " name="inquiry_class">
                         <option value="">選択</option>
                         <?php foreach ($reasons as $reasons): ?>
@@ -75,102 +76,109 @@ $this->end(); ?>
                 </td>
                 <!--検索ボタン-->
                 <td class="col-md-2">
-                    <button type="submit" class="btn btn-primary full" id="btn-Retrieval">検索</button>
+                    <button type="submit" class="btn btn-primary retrievalbtn" id="btn-Retrieval">検索</button>
                 </td>
             </tr>
         </table>
     </form>
 
     <!--テーブル-->
-    <div class="row">
-        <div class="Retrieval-table col-md-10 col-md-offset-1">
-            <table class="table table-bordered">
-                <thead class="bg-primary">
-                <tr>
-                    <th class="col-md-1">
-                        <label>#</label></th>
-
-                    <th class="col-md-2">
-                        <label>問合わせ者名</label></th>
-
-                    <th class="col-md-2">
-                        <label>児童名</label></th>
-
-                    <th class="col-md-2">
-                        <label>問合わせ内容</label></th>
-
-                    <th class="col-md-1">
-                        <label>写真ID</label></th>
-
-                    <th class="col-md-1">
-                        <label class="checkbox">全て選択
-                            <input type="checkbox" id="all" class="checkbox" data-toggle="checkbox"
-                                   name="all" onClick="AllChecked();">
-                        </label>
-                    </th>
-                </tr>
-
-                </thead>
-                <?php $cnt = 1 ?>
-                <?php $line =0 ?>
-                <?php foreach ($Inquiries as $key => $value): ?>
-                    <?php
-                    if ($cnt != 1) {
-                        $cnt--;
-                        continue;
-                    } ?>
-                    <?php
-                    if ($value->already == 1) {
-                        echo '<tr class = "already_info"';
-                    } else {
-
-                    } ?>
+    <form method="post">
+        <div class="row">
+            <div class="Retrieval-table col-md-10 col-md-offset-1">
+                <table class="table table-bordered">
+                    <thead class="bg-primary">
                     <tr>
-                        <!--行番号-->
-                        <td id="number" class="inquirylist"
-                            onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
-                                    ,'問合せ詳細','width=800,height=600')"><?= $line + 1 ?>
-                        </td>
-                        <!--問合わせ者名-->
-                        <td id="patronusername" class="inquirylist"
-                            onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
-                                    ,'問合せ詳細','width=800,height=600')"><?= $value['patron']['username'] ?>
-                        </td>
-                        <!--児童名-->
-                        <?php
-                        $childName = $value['children']['username'];
-                        while ($key + $cnt < count($Inquiries) && $value['patron']['username'] == $Inquiries[$key + $cnt]['patron']['username']
-                        && $value['reason']['detail'] == $Inquiries[$key + $cnt]['reason']['detail']
-                        && $value['photos']['id'] == $Inquiries[$key + $cnt]['photos']['id']) {
-                            $childName .= "&nbsp;&nbsp;,&nbsp;&nbsp;";
-                            $childName .= $Inquiries[$key + $cnt]['children']['username'];
-                            $cnt++;
-                        } ?>
-                        <td id="childusername" class="inquirylist"
-                            onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
-                                    ,'問合せ詳細','width=800,height=600')"><?= $childName ?>
-                        </td>
-                        <!--問合せ理由-->
-                        <?php $line++ ?>
-                        <td id="reasondetail" class="inquirylist"
-                            onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
-                                    ,'問合せ詳細','width=800,height=600')"><?= $value['reason']['detail'] ?>
-                        </td>
-                        <!--写真ID-->
-                        <td id="photoid" class="inquirylist"
-                            onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
-                                    ,'問合せ詳細','width=800,height=600')"><?= $value['photos']['id'] ?>
-                        </td>
-                        <!--チェックボックス-->
-                        <td>
-                        <label class="checkbox">
-                            <input type="checkbox" class="checkbox" data-toggle="checkbox"
-                                   name="check" value=''>
-                        </label>
-                        </td>
+                        <th class="col-md-1">
+                            <label>#</label></th>
+
+                        <th class="col-md-2">
+                            <label>問合せ者名</label></th>
+
+                        <th class="col-md-2">
+                            <label>児童名</label></th>
+
+                        <th class="col-md-2">
+                            <label>問合せ内容</label></th>
+
+                        <th class="col-md-1">
+                            <label>写真ID</label></th>
+
+                        <th class="col-md-1">
+                            <label class="checkbox">全て選択
+                                <input type="checkbox" id="all" class="checkbox" data-toggle="checkbox"
+                                       name="all" onClick="AllChecked();">
+                            </label>
+                        </th>
                     </tr>
-                <?php endforeach; ?>
-            </table>
+
+                    </thead>
+                    <?php $cnt = 1 ?>
+                    <?php $line =0 ?>
+                    <?php foreach ($Inquiries as $key => $value): ?>
+                        <?php
+                        if ($cnt != 1) {
+                            $cnt--;
+                            continue;
+                        } ?>
+                        <?php
+                        if ($value->already == 1) {
+                            echo '<tr class = "already_info"';
+                        } else {
+
+                        } ?>
+                        <tr>
+                            <!--行番号-->
+                            <td id="number" class="inquirylist"
+                                onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
+                                        ,'問合せ詳細','width=800,height=600')"><?= $line + 1 ?>
+                            </td>
+                            <!--問合せ者名-->
+                            <td id="patronusername" class="inquirylist"
+                                onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
+                                        ,'問合せ詳細','width=800,height=600')"><?= $value['patron']['username'] ?>
+                            </td>
+                            <!--児童名-->
+                            <?php
+                            $childName = $value['children']['username'];
+                            while ($key + $cnt < count($Inquiries) && $value['patron']['username'] == $Inquiries[$key + $cnt]['patron']['username']
+                            && $value['reason']['detail'] == $Inquiries[$key + $cnt]['reason']['detail']
+                            && $value['photos']['id'] == $Inquiries[$key + $cnt]['photos']['id']) {
+                                $childName .= "&nbsp;&nbsp;,&nbsp;&nbsp;";
+                                $childName .= $Inquiries[$key + $cnt]['children']['username'];
+                                $cnt++;
+                            } ?>
+                            <td id="childusername" class="inquirylist"
+                                onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
+                                        ,'問合せ詳細','width=800,height=600')"><?= $childName ?>
+                            </td>
+                            <!--問合せ理由-->
+                            <?php $line++ ?>
+                            <td id="reasondetail" class="inquirylist"
+                                onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
+                                        ,'問合せ詳細','width=800,height=600')"><?= $value['reason']['detail'] ?>
+                            </td>
+                            <!--写真ID-->
+                            <td id="photoid" class="inquirylist"
+                                onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
+                                        ,'問合せ詳細','width=800,height=600')"><?= $value['photos']['id'] ?>
+                            </td>
+                            <!--チェックボックス-->
+                            <td>
+                            <label class="checkbox">
+                                <input class="checkbox" type="checkbox"  data-toggle="checkbox"
+                                       name="check_<?= $line ?>[]" value=''>
+                            </label>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+                <!--右下のボタン-->
+                <button class="btn btn-primary inquirybtn" type="submit"
+                        formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'aa']) ?>">
+                    問合せ済みに
+                </button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>

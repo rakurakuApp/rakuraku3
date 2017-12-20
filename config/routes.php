@@ -96,10 +96,19 @@ Router::scope('/', function (RouteBuilder $routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
+
+    //問合わせ詳細画面
     $routes->connect(
         '/inquirydetail/:number',
         ['controller'=>'manager','action'=>'inquirydetail'],
         ['number'=>'\d+']
+    );
+
+    //問合わせ変更
+    $routes->connect(
+        '/inquirydetailphotohide/:updetanam',
+        ['controller'=>'manager','action'=>'inquirydetailphotohide'],
+        ['updetanam'=>'\d+']
     );
 
     //ユーザ情報表示画面

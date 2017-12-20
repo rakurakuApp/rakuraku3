@@ -22,62 +22,12 @@ class ManagerController extends AppController
         $this->loadmodel('Inquiries');
         $this->loadComponent('TOOL');
         $this->loadComponent('SQL');
+        $this->loadComponent('Flash');
     }
 
     public function index(){}
 
     public function photoup(){}
-
-    //問い合わせ詳細画面
-    public function inquirydetail()
-    {
-        if (!empty($this->request->getParam('number'))) {
-            $query = $this->Inquiries->find()
-                ->select(['Inquiries.id','Inquiries.already','patron.username','children.username','photos.id','reason.detail','photos.path'])
-                ->join([
-                    'table' => 'reason',
-                    'type' => 'LEFT OUTER',
-                    'conditions' => 'Inquiries.reason_id=reason.id'
-                ])
-                ->join([
-                    'table' => 'patron',
-                    'type' => 'LEFT OUTER',
-                    'conditions' => 'Inquiries.patron_number = patron.number'
-                ])
-                ->join([
-                    'table' => 'children',
-                    'type' => 'LEFT OUTER',
-                    'conditions' => 'patron.number = children.patron_number'
-                ])
-                ->join([
-                    'table' => 'photos',
-                    'type' => 'LEFT OUTER',
-                    'conditions' => 'Inquiries.photos_id = photos.id'
-                ])
-                ->where(['Inquiries.id' => $this->request->getParam('number')]);
-            $this->set('parentInfo', $query->toArray());
-        }else{
-        }
-    }
-
-    public function inquirydetailphotohide()
-    {
-//        $this->autoRender = false;
-        if ($this->request->is('post')) {
-            try {
-                $InquiriesTable = TableRegistry::get('Inquiries');
-                $parentInfo = $InquiriesTable->get(1);//クリックした時ナンバー取得
-                if (!($parentInfo->already)) {
-                    $parentInfo->already = true;
-                }else{
-                    $parentInfo->already = false;
-                }
-                $InquiriesTable->save($parentInfo);//ＤＢ更新
-//                $this->Flash->success("更新しました。");
-            } catch (Exception $e) {
-            }
-        }
-    }
 
     //問合せ一覧画面
     public function inquiry()
@@ -115,7 +65,7 @@ class ManagerController extends AppController
                 if (!empty($this->request->getData('children_name'))) {
                     $query->where(['children.username LIKE' => '%' . $this->request->getData('children_name') . '%']);
                 }
-                //問合わせ内容
+                //問合せ内容
                 if (!empty($this->request->getData('inquiry_class'))) {
                     $query->where(['reason.id' => $this->request->getData('inquiry_class')]);
                 }
@@ -125,7 +75,7 @@ class ManagerController extends AppController
                     $query->where(['photos.id' => $this->request->getData('photo-id')]);
                 }
                 $this->set('Inquiries', $query->toArray());
-                //問合わせ済チェックボックス
+                //問合せ済チェックボックス
                 if (!empty($this->request->getData('remove_chk'))) {
                     $query->where(['Inquiries.already' => '1']);
                 } else {
@@ -176,4 +126,71 @@ class ManagerController extends AppController
 
     }
 
+    //問い合わせ詳細画面
+    public function inquirydetail()
+    {
+        if (!empty($this->request->getParam('number'))) {
+            $query = $this->Inquiries->find()
+                ->select(['Inquiries.id','Inquiries.already','patron.username','children.username','photos.id','reason.detail','photos.path'])
+                ->join([
+                    'table' => 'reason',
+                    'type' => 'LEFT OUTER',
+                    'conditions' => 'Inquiries.reason_id=reason.id'
+                ])
+                ->join([
+                    'table' => 'patron',
+                    'type' => 'LEFT OUTER',
+                    'conditions' => 'Inquiries.patron_number = patron.number'
+                ])
+                ->join([
+                    'table' => 'children',
+                    'type' => 'LEFT OUTER',
+                    'conditions' => 'patron.number = children.patron_number'
+                ])
+                ->join([
+                    'table' => 'photos',
+                    'type' => 'LEFT OUTER',
+                    'conditions' => 'Inquiries.photos_id = photos.id'
+                ])
+                ->where(['Inquiries.id' => $this->request->getParam('number')]);
+            $this->set('parentInfo', $query->toArray());
+        }else{
+        }
+    }
+
+    //問合せ詳細画面の表示非表示ボタンが押された時、問合せ更新するボタン
+    public function inquirydetailphotohide()
+    {
+        $this->autoRender = false;
+        if ($this->request->is('post')) {
+            try {
+                $InquiriesTable = TableRegistry::get('Inquiries');
+                $parentInfo = $InquiriesTable->get($this->request->getParam('updetanam'));
+                if (!($parentInfo->already)) {
+                    $parentInfo->already = true;
+                }else{
+                    $parentInfo->already = false;
+                }
+                $InquiriesTable->save($parentInfo);
+                $this->Flash->success("更新しました。");
+            } catch (Exception $e) {
+                $this->Flash->success("更新に失敗しました");
+            }
+        }
+        $this->redirect($this->referer());
+    }
+
+    //問合わせ済みにボタン
+    public function aa()
+    {
+        $this->autoRender = false;
+        if ($this->request->is('post')) {
+            try {
+                $this->Flash->success("更新しました");
+            } catch (Exception $e) {
+                $this->Flash->success("更新に失敗しました");
+            }
+        }
+        $this->redirect($this->referer());
+    }
 }

@@ -12,6 +12,7 @@
 
     <!--css設定-->
     <?=$this->Html->css('/private/css/manager/inquirydetail.css') ?>
+    <?= $this->Html->css('/private/css/account/cake_flash.css'); ?>
 
     <!--js設定-->
     <?= $this->Html->script('/private/js/manager/btnSwitching.js') ?>
@@ -29,11 +30,11 @@
                 <div class="col-xs-6">
                     <?= $this->Html->image($parentInfo['0']['photos']['path'],['class'=>'photosize'])  ?>
                 </div>
-                <!--問い合わせ表示-->
+                <!--問合せ表示-->
                 <div class="col-xs-offset-1 col-xs-5">
                     <div class="row moziheight">
                         <dl class="dltop">
-                            <dt class="font">問合わせ者名:
+                            <dt class="font">問合せ者名:
                             <dd class="font">
                                 <?= $parentInfo['0']['patron']['username'] ?>
                             </dd>
@@ -53,7 +54,7 @@
 
                     <div class="row moziheight">
                         <dl class="dltop">
-                            <dt class="font">問合わせ内容:
+                            <dt class="font">問合せ内容:
                             <dd class="font">
                                 <?= $parentInfo['0']['reason']['detail'] ?>
                             </dd>
@@ -62,18 +63,23 @@
                     </div>
                     <?php if ($parentInfo[0]['already'] == '0'): ?>
                         <?php //写真を非表示にするボタン?>
-                        <input class="btn btn-primary btnsize" id="hide_btn" type="submit" name="photo_hide"
-                               value="非表示" onClick="OnOff(this);">
+                        <button class="btn btn-primary btnsize" id="hide_btn" type="submit" name="photo_hide"
+                                formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetailphotohide',
+                                    'updetanam' => $parentInfo[0]['id']]) ?>">
+                            非表示
+                        </button>
                     <?php else: ?>
                         <?php ($parentInfo[0]['already'] == '1') ?>
                         <?php //写真を非表示から表示にするボタン?>
-                        <input class="btn btn-primary btnsize" id="hide_btn" type="submit" name="photo_hide"
-                               value="表示" onClick="OnOff(this);">
+                        <button class="btn btn-primary btnsize" id="hide_btn" type="submit" name="photo_hide"
+                                formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetailphotohide',
+                                    'updetanam' => $parentInfo[0]['id']]) ?>">
+                            表示
+                        </button>
                     <?php endif; ?>
 
                     <!--閉じるボタン-->
-                    <button class="btn btn-primary btnsize" type="submit"
-                            formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetailphotohide', 'updetanam' => $parentInfo[0]['id']]) ?>">
+                    <button class="btn btn-primary btnsize" type="submit" onClick="window.close()">
                         閉じる
                     </button>
                 </div>
