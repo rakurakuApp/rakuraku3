@@ -18,13 +18,13 @@
 <div id="contents">
     <div class="Photo-Box">
         <div class="col-md-12">
-            <div class="row a ">
+            <div class="row a">
                 <div class="row">
                     <?php
-                    //                偶数
+                    //画像の表示
                     for($i = 0;$i < 8;$i++){
                         if(!empty($array[$i])) {
-                            echo $this->Html->image($array[$i]['path'], ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'class' => 'contain photo photo-margin col-md-3 ' ,'id'=>'image'.$i]);
+                            echo $this->Html->image($array[$i]['path'], ['data-target'=>'#myModal' , 'data-toggle'=>'modal' , 'name'=>'listImage' ,'class' => 'contain photo photo-margin col-md-3 ' ,'id'=>'image'.$i]);
                         }
                     }
                     ?>
@@ -34,9 +34,6 @@
     </div>
 </div><!--/#contents-->
 
-
-<!-- モーダルウィンドウを呼び出すボタン -->
-<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">クリックするとモーダルウィンドウが開きます。</button>-->
 
 <!-- モーダルウィンドウの中身 -->
 <div class="modal fade" id="myModal">
@@ -48,9 +45,28 @@
             </div>
             <div class="modal-body col-xs-12">
                 <div class="row">
-                    <!--                <div class="col-xs-12">-->
-                    <p class="col-xs-offset-11 col-xs-1">★</p>
-                    <p class="col-xs-offset-11 col-xs-1">🏴</p>
+                    <div class="col-xs-offset-1 col-xs-10">
+                        <img src="" id="dummy">
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="row">
+                            <p class="star col-xs-12">★</p>
+                            <p class="col-xs-12" id ="flag" >🏴</p>
+                                <ul id="left-to-right" class="dropmenu">
+                                    <li>
+                                        <ul class="col-xs-12" id="drop">
+                                            <div class="balloon1-left">
+                                                <li><a id="drop0">画像が不適切</a></li>
+                                                <li><a id="drop1">写りが悪い</a></li>
+                                                <li><a id="drop2">画像が不適切</a></li>
+                                                <li><a id="drop3">//////</a></li>
+                                                <button type="submit" class="margin btn btn-default">送信</button>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -68,5 +84,9 @@
 <?= $this->Paginator->next('next>'); ?>
 <?= $this->Paginator->last('last>>'); ?>
 
-</body>
-</html>
+<script>
+    $("img[name='listImage']").on('click',function (e) {
+        var modalImage = document.getElementById("dummy");
+        modalImage.src = e.target.src;
+    })
+</script>

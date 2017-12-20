@@ -6,32 +6,17 @@ const color2 = '#A4A4A4';
 const left2 ='0px';
 // -------------------------------------
 var flg;
-flg = 0;
-
-//starとflagのＩＤ
-// for(i=0; i < 9999; i++){
-//     $(function(){
-//         $('#list > p').each(function(i){
-//             $(this).attr('id','star' + (i+1));
-//         });
-//     });
-//     $(function(){
-//         $('#left-to-right > li > p').each(function(i){
-//             $(this).attr('id','flag' + (i+1));
-//         });
-//     });
-// }
-
+flg = 1;
 
 //問い合わせメニュー
 $(function(){
     $("#flag").click(function(){
-        if( flg == 0){
+        if( flg == 1){
             $('#drop').css('width','90%');
-            flg = 1;
+            flg = 0;
         }else{
             $('#drop').css('width','0%');
-            flg = 0;
+            flg = 1;
         }
     });
 
@@ -53,3 +38,14 @@ $(function(){
     });
 });
 
+$(function () {
+
+    $('#myModal').on('hide.bs.modal', function () {
+        $('#drop').css('width','0%');
+        flg = 1;
+        $('#drop0,#drop1,#drop2,#drop3').css({'background':color2,'margin-left':left2});
+    });
+    // $('#myModal').on('hidden.bs.modal', function () {
+    //     console.log("2");
+    // });
+});
