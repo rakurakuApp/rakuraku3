@@ -10,9 +10,6 @@
 <div>
     <?= $this->element('common\header') ?>
 </div>
-<div>
-    <?= $this->element('common\sidemenu') ?>
-</div>
 <!--画像-->
 
 <div id="contents">
