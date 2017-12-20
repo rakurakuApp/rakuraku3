@@ -24,119 +24,27 @@
 }
 
 .a{
-    background-image: url("http://localhost/rakuraku/img/common/background.jpg")
+    background-image: url("../../../img/common/background.jpg");
+    background-size:100% 100%;
+    height:550px;
 }
 
 
-/*モーダル*/
-/* ContentsArea
--------------------------- */
-#contents {
-    margin: 0 auto;
-    padding: 0px;
-    width: 100%;
-}
 
-#open02 {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    position: absolute;
-}
-
-.close_overlay {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    text-indent: -9999px;
-    position: absolute;
-    background: #000;
-    opacity: 0.5;
-    z-index: 5;
-}
-
-.modal_window {
-    margin:30px 30px 0px 30px;
-    left: 11%;
-    /*margin: -150px 0 0 -200px;*/
-    width: 1000px;
-    height: 600px;
-    text-align: center;
-    display: block;
-    background: #fff;
-    position: absolute;
-    z-index: 10;
-    -webkit-transform: scale(0);
-}
-
-.modal_window h2 {
-    width: 1000px;
-    height: 30px;
-    line-height: 30px;
-    color: #fff;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: left;
-    text-indent: 15px;
-    background: #000;
-}
-
-.modal_window p {
-    padding: 0 15px 15px 15px;
-    line-height: 160%;
-    text-align: left;
-}
-
-
-/* CSS3 ModalWindow SET
--------------------------- */
-@-webkit-keyframes modalFadeIn {
-    0% {opacity: 0;display: block;}
-    100% {opacity: 1;}
-}
-
-div#modal div:target {
-    -webkit-animation-name: modalFadeIn;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-iteration-count: 1;
-    opacity: 1;
-    display: block;
-}
-
-@-webkit-keyframes modalScale {
-    0% {opacity: 0;display: block; -webkit-transform:scale(0);}
-    100% {opacity: 1; -webkit-transform:scale(1);}
-}
-
-div#modal div:target .modal_window {
-    -webkit-animation-name: modalScale;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-iteration-count: 1;
-    -webkit-transform:scale(1);
-    opacity: 1;
-    display: block;
-}
-.text-hight{
-    line-height: 35%;
-}
 
 /*icon-star*/
 /*星未お気に入り*/
 .star{
-    position:absolute;
-    margin:100px 0px 0px 795px;
-    padding:0px;
-    height: 60px;
-    width: 50px;
-    font-size:300%;
+    /*position:absolute;*/
+    /*margin:100px 0px 0px 795px;*/
+    /*padding:0px;*/
+    /*height: 60px;*/
+    /*width: 50px;*/
+    /*font-size:300%;*/
     color:#374c5d;
-    float:right;
-    z-index:12;
-    transition:.5s;
+    /*float:right;*/
+    /*z-index:12;*/
+    /*transition:.5s;*/
 }
 
 /*星気に入り時*/
@@ -150,14 +58,14 @@ div#modal div:target .modal_window {
 /*icon-star end*/
 
 #flag{
-    position:absolute;
-    margin: 0px 0px 0px 950px;
-    padding:0px;
-    width: 50px;
-    font-size:200%;
+    /*position:absolute;*/
+    /*margin: 0px 0px 0px 950px;*/
+    /*padding:0px;*/
+    /*width: 50px;*/
+    /*font-size:200%;*/
     color:#374c5d;
     /*float:right;*/
-    z-index:13;
+    /*z-index:13;*/
 }
 .example{
     position:relative;
@@ -166,11 +74,12 @@ div#modal div:target .modal_window {
 /*----------------------------------------------------------------------------------------------------*/
 /*といあわせ*/
 .dropmenu{
+    right: 0;
+    position: absolute;
     *zoom: 1;
     list-style-type: none;
     width: 960px;
-    margin:0px;
-    /*margin: 5px auto 30px;*/
+    margin: 5px auto 30px;
     padding: 0;
 }
 .dropmenu:before, .dropmenu:after{
@@ -202,11 +111,11 @@ div#modal div:target .modal_window {
     list-style: none;
     position: absolute;
     /*z-index: 9999;*/
-    /*top: 100%;*/
-    /*left: 0;*/
+    top: 100%;
+    left: 0;
     margin-left:1010px;
     padding: 0;
-    /*float:left;*/
+    float:left;
 }
 .dropmenu li ul li{
     width: 100%;
@@ -217,13 +126,12 @@ div#modal div:target .modal_window {
     background: #A4A4A4;
     text-align: left;
 }
-/*.dropmenu li:hover > a{
+.dropmenu li:hover > a{
   background: #6e7c0c;
-}*/
+}
 .dropmenu li a:hover{
     opacity :0.8;
     background: #BDBDBD !important;
-    /*border: 1px solid #000000;*/
 }
 #drop{
     width: 150px;
@@ -267,4 +175,13 @@ div#modal div:target .modal_window {
 }
 .margin{
     margin:10px 0px 10px 55px;
+}
+
+/*--------------------------------------------------------*/
+/*画像の縦横比*/
+.contain {
+    object-fit: contain;
+    width: 200px;
+    height: 200px;
+    background: rgba(255,255,255,0)
 }
