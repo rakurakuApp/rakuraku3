@@ -16,13 +16,12 @@
     <div class="Cancelbtn">
         <p>
             <button formaction="javascript:history.back()" class="btn btn-default CancelBox">キャンセル</button>
-            </a>
         </p>
     </div>
 
     <div class="Savebtn">
         <p>
-            <button type="submit" class="btn btn-default SaveBox">保存</button>
+            <button type="submit" class="btn btn-default SaveBox" name="idSave">保存</button>
         </p>
     </div>
     </form>

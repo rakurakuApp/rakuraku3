@@ -35,9 +35,9 @@ class UserController extends AppController
             } catch (Exception $e) {
             }
           }
-        }
+    }
 
-    public function passhange()
+    public function passChange()
     {
 
     }
@@ -48,8 +48,22 @@ class UserController extends AppController
 
     }
 
-    public  function  mailChangelogic(){
+    public  function  mailchangelogic(){
+        $this->autoRender = false;
 
+        $patron = TableRegistry::get('patron');
+
+        $old_mail = $this->request->getData('oldMail');
+        $new_mail = $this->request->getData('newMail');
+
+        //$result = $patron->query()->set(['id' => $new_mail])->where(['id' => $old_mail])->execute();
+
+        //print_r($result);
+
+        echo $old_mail . "<br>";
+        echo $new_mail;
+
+        $this->redirect(['action' => 'userinformation']);
     }
 
     public  function  idChange(){
@@ -126,7 +140,7 @@ class UserController extends AppController
 
     public function inquiry(){}
 
-    public function userinformation()
+    public function resetCheck()
     {
         $this->autoRender = false;
         $this->request->getQuery('check');
@@ -201,5 +215,20 @@ class UserController extends AppController
             $errorMessage = '不正なアクセスです';
             $this->set('errorMessage', $errorMessage);
         }
+    }
+
+    public function userinformation(){
+        $personData = $this->TOOL->loadPersonData();
+        $childData = $this->TOOL->loadChildData();
+        $set_data['person_name'] = $personData['username'];
+        $child_name = array();
+        foreach ($childData as $tmp){
+            $child_name[] = $tmp['username'];
+        }
+        $set_data['child_name'] = $child_name;
+        $set_data['mail'] = $personData['email'];
+        $set_data['ID'] = $personData['id'];
+        $set_data['pass'] = $personData['pass'];
+        $this->set('data',$set_data);
     }
 }
