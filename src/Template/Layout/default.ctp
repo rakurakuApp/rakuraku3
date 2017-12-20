@@ -39,7 +39,7 @@
     <?= $this->Html->script('flat-ui/flat-ui.js') ?>
     <?= $this->Html->script('flat-ui/application.js') ?>
     <?= $this->Html->script('flat-ui/prettify.js') ?>
-    <?= $this->Html->script('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') ?>
+    <?= $this->Html->script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') ?>
     <?= $this->fetch('script') ?>
 </head>
 
