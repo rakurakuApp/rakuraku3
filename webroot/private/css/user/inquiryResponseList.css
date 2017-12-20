@@ -1,0 +1,24 @@
+/* 同じrowの中にあるcolの高さを最大のコンテンツのものに統一する */
+.row-eq-height {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* イベント */
+#event{
+    background-color: darkgrey;
+    border-radius: .25ex;
+    text-align: center;
+}
+
+/* 問い合わせ時刻 */
+#inqDate{
+    text-align: right;
+    margin-bottom: 0;
+    font-size: small;
+}
+
+.targetPhoto{
+    width: 20rem;
+    height: 50%;
+}

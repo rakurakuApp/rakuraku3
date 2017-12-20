@@ -23,13 +23,13 @@
     </title>
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
+
     <!--css-->
     <?= $this->Html->css('bootstrap/bootstrap.css') ?>
     <?= $this->Html->css('flat-ui/flat-ui.css') ?>
-    <?= $this->Html->css('/private/css/common/header.css') ?>
     <?= $this->Html->css('/private/css/common/sidemenu.css') ?>
-    <?= $this->Html->css('/private/css/common/pure-drawer.css') ?>
     <?= $this->Html->css('/private/css/common/app.css') ?>
+    <?= $this->Html->css('/private/css/common/cake_flash.css'); ?>
     <?= $this->fetch('css') ?>
 
     <!--js-->

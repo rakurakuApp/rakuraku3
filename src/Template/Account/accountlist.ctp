@@ -17,7 +17,6 @@
 <?= 'ユーザ一覧'; ?>
 <?php $this->end(); ?>
 <?= $this->element('common\header') ?>
-<?= $this->element('common\sidemenu'); ?>
 <div class="container container-fluid">
     <div class="col-md-12">
         <h1>ユーザ一覧</h1>
@@ -35,7 +34,7 @@
             <tr>
                 <td class="col-md-3">
                     <label class="control-label" for="children-no">児童番号:</label>
-                    <input type="text" id="children-no" class="form-control" name="child_no">
+                    <input type="text" id="children-no" class="form-control" name="child_no" value="">
                 </td>
                 <td class="col-md-2">
                     <label class="control-label" for="child-class">クラス:</label>

@@ -27,6 +27,7 @@ class CommonController extends AppController
         $this->loadComponent('TOOL');
         $this->loadModel('Children');
         $this->loadModel('Patron');
+        $this->loadmodel('Reason');
     }
 
     public function photolist()

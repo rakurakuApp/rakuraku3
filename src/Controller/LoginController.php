@@ -29,7 +29,7 @@ class LoginController extends AppController
                 $this->redirect([ 'controller' => 'common','action' => 'photolist']);
             }else if($session_data['role'] === "manager"){
                 //遷移先未定
-                $this->redirect([ 'controller' => 'account','action' => 'accountList']);
+                $this->redirect([ 'controller' => 'account','action' => 'accountlist']);
             }
         }
 
@@ -52,7 +52,7 @@ class LoginController extends AppController
 
                 'loginRedirect' => [
                     'controller' => 'account',
-                    'action' => 'accountList'
+                    'action' => 'accountlist'
                     //未定
                 ],
                 'logoutRedirect' => [
