@@ -102,7 +102,7 @@ $(function(){
     //id確認
     //id形式(英数字 大文字小文字　共存可)の場合true
     function idCheck(str){
-        if(str.match(/^[a-zA-Z0-9]{6}+$/)){
+        if(str.match(/^[a-zA-Z0-9]{6}$/)){
             return true;
         }
         else{
