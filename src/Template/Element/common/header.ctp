@@ -30,7 +30,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?= $sessionData['userName']?>さん <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><?= $this->Html->link('ログアウト', ['controller' => 'login', 'action' => 'userinformation']) ?></li>
+                        <li><?= $this->Html->link('ログアウト', ['controller' => 'login', 'action' => 'logout']) ?></li>
                     </ul>
                 </li>
             </ul>
@@ -38,7 +38,7 @@
             <!--ログインユーザが管理者の場合-->
             <ul class="nav navbar-nav">
                 <li><?= $this->Html->link('ユーザ一覧', ['controller' => 'account', 'action' => 'accountlist']) ?></li>
-                <li><a href="#">画像アップロード</a></li>
+                <li><?= $this->Html->link('画像アップロード', ['controller' => 'manager', 'action' => 'photoup']) ?></li>
                 <li><?= $this->Html->link('画像一覧', ['controller' => 'common', 'action' => 'photolist']) ?></li>
                 <li><?= $this->Html->link('問い合わせ一覧', ['controller' => 'manager', 'action' => 'inquiry']) ?></li>
             </ul>
@@ -47,9 +47,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?= $sessionData['userName']?>さん <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <ul class="dropdown-menu" role="menu">
-                            <li><?= $this->Html->link('ログアウト', ['controller' => 'login', 'action' => 'userinformation']) ?></li>
-                        </ul>
+                        <li><?= $this->Html->link('ログアウト', ['controller' => 'login', 'action' => 'logout']) ?></li>
                     </ul>
                 </li>
             </ul>

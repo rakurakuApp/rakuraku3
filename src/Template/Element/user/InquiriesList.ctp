@@ -1,10 +1,10 @@
-<div class="row">
+<div class="row row-eq-height">
     <?php if (!empty($inquiries)): ?>
         <?php foreach ($inquiries as $key => $data): ?>
             <div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
                     <img src="<?= $data['_matchingData']['Photos']['path'] ?>" alt="イメージが見つかりません"
-                         style="width: 20rem;border-radius: 6px">
+                         class="img-responsive img-rounded targetPhoto">
                     <div class="caption">
                         <h3 id="event"><?= $data['_matchingData']['Events']['event'] ?></h3>
                         <!-- 対応済みかどうか -->

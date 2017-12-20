@@ -72,7 +72,9 @@ class AccountController extends AppController
         (Exception $e) {
             $this->Flash->error('missing');
         }
+        // クラスselectの値取得
         $this->set('childClass', $this->ChildClass->find('all'));
+
     }
 
     //個人ユーザ情報編集画面
