@@ -1,32 +1,48 @@
 $(function(){
     //名前(漢字)
     $("input[name='name']").blur(function(e){
-        if(!(e.target.value.match(/^[ぁ-んァ-ヶー一-龠 　\r\n\t]+$/))){
-            //
+        if(!emptyCheck(e.target.value && htmlCheck(e.target.value) && nameCheck(e.target.value))){
+            return true;
         }
+        else{
+            alert("入力不可文字があります\n再度入力してください");
+            e.target.value = "";
+        }
+    });
+
+    //ID
+    $("input[name='id']").blur(function(e){
+       if(!emptyCheck(e.target.value && htmlCheck(e.target.value) && idCheck(e.target.value))){
+           return true;
+       }
+       else{
+           alert("入力不可文字があります\n再度入力してください");
+           e.target.value = "";
+       }
     });
 
     //アドレス
     $("input[name='address']").blur(function(e){
-        if(!(e.target.value.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/))){
-            //実行内容
+        if(!emptyCheck(e.target.value && htmlCheck(e.target.value) && emailCheck(e.target.value))){
+            return true;
+        }
+        else{
+            alert("入力不可文字があります\n再度入力してください");
+            e.target.value = "";
         }
     });
 
-    //htmlタグを検知
-    $("textarea[name='hoge']").blur(function(e){
-        if(e.target.value.match(/[<(.*)>.*<\/\1>]/)){
-            alert('HTMLコードが含まれます。')
+    //パスワード
+    $("input[name='pass']").blur()(function (e) {
+        if(!emptyCheck(e.target.value && htmlCheck(e.target.value && strCheck(e.target.value)))){
+            return true;
+        }
+        else{
+            alert("入力不可文字があります\n再度入力してください");
+            e.target.value = "";
         }
     });
 
-
-    //空白のみを拒否
-    $("input[name='hoge']").blur(function(e){
-        if(e.target.value.match(/^[ 　\r\n\t]*$/)){
-            //実行内容
-        }
-    });
 
     //文字列がアドレスであるか
     //アドレス形式ならtrue
