@@ -14,7 +14,7 @@
 </html>
 <body>
 <form type="post" class="back" method="post">
-    <div class="mail0" id="mail" >
+    <div class="mail0" id="mail">
         登録したメールアドレスに
         IDとパスワードを送信します。<br><br>
         <label>登録したメールアドレス</label>
