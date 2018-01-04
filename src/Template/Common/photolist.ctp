@@ -5,6 +5,7 @@
 <?= $this->Html->script('/private/js/common/PhotoList/ColorChange.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/inquiry.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/InquiryForm.js') ?>
+<?= $this->Html->script('/private/js/common/PhotoList/favorite.js') ?>
 <?php $this->end(); ?>
 
 <div>
@@ -54,7 +55,7 @@
             <div class="modal-body col-xs-12">
                 <div class="row">
                     <!--                <div class="col-xs-12">-->
-                    <p class="col-xs-offset-11 col-xs-1">★</p>
+                    <p class="col-xs-offset-11 col-xs-1" id="star">★</p>
                     <p class="col-xs-offset-11 col-xs-1">🏴</p>
                 </div>
             </div>
