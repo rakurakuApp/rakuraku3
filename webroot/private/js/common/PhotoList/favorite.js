@@ -1,5 +1,6 @@
 $(function () {
 	$('#star').click(function () {
+		// クリック時のアイコンの状態を取得して流すSQL変更する必要あり
 		alert("click");
 		$.ajax({
 			//現在参照しているURLを見る

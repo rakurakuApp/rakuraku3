@@ -44,15 +44,17 @@ class CommonController extends AppController
         $this->set('array',$photo_path->toArray());
 
         //ajax通信を受信した場合
-        $query = $this->Favorite->find()
-            ->select(["Favorite.id"])
-            ->where([
-                "Favorite.photos_id" => 1,
-                "Favorite.patron_number" => $this->request->getSession()->read('Auth.User.number')
-            ])
-            ->execute();
-        print_r($query);
-//        $this->set("a",$query);
+        if($this->request->is('ajax')){
+            //お気に入り追加処理
+            if (empty($this->request->getData('star'))){
+                $query = $this->Favorite->find()
+                    ->select(["Favorite.id"])
+                    ->where([
+                        "Favorite.photos_id" => 1,
+                        "Favorite.patron_number" => $this->request->getSession()->read('Auth.User.number')
+                    ]);
+            }
+        }
     }
 
     public function inquirysend()
