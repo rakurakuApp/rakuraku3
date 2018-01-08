@@ -96,7 +96,7 @@
             ],
             ['class' => 'bg-primary']
         );?>
-        
+
             <?= $this->Html->tableCell($patrons);?>
     </table>
 </div>
