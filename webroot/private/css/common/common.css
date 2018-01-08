@@ -1,0 +1,94 @@
+/* ページネーター　cake.css から移植 */
+ul.pagination li a {
+    color: rgba(0, 0 ,0 , 0.54);
+}
+
+ul.pagination li.active a {
+    background-color: #DCE47E;
+    color: #FFF;
+    font-weight: bold;
+    cursor: custom;
+}
+ul.pagination .disabled:hover a {
+    background: none;
+}
+
+.paginator {
+    text-align: center;
+}
+
+.paginator ul.pagination li {
+    float: none;
+    display: inline-block;
+}
+
+.paginator p {
+    text-align: right;
+    color: rgba(0, 0 ,0 , 0.54);
+}
+
+/* navbar bootstrap.css から移植 */
+.navbar-custom {
+    background-color: #30B1B6;
+    border-color: #2FB0B5;
+}
+
+.navbar-custom .navbar-nav > li > a {
+    color: #134749;
+}
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus {
+    color: #030b0b;
+    background-color: transparent;
+}
+
+/* ハンバーガーメニュー */
+.navbar-toggle:before {
+    color: #0b292a;
+    content: "\e61a";
+    font-family: "Flat-UI-Icons";
+    font-size: 22px;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transition: color .25s linear;
+    transition: color .25s linear;
+}
+.dropdown-menu{
+    background-color: #7fdadd;
+    color: #134749;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #14484A;
+    text-decoration: none;
+    background-color: #80dbde;
+}
+
+
+.navbar-toggle:hover:before,
+.navbar-toggle:focus:before {
+    color: #0b292a;
+}
+
+/* 基本配色 */
+.heavenBlue{
+    background-color: #30B1B6;
+}
+
+.anotherBlue{
+    background-color: #60BFAE;
+}
+
+.vanillaMilk{
+    background-color: #EFC897;
+}
+
+.blush{
+    background-color: #F29F8D;
+}
+
+.rosePetalPink{
+    background-color: #F25E86;
+}

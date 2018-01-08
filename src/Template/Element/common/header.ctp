@@ -6,7 +6,7 @@
 ?>
 <?= $this->Html->css('/private/css/common/header.css') ?>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-custom">
     <div class="navbar-header">
         <!-- サイトタイトル ロゴ -->
         <a class="navbar-brand" href="#"></a>
@@ -18,7 +18,7 @@
             <span class="icon-bar"></span>
         </button>
     </div>
-    <div class="collapse navbar-collapse">
+    <div id="gnavi" class="collapse navbar-collapse">
         <?php if ($sessionData['role'] == '保護者'): ?>
             <!--ログインユーザが保護者の場合-->
             <ul class="nav navbar-nav">
