@@ -39,13 +39,10 @@ $(function(){
 });
 
 $(function () {
-
     $('#myModal').on('hide.bs.modal', function () {
         $('#drop').css('width','0%');
         flg = 1;
         $('#drop0,#drop1,#drop2,#drop3').css({'background':color2,'margin-left':left2});
     });
-    // $('#myModal').on('hidden.bs.modal', function () {
-    //     console.log("2");
-    // });
+
 });
