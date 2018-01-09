@@ -28,6 +28,7 @@ class AccountController extends AppController
         $this->loadComponent('TOOL');
         $this->loadComponent('SQL');
         $this->loadComponent('Paginator');//ページネーターの読み込み
+        $this->loadComponent('Flash');//ページネーターの読み込み
     }
 
     public function index()

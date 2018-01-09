@@ -27,6 +27,8 @@ $(function () {
 					if (!$(this).parent().html().match('※アカウントは半角英数字を入力して下さい。')) {
 						$('#account_id').parent().append('<p class="validate" id="id_validate">※アカウントは半角英数字を入力して下さい。&emsp;&emsp;&emsp;&emsp;</p>');
 					}
+				} else {
+					$('#id_validate').remove();
 				}
 			});
 			
@@ -40,8 +42,8 @@ $(function () {
 	
 	//完了ボタン
 	$('#confirm_btn').click(function () {
-		let errorMsg = "";
-		let flag = true;
+		var errorMsg = "";
+		var flag = true;
 		//メールアドレスのバリデーションチェック
 		if (!$('#email').val().match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
 			errorMsg += "正しいメールアドレスが入力されていません。\n";
@@ -57,6 +59,8 @@ $(function () {
 		if (!flag) {
 			window.alert(errorMsg);
 			return false;
+		}else{
+			removeDisabled();
 		}
 	});
 	
@@ -84,7 +88,7 @@ function removeDisabled() {
 function chkNumOfDelete(numOfChk) {
 	"use strict";
 	//チェック済情報数の取得
-	let chkCnt = $('.children_info :checked').length;
+	var chkCnt = $('.children_info :checked').length;
 	if (chkCnt === numOfChk) {
 		window.alert("全ての園児に削除チェックが付いています。\nいずれかの園児のチェックを外してください。");
 		return false;
