@@ -81,7 +81,7 @@ class SQLComponent extends Component
     public function getPhotoPath($id){
         $photos = TableRegistry::get('photos');
 
-        $result = $photos->find()->select('path')->where(['id IN' => $id]);
+        $result = $photos->find()->select('path')->select('id')->where(['id IN' => $id]);
 
         return $result;
     }

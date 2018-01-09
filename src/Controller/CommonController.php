@@ -42,6 +42,10 @@ class CommonController extends AppController
         $photo_path = $this->Paginator->paginate($this->SQL->getPhotoPath($photo),$paginate);
 
         $this->set('array',$photo_path->toList());
+
+        $reason = TableRegistry::get('reason');
+        $detail = $reason->find()->select('detail')->all();
+        $this->set('detail',$detail->toArray());
     }
 
     public function inquirysend()
