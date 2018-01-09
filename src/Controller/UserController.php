@@ -76,11 +76,6 @@ class UserController extends AppController
         $mail = $this->request->getData('email');
         $this->set('email',$mail);
 
-    }
-
-    public  function  mailchangelogic(){
-        $this->autoRender = false;
-
         $patron = TableRegistry::get('patron');
 
         $old_mail = $this->request->getData('oldMail');
@@ -93,16 +88,16 @@ class UserController extends AppController
         echo $old_mail . "<br>";
         echo $new_mail;
 
-        $this->redirect(['action' => 'userinformation']);
+        //        $this->redirect(['action' => 'userinformation']);
+
+        if (preg_match("/^([a-z0-9_]|\-|\.|\+)+@(([a-z0-9_]|\-)+\.)+[a-z]{2,6}$/i",$this->request->getData('email'))) {
+
+        }
     }
 
     public  function  idChange(){
         $id = $this->request->getData('id');
         $this->set('id',$id);
-    }
-
-    public function idchangelogic(){
-        $this->autoRender = false;
 
         $patron = TableRegistry::get('patron');
 
@@ -116,7 +111,7 @@ class UserController extends AppController
         echo $old_id . "<br>";
         echo $new_id;
 
-        $this->redirect(['action' => 'userinformation']);
+//        $this->redirect(['action' => 'userinformation']);
     }
 
     public function upload(){

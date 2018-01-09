@@ -2,7 +2,7 @@
 
 <body>
 <div class="back">
-    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"mailchange_logic"]]); ?>
+    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"mailChange"]]); ?>
     <div class="old" id="old-data">
         <label for="exampleInputPassword0">現在のメールアドレス</label>
         <input type="text"  class="form-control " id="exampleInputPassword0" name="oldMail" readonly value = <?= $email ?>>

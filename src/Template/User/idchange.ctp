@@ -2,7 +2,7 @@
 
 <body>
 <div class="back">
-    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"idchange_logic"]]); ?>
+    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"idChange"]]); ?>
     <div class="old" id="old-data">
         <label for="exampleInputPassword0">現在のID</label>
         <input type="text"  class="form-control" id="exampleInputPassword0" name="oldData" readonly value = <?= $id ?>>
