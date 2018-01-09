@@ -78,6 +78,11 @@ class PhotosTable extends Table
             ->requirePresence('uploaded', 'create')
             ->notEmpty('uploaded');
 
+        $validator
+            ->boolean('authentication_image')
+            ->requirePresence('authentication_image', 'create')
+            ->notEmpty('authentication_image');
+
         return $validator;
     }
 

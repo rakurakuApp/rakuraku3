@@ -13,6 +13,7 @@ use Cake\ORM\Entity;
  * @property bool $deleted
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $uploaded
+ * @property bool $authentication_image
  *
  * @property \App\Model\Entity\Event $event
  */
@@ -35,6 +36,7 @@ class Photo extends Entity
         'deleted' => true,
         'created' => true,
         'uploaded' => true,
+        'authentication_image' => true,
         'event' => true
     ];
 }

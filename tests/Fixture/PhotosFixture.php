@@ -24,6 +24,7 @@ class PhotosFixture extends TestFixture
         'deleted' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null],
         'created' => ['type' => 'timestamp', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'uploaded' => ['type' => 'timestamp', 'length' => null, 'null' => false, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
+        'authentication_image' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null],
         '_indexes' => [
             'events_id' => ['type' => 'index', 'columns' => ['events_id'], 'length' => []],
         ],
@@ -50,8 +51,9 @@ class PhotosFixture extends TestFixture
             'events_id' => 1,
             'gathered' => 1,
             'deleted' => 1,
-            'created' => 1512620340,
-            'uploaded' => 1512620340
+            'created' => 1515464115,
+            'uploaded' => 1515464115,
+            'authentication_image' => 1
         ],
     ];
 }

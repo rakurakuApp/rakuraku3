@@ -128,7 +128,7 @@ class LoginController extends AppController
            $this->redirect([ 'controller' => 'Login','action' => 'login']);
        }
 
-       $this->request->session()->destroy(); // セッションの破棄
+        $this->request->getSession()->destroy();// セッションの破棄
        $this->redirect([ 'controller' => 'Login','action' => 'login']);
 
    }
@@ -153,7 +153,7 @@ class LoginController extends AppController
                        $uuid = Text::uuid();
 
                        if (empty($patronNumber)) {
-                           //Patron　親情報追加
+
                            $resetTable = TableRegistry::get('Reset');
 
                            $reset = $resetTable->newEntity();
@@ -183,9 +183,6 @@ class LoginController extends AppController
                $errorMessage = '確認用メールアドレスと一致しません';
                $this->set('errorMessage', $errorMessage);
            }
-       }else {
-           $errorMessage = 'メールアドレスを入力してください';
-           $this->set('errorMessage', $errorMessage);
        }
    }
 

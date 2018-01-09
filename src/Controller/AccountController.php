@@ -11,6 +11,7 @@ use Cake\Log\Log;
 use Cake\Datasource\ConnectionManager;
 use Cake\Auth\DefaultPasswordHasher;
 use function PMA\Util\get;
+use App\Mailer\EmailMailer;
 
 class AccountController extends AppController
 {
@@ -188,11 +189,16 @@ class AccountController extends AppController
                 //Patron　親情報追加
                 $patronTable = TableRegistry::get('Patron');
                 $patron = $patronTable->newEntity();
-                $patron->id = $this->TOOL->makeRandStr(8);
-                $patron->password = $this->TOOL->_setPassword($this->TOOL->makeRandStr(8));
+                $id =$this->TOOL->makeRandStr(8);
+                $patron->id = $id;
+                $notHash = $this->TOOL->makeRandStr(8);
+                $patron->password = $this->TOOL->_setPassword($notHash);
                 $patron->username = $this->request->getData('patronName');
                 $patron->email = $this->request->getData('email');
                 $patronTable->save($patron);
+                //めえーるそうしん
+                $mailer = new EmailMailer();
+                $mailer->beginning($this->request->getData('email'), $id,$notHash, $$this->request->getData('patronName'));
             }
 
             if ($this->SQL->compAddress($this->request->getData('email')))

@@ -40,7 +40,36 @@ class UserController extends AppController
 
     public function passChange()
     {
+        $mail = $this->request->getData('email');
+        $this->set('email',$mail);
 
+        $patron = TableRegistry::get('patron');
+
+        $old_password = $this->request->getData('oldPassword');
+        $new_password = $this->request->getData('newPassword');
+        $confirmation_password = $this->request->getData('confirmationPassword');
+
+        $user = $patron->find()
+            ->select(['Patron.number','Patron.id', 'Patron.password', 'Patron.username', 'Patron.email'])
+            ->where(['Patron.email LIKE' => $this->request->getData('mail')])
+            ->first();
+        if (!empty($user)) {
+
+            //password変更処理
+            //
+            //
+            //
+
+
+            //$result = $patron->query()->set(['password' => $new_mail])->where(['id' => $old_mail])->execute();
+            //print_r($result);
+
+            echo $old_password . "<br>";
+            echo $new_password . "<br>";
+            echo $confirmation_password;
+
+            $this->redirect(['action' => 'userinformation']);
+        }
     }
 
     public  function  mailChange(){
@@ -193,6 +222,13 @@ class UserController extends AppController
         if (!empty($number)) {
             if (!empty($this->request->getData('password')) && !empty($this->request->getData('confirmation'))) {
                 if ($this->request->getData('password') === $this->request->getData('confirmation')) {
+
+                    //password変更処理
+                    //
+                    //
+                    //
+                    $patron = TableRegistry::get('Patron');
+                    $patron->password = $this->TOOL->_setPassword($notHash);
 
                         //uuid delete
                         $this->Reset->query()

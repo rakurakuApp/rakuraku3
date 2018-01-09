@@ -15,8 +15,8 @@
 <html lang="jp">
 </html>
 <body>
-<form type="post" class="back" method="post">
-    <div class="message" id="message">
+<form class="back">
+    <div class="message1" id="message">
         <label id="successText">メールアドレスにIDとパスワードを送信しました。<br></label>
         <div class="pon"><span id="sec">3</span>
             <span>秒後にログイン画面に移動します。</span>

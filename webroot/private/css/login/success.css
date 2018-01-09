@@ -1,13 +1,13 @@
 .back{
     margin:50px auto auto auto;
     width:450px;
-    height: 410px;
+    height: 200px;
     padding-top:30px ;
     background-color: #efefef;
     border-radius: 10px;
 }
 
-#message{
+#message1{
     margin:auto;
 }
 #confirmation-mail{
@@ -20,12 +20,12 @@ label {
     line-height: 2.3;
 }
 
-.message
+.message1
 {
     width: 400px;
 }
 
-#message
+#message1
 {
     width: 400px;
 }
