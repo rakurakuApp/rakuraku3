@@ -10,13 +10,26 @@ $(function () {
 			// メ-ルアドレスバリデーションチェック
 			$('#email').blur(function () {
 				if (!$(this).val().match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
+					// 警告表示がまだ出ていない場合
 					if (!$(this).parent().html().match('※正しいメールアドレスが入力されていません。')) {
 						$('#email').parent().append('<p class="validate" id="email_validate">※正しいメールアドレスが入力されていません。&emsp;&emsp;&emsp;&emsp;</p>');
 					}
 				} else {
+					// 警告表示後に書式の正しいメールアドレスが入力された時、警告を消す
 					$('#email_validate').remove();
 				}
 			});
+			
+			// IDバリデーションチェック
+			$('#account_id').blur(function () {
+				if (!$('#account_id').val().match(/^[a-zA-Z0-9]+$/)) {
+					// 警告表示がまだ出ていない場合
+					if (!$(this).parent().html().match('※アカウントは半角英数字を入力して下さい。')) {
+						$('#account_id').parent().append('<p class="validate" id="id_validate">※アカウントは半角英数字を入力して下さい。&emsp;&emsp;&emsp;&emsp;</p>');
+					}
+				}
+			});
+			
 			
 		} else {
 			$('#email').attr('disabled', 'disabled');
@@ -24,17 +37,24 @@ $(function () {
 			$('.del_flag').attr('disabled', 'disabled');
 		}
 	});
-
+	
 	//完了ボタン
 	$('#confirm_btn').click(function () {
 		let errorMsg = "";
 		let flag = true;
 		//メールアドレスのバリデーションチェック
 		if (!$('#email').val().match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
-			errorMsg += "正しいメールアドレスが入力されていません！\n";
+			errorMsg += "正しいメールアドレスが入力されていません。\n";
 			flag = false;
 		}
-		if (!flag){
+		//IDのバリデーションチェック
+		if (!$('#account_id').val().match(/^[a-zA-Z0-9]+$/)) {
+			errorMsg += "アカウントは半角英数字を入力して下さい。";
+			flag = false;
+		}
+		
+		// チェックに引っかかった場合、該当項目をalertでまとめて出す
+		if (!flag) {
 			window.alert(errorMsg);
 			return false;
 		}

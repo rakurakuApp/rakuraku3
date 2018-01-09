@@ -6,7 +6,7 @@
 ?>
 <?= $this->Html->css('/private/css/common/header.css') ?>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-custom">
     <div class="navbar-header">
         <!-- サイトタイトル ロゴ -->
         <a class="navbar-brand" href="#"></a>
@@ -18,17 +18,18 @@
             <span class="icon-bar"></span>
         </button>
     </div>
-    <div class="collapse navbar-collapse">
+    <div id="gnavi" class="collapse navbar-collapse">
         <?php if ($sessionData['role'] == '保護者'): ?>
             <!--ログインユーザが保護者の場合-->
             <ul class="nav navbar-nav">
-                <li><?= $this->Html->link('画像一覧', ['controller' => 'common', 'action' => 'photolist']) ?></li>
-                <li><?= $this->Html->link('ユーザ情報', ['controller' => 'manager', 'action' => 'userinformation']) ?></li>
+                <li><?= $this->Html->link('画像一覧', ['controller' => 'common', 'action' => 'photolist', 'class' => 'glyphicon glyphicon-book']); ?></li>
+                <li><?= $this->Html->link('ユーザ情報', ['controller' => 'user', 'action' => 'userinformation']) ?></li>
                 <li><?= $this->Html->link('問い合わせ一覧', ['controller' => 'user', 'action' => 'inquiryresponselist']) ?></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?= $sessionData['userName']?>さん <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button"><?= $sessionData['userName'] ?>さん <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><?= $this->Html->link('ログアウト', ['controller' => 'login', 'action' => 'logout']) ?></li>
                     </ul>
@@ -45,7 +46,8 @@
             <!--ドロップダウンメニュー-->
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><?= $sessionData['userName']?>さん <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button"><?= $sessionData['userName'] ?>さん <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><?= $this->Html->link('ログアウト', ['controller' => 'login', 'action' => 'logout']) ?></li>
                     </ul>

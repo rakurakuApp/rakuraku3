@@ -15,6 +15,8 @@ use App\Mailer\EmailMailer;
 
 class AccountController extends AppController
 {
+    public $paginate;
+
     public function initialize()
     {
         parent::initialize();
@@ -25,6 +27,7 @@ class AccountController extends AppController
         $this->loadmodel('ChildClass');
         $this->loadComponent('TOOL');
         $this->loadComponent('SQL');
+        $this->loadComponent('Paginator');//ページネーターの読み込み
     }
 
     public function index()
@@ -36,8 +39,15 @@ class AccountController extends AppController
     public function accountList()
     {
         try {
+            $this->paginate = [
+                'limit' => 10
+            ];
+
+            //必要な項目の取得
             $query = $this->Patron->find()
+                //親テーブル
                 ->select(['Patron.number', 'Patron.username', 'Patron.deleted'])
+                //園児テーブル
                 ->matching('Children', function ($q) {
                     $q->select(['Children.id', 'Children.username', 'Children.age', 'Children.deleted', 'Children.patron_number']);
                     if (!empty($this->request->getData('child_no'))) {
@@ -51,6 +61,7 @@ class AccountController extends AppController
                     }
                     return $q;
                 })
+                //児童クラス
                 ->matching('Children.ChildClass', function ($q) {
                     $q->select(['ChildClass.class_name']);
                     if (!empty($this->request->getData('child_class'))) {
@@ -68,14 +79,14 @@ class AccountController extends AppController
                 $query->where(['Patron.deleted' => '0', 'Children.deleted' => '0']);
             }
             $query->order(['Patron.number' => 'ASC']);
-            $this->set('patrons', $query->toArray());
+            $this->set('patrons', $this->paginate($query));
         } catch
         (Exception $e) {
             $this->Flash->error('missing');
         }
-        // クラスselectの値取得
-        $this->set('childClass', $this->ChildClass->find('all'));
 
+        // 児童クラスselectの値取得
+        $this->set('childClass', $this->ChildClass->find('all'));
     }
 
     //個人ユーザ情報編集画面

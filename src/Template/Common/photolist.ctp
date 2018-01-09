@@ -5,7 +5,7 @@
 <?= $this->Html->script('/private/js/common/PhotoList/ColorChange.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/inquiry.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/InquiryForm.js') ?>
-
+<?= $this->Html->script('/private/js/common/PhotoList/favorite.js') ?>
 <?php $this->end(); ?>
 
 <div>

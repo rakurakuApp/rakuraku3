@@ -28,6 +28,7 @@ class CommonController extends AppController
         $this->loadModel('Children');
         $this->loadModel('Patron');
         $this->loadmodel('Reason');
+        $this->loadmodel('Favorite');
     }
 
     public function photolist()
@@ -46,6 +47,19 @@ class CommonController extends AppController
         $reason = TableRegistry::get('reason');
         $detail = $reason->find()->select('detail')->all();
         $this->set('detail',$detail->toArray());
+
+        //ajax通信を受信した場合
+        if($this->request->is('ajax')){
+            //お気に入り追加処理
+            if (empty($this->request->getData('star'))){
+                $query = $this->Favorite->find()
+                    ->select(["Favorite.id"])
+                    ->where([
+                        "Favorite.photos_id" => 1,
+                        "Favorite.patron_number" => $this->request->getSession()->read('Auth.User.number')
+                    ]);
+            }
+        }
     }
 
     public function inquirysend()
@@ -64,7 +78,7 @@ class CommonController extends AppController
            $query=$Inquirytable->query(); //テーブルでクエリ文を使用することを宣言
             $query->insert(['reason_id'])//NAMEとPWの二つのカラムにデータを挿入する文
 
-          ->eecute(); //実行
+          ->execute(); //実行
 
            echo('0'); //データ登録成功
         }
@@ -89,19 +103,6 @@ class CommonController extends AppController
     }
 
     public function inquiry(){}
-
-    // お気に入り追加時処理
-    public function favorite()
-    {
-        $this->autoRender = false;
-        if ($this->request->is('ajax')) {
-            $this->set(compact('data'));
-            $this->set('_serialize', ['data']);
-        } else {
-            $this->log("error");
-        }
-        $this->log("check");
-    }
 
     public function hoge(){}
 }
