@@ -1,6 +1,9 @@
 .control-label{
-    width: 20%;
+    width: 30%;
 }
 .form-control.search-topic{
     width: 75%; !important;
+}
+.checkbox{
+    vertical-align: middle;
 }

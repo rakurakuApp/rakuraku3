@@ -23,7 +23,7 @@
             <!--ログインユーザが保護者の場合-->
             <ul class="nav navbar-nav">
                 <li><?= $this->Html->link('画像一覧', ['controller' => 'common', 'action' => 'photolist', 'class' => 'glyphicon glyphicon-book']); ?></li>
-                <li><?= $this->Html->link('ユーザ情報', ['controller' => 'manager', 'action' => 'userinformation']) ?></li>
+                <li><?= $this->Html->link('ユーザ情報', ['controller' => 'user', 'action' => 'userinformation']) ?></li>
                 <li><?= $this->Html->link('問い合わせ一覧', ['controller' => 'user', 'action' => 'inquiryresponselist']) ?></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

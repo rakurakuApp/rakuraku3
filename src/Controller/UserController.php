@@ -127,42 +127,21 @@ class UserController extends AppController
 
     public function inquiry(){}
 
-    public function userinformation()
-    {
-        $this->autoRender = false;
-        $this->request->getQuery('check');
-        $this->request->getQuery('id');
-
-        //親情報の有無
-        $Reset = $this->Reset->find()
-            ->select(['Reset.patron_number', 'Reset.created'])
-            ->where(['Reset.uuid' => $this->request->getQuery('check')])
-            ->first();
-        $number = $Reset['patron_number'];
-        $time = Time::parse($Reset['created']);
-
-        if (!empty($Reset)) {
-            if ($time->wasWithinLast('1 days')) {
-
-                //親情報の取得
-                $Patron = $this->Patron->find()
-                    ->select(['Patron.id'])
-                    ->where(['Patron.number' => $Reset['patron_number']])
-                    ->first();
-
-                //resetpage
-                $this->redirect(['controller' => 'User', 'action' => 'reset', $number]);
-            } else {
-                //期限切れerror
-                // $this->redirect([ 'controller' => 'Login','action' => 'login']);
-                echo '期限過ぎてんぞ';
-            }
-        } else {
-            //無効error
-            //$this->redirect([ 'controller' => 'Login','action' => 'login']);
-            echo 'データ無い';
+    public function userinformation(){
+        $personData = $this->TOOL->loadPersonData();
+        $childData = $this->TOOL->loadChildData();
+        $set_data['person_name'] = $personData['username'];
+        $child_name = array();
+        foreach ($childData as $tmp){
+            $child_name[] = $tmp['username'];
         }
+        $set_data['child_name'] = $child_name;
+        $set_data['mail'] = $personData['email'];
+        $set_data['ID'] = $personData['id'];
+        $set_data['pass'] = $personData['pass'];
+        $this->set('data',$set_data);
     }
+
     public function dataValidator($data)
     {
         $validator = new Validator();

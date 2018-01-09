@@ -1,102 +1,49 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var $childClass
  * @var $patrons
  */
 ?>
-<!-- 検索フォーム生成 -->
-<?= $this->Form->create(null, [
-    'type' => 'post',
-    'class' => 'form-inline',
-]); ?>
-<div class="row">
-    <!-- 児童番号 -->
-    <div class="col-md-4 col-xs-6">
-        <?= $this->Form->label('child-id', '児童番号', [
-            'class' => 'control-label'
-        ]); ?>
-        <?= $this->Form->text("child-id", [
-            'type' => 'text',
-            'class' => 'form-control search-topic',
-            'id' => 'child-id',
-            'name' => 'child-id',
-            'default' => 'テスト'
-        ]); ?>
+<div class="container container-fluid">
+    <div class="row">
+        <div class="account-list">
+            <table class="table table-bordered table-hover">
+                <thead class="bg-primary">
+                <tr>
+                    <th class="col-md-1">#</th>
+                    <th class="col-md-3">保護者名</th>
+                    <th class="col-md-1">児童番号</th>
+                    <th class="col-md-3">児童名</th>
+                    <th class="col-md-3">児童クラス</th>
+                    <th class="col-md-1">児童年齢</th>
+                </tr>
+                </thead>
+                <br>
+                <?php
+                if (empty($patrons)) {
+                    echo '<tr><td colspan="6" class="center">一致するデータがありませんでした。</td></tr>';
+                } else {
+                    foreach ($patrons as $key => $patron) {
+                        echo "<tbody>";
+                        if ($patron->deleted == '0') {
+                            echo '<tr';
+                        } else {
+                            echo '<tr class = "deleted_info"';
+                        } ?>
+                        onclick="window.open('<?= $this->URL->build(['controller' => 'Account', 'action' => 'individualinfo', 'id' => $patron->number]) ?>','ユーザ管理','width=700,height=600')">
+                        <?php
+                        echo '<td>' . ($key + 1) . '</td>';
+                        echo '<td>' . $patron->username . '</td>';
+                        echo '<td>' . $patron['_matchingData']['Children']['id'] . '</td>';
+                        echo '<td>' . $patron['_matchingData']['Children']['username'] . '</td>';
+                        echo '<td>' . $patron['_matchingData']['ChildClass']['class_name'] . '</td>';
+                        echo '<td>' . $patron['_matchingData']['Children']['age'] . '</td>';
+                        echo '</tr>';
+                        echo '</tbody>';
+                    }
+                } ?>
+            </table>
+        </div>
     </div>
-    <!-- 児童組 -->
-    <div class="col-md-4 col-xs-6">
-        <?= $this->Form->label('child-class', '児童組', [
-            'class' => 'control-label'
-        ]); ?>
-        <?= $this->Form->select('child-class', $options = [
-            'empty' => '組を選択',
-            '1' => 'test1',
-            '2' => 'test2'
-        ], $attribute = [
-            'class' => 'form-control search-topic',
-            'id' => 'child-class'
-        ]); ?>
-    </div>
-    <!-- 児童氏名 -->
-    <div class="col-md-4 col-xs-6">
-        <?= $this->Form->label('child-username', '児童名', [
-            'class' => 'control-label'
-        ]); ?>
-        <?= $this->Form->text("child-username", [
-            'type' => 'text',
-            'class' => 'form-control search-topic',
-            'id' => 'child-username',
-            'name' => 'child-username',
-            'default' => 'テスト'
-        ]); ?>
-    </div>
-    <!-- 保護者氏名 -->
-    <div class="col-md-4 col-xs-6">
-        <?= $this->Form->label('patron-username', '保護者名', [
-            'class' => 'control-label'
-        ]); ?>
-        <?= $this->Form->text("patron-username", [
-            'type' => 'text',
-            'class' => 'form-control search-topic',
-            'id' => 'patron-username',
-            'name' => 'patron-username',
-            'default' => 'テスト'
-        ]); ?>
-    </div>
-    <!-- 除外垢表示 -->
-    <div class="col-md-4 col-xs-6">
-        <?= $this->Form->label('showDeleteChk', '削除済アカウント表示', [
-            'class' => 'checkbox center-block'
-        ]); ?>
-        <?= $this->Form->checkbox("showDeleteChk", [
-            'checked' => 'true',
-            'class' => 'checkbox',
-            'id' => 'showDeleteChk'
-        ]) ?>
-        <!-- 検索 -->
-        <?= $this->Form->submit("検索", [
-            'class' => 'btn btn-primary'
-        ]) ?>
-    </div>
-    <?= $this->Form->end(); ?>
-    <!-- 垢追加 -->
-    <div class="col-md-4 col-xs-6">
-        <button class="btn btn-warning">アカウント追加</button>
-    </div>
-</div>
-
-<div class="row" id="content">
-    <table class="table-bordered table-responsive">
-        <?= $this->Html->tableHeaders(
-            [
-                ['保護者名' => ['class' => 'col-md-4 col-xs-4']],
-                ['児童番号' => ['class' => 'col-md-2 col-xs-2']],
-                ['児童名' => ['class' => 'col-md-4 col-xs-4']],
-                ['児童組' => ['class' => 'col-md-2 col-xs-2']]
-            ],
-            ['class' => 'bg-primary']
-        );?>
-
-            <?= $this->Html->tableCell($patrons);?>
-    </table>
 </div>
