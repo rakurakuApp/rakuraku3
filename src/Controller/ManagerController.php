@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Controller\Component\RAWSComponent;
 use App\Model\Entity\Patron;
 use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
@@ -192,5 +193,57 @@ class ManagerController extends AppController
             }
         }
         $this->redirect($this->referer());
+    }
+
+    public function upload_logic(){
+        $this->autoRender = false;
+
+        $typeList = array('jpg', 'jpeg', 'gif', 'png');
+
+        if(!empty($_FILES)){
+            for ($i = 0; $i < count($_FILES['upfile']['tmp_name']); $i++) {
+                if (is_uploaded_file($_FILES['upfile']['tmp_name'][$i])) {
+                    $name = $_FILES['upfile']['name'][$i];
+                    $filePath = $_FILES['upfile']['tmp_name'][$i];
+
+                    $fileTypes = pathinfo($name);
+
+                    // ファイル名がアルファベットのみかをチェック
+                    if (preg_match("/^([a-zA-Z0-9\.\-\_])+$/ui", $name) == "0") {
+                        // アルファベット以外を含む場合はファイル名を日時とする
+                        $saveFileName = date("Ymd_His", time());
+                    } else {
+                        if (preg_match("/\.jpg$/ui", $name) == true) {
+                            $ret = explode('.jpg', $name);
+                        } elseif (preg_match("/\.gif$/ui", $name) == true) {
+                            $ret = explode('.gif', $name);
+                        } elseif (preg_match("/\.png$/ui", $name) == true) {
+                            $ret = explode('.png', $name);
+                        }
+                        $saveFileName = $ret[0]; // 拡張子を除いたそのまま
+                    }
+
+                    $saveFileName = @('[' . (microtime() * 1000000) . ']' . $saveFileName);
+
+                    if (in_array($fileTypes['extension'], $typeList)) {
+                        //アップロード処理
+                        $result = $this->RAWS->SearchUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"ViewImage");
+
+                        $tmp = $this->SQL->searchChild($result[1]['FaceId']);
+
+                        if(is_array($tmp)) {
+                            $this->SQL->insertPhoto($result[0], $_POST['eventId'], 1);
+                        }
+                        else{
+                            $this->SQL->insertPhoto($result[0], $_POST['eventId'], 0);
+                        }
+
+                        $this->redirect($this->referer());
+                    } else {
+                        //ファイル種類外処理
+                    }
+                }
+            }
+        }
     }
 }

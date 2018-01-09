@@ -2,7 +2,10 @@
     <?= $this->Html->css('/private/css/user/userinformation.css') ?>
 </head>
 
-<br><br>
+<div>
+    <?= $this->element('common\header') ?>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-xs-offset-3 col-xs-6" id="data">
