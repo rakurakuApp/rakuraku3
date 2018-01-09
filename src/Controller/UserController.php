@@ -294,5 +294,52 @@ class UserController extends AppController
             // ajax内で行わないと他のコンテンツが非表示になってしまう
             $this->render("/Element/user/inquiriesList");
         }
+
+    }
+
+    public function upload_logic(){
+        $this->autoRender = false;
+
+        $typeList = array('jpg', 'jpeg', 'gif', 'png');
+
+        if(!empty($_FILES)){
+            for ($i = 0; $i < count($_FILES['upfile']['tmp_name']); $i++) {
+                if (is_uploaded_file($_FILES['upfile']['tmp_name'][$i])) {
+                    $name = $_FILES['upfile']['name'][$i];
+                    $filePath = $_FILES['upfile']['tmp_name'][$i];
+
+                    $fileTypes = pathinfo($name);
+
+                    // ファイル名がアルファベットのみかをチェック
+                    if (preg_match("/^([a-zA-Z0-9\.\-\_])+$/ui", $name) == "0") {
+                        // アルファベット以外を含む場合はファイル名を日時とする
+                        $saveFileName = date("Ymd_His", time());
+                    } else {
+                        if (preg_match("/\.jpg$/ui", $name) == true) {
+                            $ret = explode('.jpg', $name);
+                        } elseif (preg_match("/\.gif$/ui", $name) == true) {
+                            $ret = explode('.gif', $name);
+                        } elseif (preg_match("/\.png$/ui", $name) == true) {
+                            $ret = explode('.png', $name);
+                        }
+                        $saveFileName = $ret[0]; // 拡張子を除いたそのまま
+                    }
+
+                    $saveFileName = @('[' . (microtime() * 1000000) . ']' . $saveFileName);
+
+                    if (in_array($fileTypes['extension'], $typeList)) {
+                        //アップロード処理
+                        $result = $this->RAWS->AuthUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"Auth");
+                        $childId = hoge;//子供IDを何らかのタイミングで取得
+
+                        $this->SQL->insertAuthPhoto($result['ObjectURL'],$childId,$result['FaceId']);
+
+                        $this->redirect($this->referer());
+                    } else {
+                        //ファイル種類外処理
+                    }
+                }
+            }
+        }
     }
 }

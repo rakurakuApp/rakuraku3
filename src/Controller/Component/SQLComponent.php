@@ -8,6 +8,7 @@
 
 namespace App\Controller\Component;
 
+use App\Model\Table\PhotosTable;
 use Cake\Controller\Component;
 use Cake\ORM\TableRegistry;
 
@@ -101,5 +102,67 @@ class SQLComponent extends Component
         else{
             return false;
         }
+    }
+
+    //顔IDから子供IDを取得
+    //返り値　子供ID
+    public function searchChild($faceID){
+        $face = TableRegistry::get('face');
+
+        $result = $face->find()
+            ->select('children_id')
+            ->where(['id IN' => $faceID])
+            ->all();
+
+        return $result;
+    }
+
+    //写真データを登録
+    //登録完了した場合ID できなかった場合null
+    public function insertPhoto($path,$eventId,$gathered){
+        $id = null;
+
+        $photo = TableRegistry::get('photos');
+
+        $data = $photo->newEntity();
+
+        $data->path = $path;
+        $data->events_id = $eventId;
+        $data->gathered = $gathered;
+        $data->deleted = false;
+        $data->authentication_image = false;
+
+        if($photo->save($data)){
+            $id = $data->id;
+        }
+
+        return $id;
+    }
+
+    //認証用画像登録
+    public function insertAuthPhoto($path,$childId,$faceId){
+        $photoId = null;
+
+        $photo = TableRegistry::get('photos');
+
+        $photoData = $photo->newEntity();
+        $photoData->path = $path;
+        $photoData->events_id = -1;
+        $photoData->gathered = -1;
+        $photoData->deleted = -1;
+        $photoData->authentication_image = 1;
+
+        if($photo->save($photoData)){
+            $photoId = $photoData->id;
+        }
+
+        $face = TableRegistry::get('face');
+        $faceData = $face->newEntity();
+        $faceData->id = $faceId;
+        $faceData->children_id = $childId;
+        $faceData->photos_id = $photoId;
+
+        $face->save($photoData);
+
     }
 }
