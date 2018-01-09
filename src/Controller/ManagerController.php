@@ -131,7 +131,7 @@ class ManagerController extends AppController
     {
         if (!empty($this->request->getParam('number'))) {
             $query = $this->Inquiries->find()
-                ->select(['Inquiries.id','Inquiries.already','patron.username','children.username','photos.id','reason.detail','photos.path'])
+                ->select(['Inquiries.id','Inquiries.already','patron.username','children.username','photos.id','reason.detail','photos.path','photos.deleted'])
                 ->join([
                     'table' => 'reason',
                     'type' => 'LEFT OUTER',
@@ -168,8 +168,10 @@ class ManagerController extends AppController
                 $parentInfo = $InquiriesTable->get($this->request->getParam('updetanam'));
                 if (!($parentInfo->already)) {
                     $parentInfo->already = true;
+                    $parentInfo->photos['deleted'] = 1;
                 }else{
                     $parentInfo->already = false;
+                    $parentInfo->photos['deleted'] = 0;
                 }
                 $InquiriesTable->save($parentInfo);
                 $this->Flash->success("更新しました。");
@@ -181,7 +183,7 @@ class ManagerController extends AppController
     }
 
     //問合わせ済みにボタン
-    public function aa()
+    public function inquiryswitching()
     {
         $this->autoRender = false;
         if ($this->request->is('post')) {

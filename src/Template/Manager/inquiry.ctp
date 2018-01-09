@@ -175,7 +175,7 @@ $this->end(); ?>
                 </table>
                 <!--右下のボタン-->
                 <button class="btn btn-primary inquirybtn" type="submit"
-                        formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'aa']) ?>">
+                        formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquiryswitching']) ?>">
                     問合せ済みに
                 </button>
             </div>
