@@ -111,6 +111,7 @@ class SQLComponent extends Component
 
         $result = $face->find()
             ->select('children_id')
+            ->distinct('children_id')
             ->where(['id IN' => $faceID])
             ->all();
 
@@ -123,7 +124,6 @@ class SQLComponent extends Component
         $id = null;
 
         $photo = TableRegistry::get('photos');
-
         $data = $photo->newEntity();
 
         $data->path = $path;
@@ -144,7 +144,6 @@ class SQLComponent extends Component
         $photoId = null;
 
         $photo = TableRegistry::get('photos');
-
         $photoData = $photo->newEntity();
         $photoData->path = $path;
         $photoData->events_id = -1;
@@ -163,6 +162,6 @@ class SQLComponent extends Component
         $faceData->photos_id = $photoId;
 
         $face->save($photoData);
-
     }
+    
 }

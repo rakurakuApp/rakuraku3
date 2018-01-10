@@ -231,13 +231,13 @@ class ManagerController extends AppController
                         //アップロード処理
                         $result = $this->RAWS->SearchUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"ViewImage");
 
-                        $tmp = $this->SQL->searchChild($result[1]['FaceId']);
+                        $faceId = $this->SQL->searchChild($result[1]['FaceId']);
 
-                        if(is_array($tmp)) {
-                            $this->SQL->insertPhoto($result[0], $_POST['eventId'], 1);
+                        if(count($faceId) == 1) {
+                            $this->SQL->insertPhoto($result[0], $_POST['eventId'], 0);
                         }
                         else{
-                            $this->SQL->insertPhoto($result[0], $_POST['eventId'], 0);
+                            $this->SQL->insertPhoto($result[0], $_POST['eventId'], 1);
                         }
 
                         $this->redirect($this->referer());

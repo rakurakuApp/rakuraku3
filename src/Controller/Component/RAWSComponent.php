@@ -127,7 +127,6 @@ class RAWSComponent extends Component {
                 'FaceId' => $tmp1['Face']['FaceId']
             ];
         }
-
         return $result;
     }
 
