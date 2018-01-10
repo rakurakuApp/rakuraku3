@@ -7,17 +7,19 @@
 <?= $this->Html->css('/private/css/common/header.css') ?>
 
 <nav class="navbar navbar-custom">
-    <div class="navbar-header">
-        <!-- サイトタイトル ロゴ -->
-        <a class="navbar-brand" href="#"></a>
-        <!-- 画面縮小時のハンバーガーメニュー -->
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gnavi">
-            <span class="sr-only">メニュー</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-    </div>
+    <?php if ($sessionData['role'] != '未ログイン'): ?>
+        <div class="navbar-header">
+            <!-- サイトタイトル ロゴ -->
+            <a class="navbar-brand" href="#"></a>
+            <!-- 画面縮小時のハンバーガーメニュー -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gnavi">
+                <span class="sr-only">メニュー</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+    <?php endif; ?>
     <div id="gnavi" class="collapse navbar-collapse">
         <?php if ($sessionData['role'] == '保護者'): ?>
             <!--ログインユーザが保護者の場合-->

@@ -80,7 +80,7 @@ class AccountController extends AppController
                 $query->where(['Patron.deleted' => '0', 'Children.deleted' => '0']);
             }
             $query->order(['Patron.number' => 'ASC']);
-            $this->set('patrons', $this->paginate($query));
+            $this->set('patrons', $this->paginate($query)->toArray());
         } catch
         (Exception $e) {
             $this->Flash->error('missing');

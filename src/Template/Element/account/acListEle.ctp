@@ -23,23 +23,31 @@
             if (empty($patrons)) {
                 echo '<tbody><tr><td colspan="6" class="center">一致するデータがありませんでした。</td></tr></tbody>';
             } else {
-                foreach ($patrons as $key => $patron) {
-                    echo "<tbody>";
-                    if ($patron->deleted == '0') {
-                        echo '<tr';
-                    } else {
-                        echo '<tr class = "deleted_info"';
-                    } ?>
-                    onclick="window.open('<?= $this->URL->build(['controller' => 'Account', 'action' => 'individualinfo', 'id' => $patron->number]) ?>','ユーザ管理','width=700,height=600')">
-                    <?php
-                    echo '<td>' . ($key + 1) . '</td>';
-                    echo '<td>' . $patron->username . '</td>';
-                    echo '<td>' . $patron['_matchingData']['Children']['id'] . '</td>';
-                    echo '<td>' . $patron['_matchingData']['Children']['username'] . '</td>';
-                    echo '<td>' . $patron['_matchingData']['ChildClass']['class_name'] . '</td>';
-                    echo '<td>' . $patron['_matchingData']['Children']['age'] . '</td>';
-                    echo '</tr>';
-                    echo '</tbody>';
+                for ($i = 0; $i < count($patrons) - 1; $i++) {
+                    for ($j = $i + 1, $cnt = 0; $j < count($patrons); $j++) {
+                        if ($patrons[$i]->number == $patrons[$j]->number) {
+                            $cnt++;
+                        } else {
+                            for ($k = $j - $cnt; $k < $j; $k++) {
+                                echo '<tr onclick = "window.open'
+                                    ."('"
+                                    .$this->URL->build(['controller' => 'Account', 'action' => 'individualinfo', 'id' => $patrons[$k]['number']])
+                                    ."','ユーザ管理','width=700,height=600')"
+                                    .'">';
+                                echo '<td>' . ($k+1) . '</td>';
+                                if ($k == $j - $cnt){
+                                    echo "<td rowspan= '$cnt' style='vertical-align: middle'>" . $patrons[$i]['username'] . '</td>';
+                                }
+                                echo '<td>' . $patrons[$k]['_matchingData']['Children']['id'] . '</td>';
+                                echo '<td>' . $patrons[$k]['_matchingData']['Children']['username'] . '</td>';
+                                echo '<td>' . $patrons[$k]['_matchingData']['ChildClass']['class_name'] . '</td>';
+                                echo '<td>' . $patrons[$k]['_matchingData']['Children']['age'] . '</td>';
+                                echo '</tr>';
+                            }
+                            $i += $cnt - 1;
+                            break;
+                        }
+                    }
                 }
             } ?>
         </table>
