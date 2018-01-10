@@ -14,6 +14,7 @@ class RAWSComponent extends Component {
     const AWS_rekognition_collection = "JSP3";
     const AWS_S3_region = "us-east-1";
     const AWS_S3_bucketname = 'test-koyama3';
+    const AWS_UnderSimilarity = 80.0;
 
     public $components = ['Const'];
 
@@ -55,11 +56,9 @@ class RAWSComponent extends Component {
         $tmp = $this->RekognitionFactry()->compareFaces([
             'Attributes' => 'ALL',
             'SourceImage' => [
-                //'Bytes' => file_get_contents($_FILES['image1']['tmp_name'])
                 'Bytes' => file_get_contents($image1)
             ],
             'TargetImage' => [
-                //'Bytes' => file_get_contents($_FILES['image2']['tmp_name'])
                 'Bytes' => file_get_contents($image2)
             ]
         ]);
@@ -115,7 +114,7 @@ class RAWSComponent extends Component {
     public function searchFacesByImage($image){
         $tmp = $this->RekognitionFactry()->searchFacesByImage([
             "CollectionId"=> RAWSComponent::AWS_rekognition_collection,
-            "FaceMatchThreshold" => 70.0,
+            "FaceMatchThreshold" => RAWSComponent::AWS_UnderSimilarity,
             "Image"=>[
                 "Bytes" => file_get_contents($image)
             ]

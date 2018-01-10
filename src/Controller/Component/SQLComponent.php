@@ -163,5 +163,5 @@ class SQLComponent extends Component
 
         $face->save($photoData);
     }
-    
+
 }
