@@ -15,6 +15,7 @@ class TOOLComponent extends Component
 {
     public $components = ['SQL'];
 
+    //コンストラクタを持っているコントローラー
     private $contlloer;
 
     public function initialize(array $config)
@@ -25,7 +26,7 @@ class TOOLComponent extends Component
 
     //セッションに情報が無ければloginに強制リダイレクト
     public function loginRedirect(){
-        if(!($this->loadSessionId())) {
+        if(empty($this->loadSessionId())) {
             $this->contlloer->redirect(['controller' => 'login']);
         }
     }

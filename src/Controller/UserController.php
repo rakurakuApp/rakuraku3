@@ -330,9 +330,8 @@ class UserController extends AppController
                     if (in_array($fileTypes['extension'], $typeList)) {
                         //アップロード処理
                         $result = $this->RAWS->AuthUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"Auth");
-                        $childId = hoge;//子供IDを何らかのタイミングで取得
 
-                        $this->SQL->insertAuthPhoto($result['ObjectURL'],$childId,$result['FaceId']);
+                        $this->SQL->insertAuthPhoto($result['ObjectURL'],$_POST['childId'],$result['FaceId']);
 
                         $this->redirect($this->referer());
                     } else {
