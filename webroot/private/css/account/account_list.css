@@ -10,3 +10,9 @@
 .full{
     width: 100%;
 }
+.table-hover{
+    cursor: pointer;
+}
+.table-hover tr:hover > td[rowspan] {
+    background-color: transparent;
+}

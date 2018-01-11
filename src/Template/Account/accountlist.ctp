@@ -73,7 +73,7 @@
                 </td>
                 <td>
                     <button type="button" class="btn btn-warning full"
-                            onclick="window.open('<?= $this->URL->build(['controller' => 'Account', 'action' => 'addacount']) ?>','アカウント追加','width=700,height=600',resizable=no)">
+                            onclick="window.open('<?= $this->URL->build(['controller' => 'Account', 'action' => 'addacount']);?>','アカウント追加','width=700,height=600')">
                         アカウント新規作成
                     </button>
                 </td>
@@ -87,3 +87,4 @@
     </form>
     <br><br>
 </div>
+

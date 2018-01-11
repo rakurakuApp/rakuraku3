@@ -1,19 +1,27 @@
 $(function () {
-	$('#star').click(function () {
-		// クリック時のアイコンの状態を取得して流すSQL変更する必要あり
-		alert("click");
+	$('.star').click(function () {
+		
+		var id = $(this).attr('id');
+		var favorite = '';
+		
+		//ボタンの状態取得
+		if($(this).hasClass('active')){
+			favorite = 'insert';
+		}else{
+			favorite = 'delete';
+		}
+		
 		$.ajax({
-			//現在参照しているURLを見る
 			url:location.href,
 			data:{
 				//ここでstarのIDぶん投げる
-				"star":1
+				"star": id,
+				"order": favorite
 			},
 			type:"post",
 			dataType:"html"
 		}).done(function () {
-			alert("ルナだよ");
-			$('#star').html("るなだよ");
+			alert('ルナだよ');
 		}).fail(function () {
 			alert("ルナじゃないよ");
 		});
