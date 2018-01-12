@@ -142,12 +142,13 @@ class RAWSComponent extends Component {
 
     //S3にアップロードした後にRekognitionのコレクションと比較
     //第一引数 S3でのファイルパス　第二引数　アップロード元のファイルパス　第三引数　ディレクトリパス
-    //返り値 'ObjectURL' {'Similarity' 一致度 'FaceId' 顔ID}を含む連想配列
+    //返り値 'ObjectURL' 配列{'Similarity' 一致度 'FaceId' 顔ID}を含む連想配列
     public function SearchUpload($key,$SourceFile,$Directry = ""){
         $result['ObjectURL'] = $this->putObject($key,$SourceFile,$Directry);
         $tmp = $this->searchFacesByImage($SourceFile);
 
-        $result = array_merge($result,$tmp);
+//        $result = array_merge($result,$tmp);
+        $result[] = $tmp;
 
         return $result;
     }

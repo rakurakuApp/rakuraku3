@@ -24,6 +24,7 @@ class ManagerController extends AppController
         $this->loadComponent('TOOL');
         $this->loadComponent('SQL');
         $this->loadComponent('Flash');
+        $this->loadComponent('RAWS');
     }
 
     public function index(){}
@@ -197,8 +198,8 @@ class ManagerController extends AppController
         $this->redirect($this->referer());
     }
 
-    public function upload_logic(){
-        $this->autoRender = false;
+    public function uploadlogic(){
+        $this->autoRender = true;
 
         $typeList = array('jpg', 'jpeg', 'gif', 'png');
 
@@ -231,16 +232,28 @@ class ManagerController extends AppController
                         //アップロード処理
                         $result = $this->RAWS->SearchUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"ViewImage");
 
-                        $faceId = $this->SQL->searchChild($result['FaceId']);
+                        echo '<pre>';
+                        print_r($result);
+                        echo '</pre>';
+
+                        $childId = $this->SQL->searchChild($result[0]);
 
 //                        $eventId = $_POST['eventId'];
-                        $eventId = -1:
+                        $eventId = 1;
 
-                        if(count($faceId) == 1) {
-                            $this->SQL->insertPhoto($result[0], $eventId, 0);
+                        echo '<pre>';
+                        print_r($childId);
+                        echo '</pre>';
+
+                        if(count($childId) == 1) {
+                            $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 0);
+                            $this->SQL->insertFaceTable('view',$childId[0]['children_id'],$photoId);
                         }
                         else{
-                            $this->SQL->insertPhoto($result[0], $eventId, 1);
+                            $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 1);
+                            foreach($childId as $number) {
+                                $this->SQL->insertFaceTable('view',$number['children_id'],$photoId);
+                            }
                         }
 
                         $this->redirect($this->referer());
@@ -251,4 +264,6 @@ class ManagerController extends AppController
             }
         }
     }
+
+    public function upload(){}
 }

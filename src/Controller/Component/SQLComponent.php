@@ -111,13 +111,19 @@ class SQLComponent extends Component
     public function searchChild($faceID){
         $face = TableRegistry::get('face');
 
+        $faceIdList = array();
+
+        foreach($faceID as $tmp){
+            $faceIdList[] = $tmp['FaceId'];
+        }
+
         $result = $face->find()
             ->select('children_id')
             ->distinct('children_id')
-            ->where(['id IN' => $faceID])
+            ->where(['id IN' => $faceIdList])
             ->all();
 
-        return $result;
+        return $result->toArray();
     }
 
     //写真データを登録
@@ -131,8 +137,10 @@ class SQLComponent extends Component
         $data->path = $path;
         $data->events_id = $eventId;
         $data->gathered = $gathered;
-        $data->deleted = false;
-        $data->authentication_image = false;
+        $data->deleted = 0;
+        $data->authentication_image = 0;
+        $data->created = null;
+        $data->uploaded = null;
 
         if($photo->save($data)){
             $id = $data->id;
@@ -191,6 +199,18 @@ class SQLComponent extends Component
                 'photos_id'=>$photoId])
             ->execute();
 
+    }
+
+    //faceテーブル登録処理
+    public function insertFaceTable($id,$childId,$photoId){
+        $face = TableRegistry::get('face');
+        $face->query()
+            ->insert(['id','children_id','photos_id'])
+            ->values([
+                'id'=>$id,
+                'children_id'=>$childId,
+                'photos_id'=>$photoId])
+            ->execute();
     }
 
 }
