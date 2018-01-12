@@ -2,14 +2,8 @@
 
 namespace App\Controller;
 
-use App\Controller\AppController;
-use App\Controller\Component\RAWSComponent;
-use App\Model\Entity\Patron;
 use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
-use Cake\Event\Event;
-use Cake\Log\Log;
-use Cake\Datasource\ConnectionManager;
 
 class ManagerController extends AppController
 {
