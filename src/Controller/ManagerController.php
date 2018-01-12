@@ -199,7 +199,7 @@ class ManagerController extends AppController
     }
 
     public function uploadlogic(){
-        $this->autoRender = true;
+        $this->autoRender = false;
 
         $typeList = array('jpg', 'jpeg', 'gif', 'png');
 
