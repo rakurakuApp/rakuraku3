@@ -2,7 +2,6 @@
 <?= $this->Html->css('/private/css/common/photolist.css') ?>
 <?php $this->end(); ?>
 <?php $this->start('script'); ?>
-<?= $this->Html->script('/private/js/common/PhotoList/ColorChange.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/inquiry.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/InquiryForm.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/favorite.js') ?>
@@ -26,10 +25,6 @@
                         }
                     }
                     ?>
-
-
-
-
                     <!-- モーダルウィンドウの中身 -->
                     <div class="modal fade" id="myModal">
                         <div class="modal-dialog">
@@ -51,7 +46,6 @@
                                                     <li>
                                                         <ul class="col-xs-12" id="drop">
                                                             <div class="balloon1-left">
-
                                                                 <li><a id="drop0"><?=  $detail[0]['detail'] ?></a></li>
                                                                 <li><a id="drop1"><?=  $detail[1]['detail'] ?></a></li>
                                                                 <li><a id="drop2"><?=  $detail[2]['detail'] ?></a></li>
@@ -88,8 +82,10 @@
 
 <script>
     $("img[name='listImage']").on('click',function (e) {
+        //画像に対してのID割振
         var modalImage = document.getElementById("dummy");
         modalImage.src = e.target.src;
+        //問い合わせ内容
         var favorite = document.getElementsByName("dummy2").item([0]);
         favorite.id = e.target.id;
     })

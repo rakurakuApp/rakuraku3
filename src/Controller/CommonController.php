@@ -51,6 +51,7 @@ class CommonController extends AppController
 
         //ajax通信を受信した場合
         if ($this->request->is('ajax')) {
+            $result = '';   //結果出力文字
             //お気に入り追加処理
             if (!empty($this->request->getData('star')) && !empty($this->request->getData('order'))) {
                 if ($this->request->getData('order') == 'insert') {
@@ -61,6 +62,8 @@ class CommonController extends AppController
                     $favorite->photos_id = $this->request->getData('star');
                     $favorite->patron_number = $this->request->getSession()->read('id');
                     $favoriteTable->save($favorite);
+                    $result = 'お気に入り登録しました。';
+                    return $result;
                 } else if ($this->request->getData('order') == 'delete') {
                     //Delete処理
                     $query = $this->Favorite->find()
@@ -70,6 +73,11 @@ class CommonController extends AppController
                             'Favorite.patron_number' => $this->request->getSession()->read('id')
                         ])
                         ->execute();
+                    $result = 'お気に入り登録に失敗しました。';
+                    return $result;
+                } else {
+                    $result = '処理に失敗しました。\n一度画面を更新してみてください。';
+                    return $result;
                 }
             }
         }
