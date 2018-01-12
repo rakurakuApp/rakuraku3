@@ -141,7 +141,7 @@ class SQLComponent extends Component
     }
 
     //認証用画像登録
-    public function insertAuthPhoto($path,$childId,$faceId){
+    public function insertAuthPhoto($path){
         $photoId = null;
 
         $photo = TableRegistry::get('photos');

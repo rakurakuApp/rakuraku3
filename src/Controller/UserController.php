@@ -292,7 +292,7 @@ class UserController extends AppController
 //                        $childId = $_POST['childId'];
                         $childId = 11;
 
-                        $photoId = $this->SQL->insertAuthPhoto($result['ObjectURL'],$childId,$result['FaceId']);
+                        $photoId = $this->SQL->insertAuthPhoto($result['ObjectURL']);
                         $this->SQL->insertFaceTable($result['FaceId'],$childId,$photoId);
 
                         $this->redirect($this->referer());
