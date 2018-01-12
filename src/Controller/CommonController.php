@@ -66,14 +66,14 @@ class CommonController extends AppController
                     return $result;
                 } else if ($this->request->getData('order') == 'delete') {
                     //Delete処理
-                    $query = $this->Favorite->find()
+                    $this->Favorite->find()
                         ->delete()
                         ->where([
                             'Favorite.photos_id' => $this->request->getData('star'),
                             'Favorite.patron_number' => $this->request->getSession()->read('id')
                         ])
                         ->execute();
-                    $result = 'お気に入り登録に失敗しました。';
+                    $result = 'お気に入り登録を解除しました。';
                     return $result;
                 } else {
                     $result = '処理に失敗しました。\n一度画面を更新してみてください。';

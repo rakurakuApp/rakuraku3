@@ -6,6 +6,9 @@
 <?= $this->Html->script('/private/js/common/PhotoList/InquiryForm.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/favorite.js') ?>
 <?php $this->end(); ?>
+<?php $this->start('title');?>
+<?= '画像一覧';?>
+<?php $this->end();?>
 
 <div>
     <?= $this->element('common\header') ?>
@@ -13,6 +16,11 @@
 <!--画像-->
 
 <div id="contents">
+    <h1>画像一覧</h1>
+    <form action="" method="post">
+        <label for=""></label>
+        <input type="text">
+    </form>
     <div class="Photo-Box">
         <div class="col-md-12">
             <div class="row a">
