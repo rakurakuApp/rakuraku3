@@ -49,8 +49,8 @@
                                                 <p class="col-xs-12" id ="flag" >🏴</p>
                                                 <ul id="left-to-right" class="dropmenu">
                                                     <li>
-                                                        <ul class="col-xs-12" id="drop">
-                                                            <div class="balloon1-left">
+                                                        <ul class="col-xs-12" id="drop">balloon1-left
+                                                            <div class="">
 
                                                                 <li><a id="drop0"><?=  $detail[0]['detail'] ?></a></li>
                                                                 <li><a id="drop1"><?=  $detail[1]['detail'] ?></a></li>
