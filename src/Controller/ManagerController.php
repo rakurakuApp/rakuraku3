@@ -232,18 +232,10 @@ class ManagerController extends AppController
                         //アップロード処理
                         $result = $this->RAWS->SearchUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"ViewImage");
 
-                        echo '<pre>';
-                        print_r($result);
-                        echo '</pre>';
-
                         $childId = $this->SQL->searchChild($result[0]);
 
 //                        $eventId = $_POST['eventId'];
                         $eventId = 1;
-
-                        echo '<pre>';
-                        print_r($childId);
-                        echo '</pre>';
 
                         if(count($childId) == 1) {
                             $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 0);
