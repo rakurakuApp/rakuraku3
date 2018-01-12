@@ -299,7 +299,7 @@ class UserController extends AppController
     }
 
     public function uploadlogic(){
-        $this->autoRender = true;
+        $this->autoRender = false;
 
         $typeList = array('jpg', 'jpeg', 'gif', 'png');
 
@@ -335,13 +335,9 @@ class UserController extends AppController
 //                        $childId = $_POST['childId'];
                         $childId = 11;
 
-                        echo '<pre>';
-                        print_r($result);
-                        echo '</pre>';
-
                         $this->SQL->insertAuthPhoto($result['ObjectURL'],$childId,$result['FaceId']);
 
-//                        $this->redirect($this->referer());
+                        $this->redirect($this->referer());
                     } else {
                         //ファイル種類外処理
                     }
