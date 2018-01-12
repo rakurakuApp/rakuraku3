@@ -1,18 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 15110011
- * Date: 2017/12/07
- * Time: 10:54
- */
 
 namespace App\Controller\Component;
 
-use App\Model\Table\PhotosTable;
-use App\Model\Entity\Photo;
 use Cake\Controller\Component;
 use Cake\ORM\TableRegistry;
-use Cake\ORM\Table;
 
 class SQLComponent extends Component
 {
@@ -168,37 +159,7 @@ class SQLComponent extends Component
             $photoId = $photoData->id;
         }
 
-//        $photo->query()
-//            ->insert(['path','events_id','gathered','deleted','authentication_image','created','uploaded'])
-//            ->values([
-//                'path' => $path,
-//                'events_id' => 1,
-//                'gathered' => false,
-//                'deleted' => false,
-//                'authentication_image' => true,
-//                'created' => null,
-//                'uploaded' => null])
-//            ->execute();
-
-        $face = TableRegistry::get('face');
-//        $faceData = $face->newEntity();
-//        $faceData->id = $faceId;
-//        $faceData->children_id = $childId;
-//        $faceData->photos_id = $photoId;
-//
-//        if($face->save($faceData)){
-//            $tmp = $faceData->id;
-//            echo $tmp;
-//        }
-
-        $face->query()
-            ->insert(['id','children_id','photos_id'])
-            ->values([
-                'id'=>$faceId,
-                'children_id'=>$childId,
-                'photos_id'=>$photoId])
-            ->execute();
-
+        return $photoId;
     }
 
     //faceテーブル登録処理
