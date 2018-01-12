@@ -9,8 +9,10 @@
 namespace App\Controller\Component;
 
 use App\Model\Table\PhotosTable;
+use App\Model\Entity\Photo;
 use Cake\Controller\Component;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Table;
 
 class SQLComponent extends Component
 {
@@ -145,23 +147,50 @@ class SQLComponent extends Component
 
         $photo = TableRegistry::get('photos');
         $photoData = $photo->newEntity();
+
         $photoData->path = $path;
-        $photoData->events_id = -1;
-        $photoData->gathered = -1;
-        $photoData->deleted = -1;
+        $photoData->events_id = 1;
+        $photoData->gathered = 0;
+        $photoData->deleted = 0;
         $photoData->authentication_image = 1;
+        $photoData->created = null;
+        $photoData->uploaded = null;
 
         if($photo->save($photoData)){
             $photoId = $photoData->id;
         }
 
-        $face = TableRegistry::get('face');
-        $faceData = $face->newEntity();
-        $faceData->id = $faceId;
-        $faceData->children_id = $childId;
-        $faceData->photos_id = $photoId;
+//        $photo->query()
+//            ->insert(['path','events_id','gathered','deleted','authentication_image','created','uploaded'])
+//            ->values([
+//                'path' => $path,
+//                'events_id' => 1,
+//                'gathered' => false,
+//                'deleted' => false,
+//                'authentication_image' => true,
+//                'created' => null,
+//                'uploaded' => null])
+//            ->execute();
 
-        $face->save($photoData);
+        $face = TableRegistry::get('face');
+//        $faceData = $face->newEntity();
+//        $faceData->id = $faceId;
+//        $faceData->children_id = $childId;
+//        $faceData->photos_id = $photoId;
+//
+//        if($face->save($faceData)){
+//            $tmp = $faceData->id;
+//            echo $tmp;
+//        }
+
+        $face->query()
+            ->insert(['id','children_id','photos_id'])
+            ->values([
+                'id'=>$faceId,
+                'children_id'=>$childId,
+                'photos_id'=>$photoId])
+            ->execute();
+
     }
 
 }

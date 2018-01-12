@@ -19,6 +19,7 @@ class UserController extends AppController
         $this->loadComponent('RequestHandler');
         $this->loadComponent('RAWS');
         $this->loadComponent('TOOL');
+        $this->loadComponent('SQL');
         $this->loadModel('Reset');
         $this->loadModel('Patron');
         $this->loadModel('Inquiries');
@@ -120,48 +121,48 @@ class UserController extends AppController
         //$mailer->resend('oic.k.koyama@gmail.com','kusamochi2','44444444','test');
     }
 
-    public function uploadlogic()
-    {
-        $this->autoRender = false;
-
-        $typeList = array('jpg', 'jpeg', 'gif', 'png');
-        if (!empty($_FILES)) {
-            for ($i = 0; $i < count($_FILES['upfile']['tmp_name']); $i++) {
-                if (is_uploaded_file($_FILES['upfile']['tmp_name'][$i])) {
-                    $name = $_FILES['upfile']['name'][$i];
-                    $filePath = $_FILES['upfile']['tmp_name'][$i];
-
-                    $fileTypes = pathinfo($name);
-
-                    // ファイル名がアルファベットのみかをチェック
-                    if (preg_match("/^([a-zA-Z0-9\.\-\_])+$/ui", $name) == "0") {
-                        // アルファベット以外を含む場合はファイル名を日時とする
-                        $saveFileName = date("Ymd_His", time());
-                    } else {
-                        if (preg_match("/\.jpg$/ui", $name) == true) {
-                            $ret = explode('.jpg', $name);
-                        } elseif (preg_match("/\.gif$/ui", $name) == true) {
-                            $ret = explode('.gif', $name);
-                        } elseif (preg_match("/\.png$/ui", $name) == true) {
-                            $ret = explode('.png', $name);
-                        }
-                        $saveFileName = $ret[0]; // 拡張子を除いたそのまま
-                    }
-
-                    $saveFileName = @('[' . (microtime() * 1000000) . ']' . $saveFileName);
-
-                    if (in_array($fileTypes['extension'], $typeList)) {
-                        //アップロード処理
-                        $this->RAWS->AuthUpload($saveFileName . "." . $fileTypes['extension'], $filePath);
-
-                        $this->redirect($this->referer());
-                    } else {
-                        //ファイル種類外処理
-                    }
-                }
-            }
-        }
-    }
+//    public function uploadlogic()
+//    {
+//        $this->autoRender = false;
+//
+//        $typeList = array('jpg', 'jpeg', 'gif', 'png');
+//        if (!empty($_FILES)) {
+//            for ($i = 0; $i < count($_FILES['upfile']['tmp_name']); $i++) {
+//                if (is_uploaded_file($_FILES['upfile']['tmp_name'][$i])) {
+//                    $name = $_FILES['upfile']['name'][$i];
+//                    $filePath = $_FILES['upfile']['tmp_name'][$i];
+//
+//                    $fileTypes = pathinfo($name);
+//
+//                    // ファイル名がアルファベットのみかをチェック
+//                    if (preg_match("/^([a-zA-Z0-9\.\-\_])+$/ui", $name) == "0") {
+//                        // アルファベット以外を含む場合はファイル名を日時とする
+//                        $saveFileName = date("Ymd_His", time());
+//                    } else {
+//                        if (preg_match("/\.jpg$/ui", $name) == true) {
+//                            $ret = explode('.jpg', $name);
+//                        } elseif (preg_match("/\.gif$/ui", $name) == true) {
+//                            $ret = explode('.gif', $name);
+//                        } elseif (preg_match("/\.png$/ui", $name) == true) {
+//                            $ret = explode('.png', $name);
+//                        }
+//                        $saveFileName = $ret[0]; // 拡張子を除いたそのまま
+//                    }
+//
+//                    $saveFileName = @('[' . (microtime() * 1000000) . ']' . $saveFileName);
+//
+//                    if (in_array($fileTypes['extension'], $typeList)) {
+//                        //アップロード処理
+//                        $this->RAWS->AuthUpload($saveFileName . "." . $fileTypes['extension'], $filePath);
+//
+//                        $this->redirect($this->referer());
+//                    } else {
+//                        //ファイル種類外処理
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     public function inquiry(){}
 
@@ -297,8 +298,8 @@ class UserController extends AppController
 
     }
 
-    public function upload_logic(){
-        $this->autoRender = false;
+    public function uploadlogic(){
+        $this->autoRender = true;
 
         $typeList = array('jpg', 'jpeg', 'gif', 'png');
 
@@ -331,9 +332,16 @@ class UserController extends AppController
                         //アップロード処理
                         $result = $this->RAWS->AuthUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"Auth");
 
-                        $this->SQL->insertAuthPhoto($result['ObjectURL'],$_POST['childId'],$result['FaceId']);
+//                        $childId = $_POST['childId'];
+                        $childId = 11;
 
-                        $this->redirect($this->referer());
+                        echo '<pre>';
+                        print_r($result);
+                        echo '</pre>';
+
+                        $this->SQL->insertAuthPhoto($result['ObjectURL'],$childId,$result['FaceId']);
+
+//                        $this->redirect($this->referer());
                     } else {
                         //ファイル種類外処理
                     }
