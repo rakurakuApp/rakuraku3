@@ -273,6 +273,7 @@ class UserController extends AppController
                         // アルファベット以外を含む場合はファイル名を日時とする
                         $saveFileName = date("Ymd_His", time());
                     } else {
+                        $ret = null;
                         if (preg_match("/\.jpg$/ui", $name) == true) {
                             $ret = explode('.jpg', $name);
                         } elseif (preg_match("/\.gif$/ui", $name) == true) {
@@ -296,9 +297,8 @@ class UserController extends AppController
                         $this->SQL->insertFaceTable($result['FaceId'],$childId,$photoId);
 
                         $this->redirect($this->referer());
-                    } else {
-                        //ファイル種類外処理
                     }
+                        //ファイル種類外処理
                 }
             }
         }
