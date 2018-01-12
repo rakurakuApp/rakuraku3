@@ -234,12 +234,12 @@ class ManagerController extends AppController
 
                         if(count($childId) == 1) {
                             $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 0);
-                            $this->SQL->insertFaceTable('view',$childId[0]['children_id'],$photoId);
+                            $this->SQL->insertFaceTable(null,$childId[0]['children_id'],$photoId);
                         }
                         else{
                             $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 1);
                             foreach($childId as $number) {
-                                $this->SQL->insertFaceTable('view',$number['children_id'],$photoId);
+                                $this->SQL->insertFaceTable(null,$number['children_id'],$photoId);
                             }
                         }
 

@@ -165,13 +165,25 @@ class SQLComponent extends Component
     //faceテーブル登録処理
     public function insertFaceTable($id,$childId,$photoId){
         $face = TableRegistry::get('face');
-        $face->query()
-            ->insert(['id','children_id','photos_id'])
-            ->values([
-                'id'=>$id,
-                'children_id'=>$childId,
-                'photos_id'=>$photoId])
-            ->execute();
+        if(is_null($id)){
+            $count = $face->find()->all()->count() + 1;
+            $face->query()
+                ->insert(['id','children_id','photos_id'])
+                ->values([
+                    'id'=>$count,
+                    'children_id'=>$childId,
+                    'photos_id'=>$photoId])
+                ->execute();
+        }
+        else {
+            $face->query()
+                ->insert(['id', 'children_id', 'photos_id'])
+                ->values([
+                    'id' => $id,
+                    'children_id' => $childId,
+                    'photos_id' => $photoId])
+                ->execute();
+        }
     }
 
 }
