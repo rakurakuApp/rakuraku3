@@ -14,13 +14,10 @@
     <?= $this->element('common\header') ?>
 </div>
 <!--画像-->
-
+<div class="loading is-hide">
+    <div class="loading_icon"></div>
+</div>
 <div id="contents">
-    <h1>画像一覧</h1>
-    <form action="" method="post">
-        <label for=""></label>
-        <input type="text">
-    </form>
     <div class="Photo-Box">
         <div class="col-md-12">
             <div class="row a">
@@ -49,6 +46,7 @@
                                         <div class="col-xs-1">
                                             <div class="row">
                                                 <p class="star col-xs-12" name ="dummy2" id="test">★</p>
+
                                                 <p class="col-xs-12" id ="flag" >🏴</p>
                                                 <ul id="left-to-right" class="dropmenu">
                                                     <li>
