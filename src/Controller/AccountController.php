@@ -31,10 +31,7 @@ class AccountController extends AppController
         $this->loadComponent('Flash');//ページネーターの読み込み
     }
 
-    public function index()
-    {
-
-    }
+    public function index(){}
 
     //アカウント一覧表示アクション
     public function accountList()

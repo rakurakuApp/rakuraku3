@@ -2,8 +2,6 @@
     margin: auto;
     width: 1120px;
     height: 450px;
-    /*opacity: 0.3;*/
-
 }
 .Photo-margin{
     margin:auto;
@@ -11,16 +9,11 @@
 .photo{
     width:200px;
     heigth:200px;
-    z-index: 11;
+
 }
-.photo-size{
-    width: 70%;
-}
+
 .photo-margin{
-    margin: 60px 0px 0px 65px;
-}
-.photo-auto{
-    margin: auto;
+    margin: 60px 0px 0px 70px;
 }
 
 .a{
@@ -29,7 +22,7 @@
     height:550px;
 }
 /*icon-star*/
-/*星未お気に入り*/
+/*星お気に入り*/
 .star{
     width: 30px;
     font-size:200%;
@@ -90,12 +83,12 @@
     text-decoration: none;
 }
 .dropmenu li ul{
+
     list-style: none;
     position: absolute;
-    /*z-index: 9999;*/
     top: 100%;
     left: 0;
-    margin-left:1010px;
+    margin-left:970px;
     padding: 0;
     float:left;
 }
@@ -134,10 +127,11 @@
 /*問い合わせフォームの枠*/
 /*---------------------------------------------------------------*/
 .balloon1-left {
+    width:230px;
     height:230px;
     position: relative;
     display: inline-block;
-    margin: 0 0 0 15px;
+    margin: 100px 0 0 15px;
     padding: 7px 10px;
     background: #e0edff;
 }
@@ -152,14 +146,69 @@
     border-right: 15px solid #e0edff;
 }
 .margin{
-    margin:10px 0px 10px 55px;
+    margin:10px 0px 10px 110px;
+    width:90px;
 }
 
 /*--------------------------------------------------------*/
 /*画像の縦横比*/
 .contain {
     object-fit: contain;
-    width: 200px;
-    height: 200px;
+    width: 190px;
+    height: 190px;
     background: rgba(255,255,255,0)
+}
+/*--------------------------------------------------------*/
+/*画像のドラッグ禁止*/
+.drag-off{
+    user-select:none;
+    -webkit-user-select:none;
+    -webkit-user-drag: none;
+}
+.size{
+    font-size:130%;
+
+}
+
+/*検索フォームの外枠*/
+.box{
+    border: 2px solid #da4033;
+    border-radius: 4px;
+    margin: 2em 0;
+    padding: 2em;
+    position: relative;
+}
+.box::before {
+    background-color: #fff;
+    color: #da4033;
+    content: "検索フォーム";
+    font-weight: bold;
+    left: 1em;
+    padding: 0 .5em;
+    position: absolute;
+    top: -1em;
+}
+/*子供の検索*/
+.form-w{
+    width: 150px;
+
+}
+.center{
+    text-align: center;
+}
+.float-r{
+    float:right;
+}
+.float-l{
+    float:left;
+}
+.margin-10{
+    margin:10px;
+}
+.clear{
+clear: both;
+}
+
+.checkbox+.checkbox{
+    margin-top: 0;
 }

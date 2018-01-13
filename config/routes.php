@@ -17,12 +17,10 @@
  * @link          https://cakephp.org CakePHP(tm) Project
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-
 use Cake\Core\Plugin;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
-
 /**
  * The default class to use for all routes
  *
@@ -42,7 +40,6 @@ use Cake\Routing\Route\DashedRoute;
  *
  */
 Router::defaultRouteClass(DashedRoute::class);
-
 Router::scope('/', function (RouteBuilder $routes) {
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -50,18 +47,14 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
-
     $routes->connect('/login', ['controller' => 'Login', 'action' => 'login']);
     /**
      * login routing
      **/
-
     $routes->connect('/logout', ['controller' => 'Login', 'action' => 'logout']);
     /**
      * logout routing
@@ -79,7 +72,6 @@ Router::scope('/', function (RouteBuilder $routes) {
      * reset routing
      */
     $routes->connect('/resetCheck', ['controller' => 'user', 'action' => 'resetCheck']);
-
     /**
      * Connect catchall routes for all controllers.
      *
@@ -96,45 +88,38 @@ Router::scope('/', function (RouteBuilder $routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
-
     //問合わせ詳細画面
     $routes->connect(
         '/inquirydetail/:number',
         ['controller'=>'manager','action'=>'inquirydetail'],
         ['number'=>'\d+']
     );
-
     //問合わせ変更
     $routes->connect(
         '/inquirydetailphotohide/:updetanam',
         ['controller'=>'manager','action'=>'inquirydetailphotohide'],
         ['updetanam'=>'\d+']
     );
-
     //ユーザ情報表示画面
     $routes->connect(
         '/individualinfo/:id',
         ['controller' => 'account', 'action'=> 'individualinfo'],
         ['id' => '\d+']
     );
-
     //ユーザ情報表示画面(アカウント削除チェック更新アクション)
     $routes->connect(
         '/editrecord/:editNum',
         ['controller' => 'account', 'action'=> 'editrecord'],
         ['editNum' => '\d+']
     );
-
     //ユーザ情報表示画面(ユーザ情報更新アクション)
     $routes->connect(
         '/reloadPatronDelete/:deleteNum',
         ['controller' => 'account', 'action'=> 'reloadPatronDelete'],
         ['deleteNum' => '\d+']
     );
-
     $routes->fallbacks(DashedRoute::class);
 });
-
 /**
  * Load all plugin routes. See the Plugin documentation on
  * how to customize the loading of plugin routes.

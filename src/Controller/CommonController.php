@@ -10,13 +10,13 @@ namespace App\Controller;
 
 use App\Model\Entity\Photo;
 use Cake\Core\Exception\Exception;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 
 class CommonController extends AppController
 {
-    public $helpers = ['Paginator' => ['templates' => 'paginator-templates']];
-
+    public $paginate = ['templetes'=>'paginator-templates'];
     public function initialize()
     {
         /*初期化*/
@@ -37,7 +37,7 @@ class CommonController extends AppController
 
     public function photolist()
     {
-        $paginate = [
+        $this->paginate = [
             'limit' => 8
         ];
 
@@ -48,7 +48,7 @@ class CommonController extends AppController
             ->where(['Children.deleted' => 0])//未削除
             ->andwhere(['Children.graduated' => 0])//未卒園
             ->andwhere(['Children.patron_number' => $this->request->getSession()->read('id')]); //ログイン中親アカウント
-        if (!empty($this->request->getData('児童名選択'))) {  //児童名
+        if (!empty($this->request->getData('児童名選択'))) { //児童名
             $getChildrenQuery->where(['Children.id' => ($this->request->getData('児童名選択(プルダウン)'))]);
         }
 
@@ -59,7 +59,7 @@ class CommonController extends AppController
 
         //主クエリ
         $getPhotoQuery = $this->Photos->find()
-            ->select(['Photos.id'])
+            ->select(['Photos.id','Photos.path'])
             ->where(['Photos.deleted' => 0])//未削除
             ->andwhere(['Photos.id IN' => $getFaceQuery]);
         if (!empty($this->request->getData('イベントフォーム(プルダウン)'))) {  //イベント検索
@@ -77,11 +77,17 @@ class CommonController extends AppController
                 ->where(['Favorite.patron_number' => $this->request->getSession()->read('id')]);
             $getPhotoQuery->andwhere(['Photos.id IN' => $getFavoriteQuery]);
         }
-        $this->set('array', $this->paginate($getPhotoQuery)->toArray());
+
+        //画像情報セット
+        try{
+            $this->set('photoData', $this->paginate($getPhotoQuery));
+        }catch(NotFoundException $e){
+            $this->redirect('');
+        }
 
         //(selectフォーム用)ログイン中の親の児童名とID取得
         $getChildrenQuery->select(['Children.username']);
-        $this->set('childName', $this->paginate($getChildrenQuery)->toArray());
+        $this->set('childName', $getChildrenQuery->toArray());
 
         //(selectフォーム用)登録イベント名とID取得
         $getEventsQuery = $this->Events->find('all');
