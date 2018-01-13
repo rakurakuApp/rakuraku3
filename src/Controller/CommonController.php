@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Model\Entity\Photo;
 use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
 
@@ -29,6 +30,9 @@ class CommonController extends AppController
         $this->loadModel('Patron');
         $this->loadmodel('Reason');
         $this->loadmodel('Favorite');
+        $this->loadmodel('Face');
+        $this->loadmodel('Photos');
+        $this->loadmodel('Events');
     }
 
     public function photolist()
@@ -37,12 +41,48 @@ class CommonController extends AppController
             'limit' => 8
         ];
 
-        $id = $this->TOOL->loadSessionId();
-        $children = $this->SQL->getChildrenID($id);
-        $photo = $this->SQL->getPhotoID($children);
-        $photo_path = $this->Paginator->paginate($this->SQL->getPhotoPath($photo), $paginate);
+        //サブクエリ使用テスト
+        //サブクエリ2
+        $getChildrenQuery = $this->Children->find()
+            ->select(['Children.id'])
+            ->where(['Children.deleted' => 0])//未削除
+            ->andwhere(['Children.patron_number' => $this->request->getSession()->read('id')]); //ログイン中親アカウント
+        if (!empty($this->request->getData('児童名選択'))) {  //児童名
+            $getChildrenQuery->where(['Children.id' => ($this->request->getData('児童名選択(プルダウン)'))]);
+        }
+        //サブクエリ1
+        $getFaceQuery = $this->Face->find()
+            ->select(['Face.id'])
+            ->where(['Face.children_id IN' => $getChildrenQuery]); //未削除
+        //主クエリ
+        $getPhotoQuery = $this->Photos->find()
+            ->select(['Photos.id'])
+            ->where(['Photos.deleted' => 0])//未削除
+            ->andwhere(['Photos.id IN' => $getFaceQuery]);
+        if (!empty($this->request->getData('イベントフォーム(プルダウン)'))) {  //イベント検索
+            $getPhotoQuery->where(['Photos.event_id' => $this->request->getData('イベントフォーム(プルダウン)')]);
+        }
+        if (empty($this->request->getData('集合写真チェックフォーム'))) { //集合写真検索
+            $getPhotoQuery->where(['Photos.gathered' => 0]);
+        } else {
+            $getPhotoQuery->where(['Photos.gathered' => 1]);
+        }
+        if (!empty($this->request->getData('お気に入りチェック'))) {  //お気に入り
+            //サブクエリ3
+            $getFavoriteQuery = $this->Favorite->find()
+                ->select(['Favorite.photos_id'])
+                ->where(['Favorite.patron_number' => $this->request->getSession()->read('id')]);
+            $getPhotoQuery->where(['Photos.id IN' => $getFavoriteQuery]);
+        }
+        $this->set('array', $getPhotoQuery->toArray());
 
-//        $this->set('array', $photo_path->toList());
+        //(selectフォーム用)ログイン中の親の児童名とID取得
+        $getChildrenQuery->select(['Children.username']);
+        $this->set('childName', $this->paginate($getChildrenQuery)->toArray());
+
+        //(selectフォーム用)登録イベント名とID取得
+        $getEventsQuery = $this->Events->find('all');
+        $this->set('events', $getEventsQuery);
 
         //問い合わせ理由の一覧取得
         $reason = TableRegistry::get('reason');
@@ -54,23 +94,23 @@ class CommonController extends AppController
             $this->autoRender = false;
 
             //モーダルオープン時に対象写真のID取得
-            if (!empty($this->request->getData('photoID'))){
+            if (!empty($this->request->getData('photoID'))) {
                 $query = $this->Favorite->find()
                     ->where([
                         'Favorite.photos_id' => $this->request->getData('photoID'),
                         'Favorite.patron_number' => $this->request->getSession()->read('id')
                     ])
                     ->toArray();
-                if (count($query)){
+                if (count($query)) {
                     echo 'true';
-                }else{
+                } else {
                     echo 'false';
                 }
             }
             $result = '';   //結果出力文字
             //お気に入り追加処理
             if (!empty($this->request->getData('star')) && !empty($this->request->getData('order'))) {
-                try{
+                try {
                     if ($this->request->getData('order') == 'insert') {
                         //Insert処理
                         $favoriteTable = TableRegistry::get('Favorite');
@@ -96,7 +136,7 @@ class CommonController extends AppController
                         $result = '"処理に失敗しました。\n一度画面を更新してみてください。';
                         echo $result;
                     }
-                }catch (Exception $e){
+                } catch (Exception $e) {
                     echo $e;
                 }
 
@@ -105,8 +145,7 @@ class CommonController extends AppController
 
     }
 
-    public
-    function inquirysend()
+    public function inquirysend()
     {
         $this->log('aaaa');
         $this->autoRender = FALSE; //ページの自動レンダリング機能をオフにする
@@ -131,13 +170,8 @@ class CommonController extends AppController
         }
     }
 
-    public
-    function index()
-    {
-    }
-
-    public
-    function deleterecord()
+    public function index(){}
+    public function deleterecord()
     {
         if ($this->request->is('post')) {
             try {
@@ -148,14 +182,6 @@ class CommonController extends AppController
             }
         }
     }
-
-    public
-    function inquiry()
-    {
-    }
-
-    public
-    function hoge()
-    {
-    }
+    public function inquiry(){}
+    public function hoge(){}
 }
