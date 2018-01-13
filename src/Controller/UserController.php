@@ -2,14 +2,10 @@
 
 namespace App\Controller;
 
-use App\Controller\AppController;
-use App\Controller\Component\TOOLComponent;
-use Cake\Controller\Component;
-use App\Mailer\EmailMailer;
 use Cake\I18n\Time;
-use Cake\Chronos\Chronos;
 use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
+use Cake\Auth\DefaultPasswordHasher;
 
 class UserController extends AppController
 {
@@ -40,39 +36,50 @@ class UserController extends AppController
 
     public function passChange()
     {
-        $mail = $this->request->getData('email');
-        $this->set('email',$mail);
-
-        $patron = TableRegistry::get('patron');
+        $this->TOOL->loginRedirect();
+        $patronData = $this->TOOL->loadPersonData();
 
         $old_password = $this->request->getData('oldPassword');
         $new_password = $this->request->getData('newPassword');
         $confirmation_password = $this->request->getData('confirmationPassword');
 
-        $user = $patron->find()
-            ->select(['Patron.number','Patron.id', 'Patron.password', 'Patron.username', 'Patron.email'])
-            ->where(['Patron.email LIKE' => $this->request->getData('mail')])
-            ->first();
-        if (!empty($user)) {
+        if (!empty($patronData)) {
+            if (!empty($old_password) && !empty($new_password) && !empty($confirmation_password)) {
+                if (preg_match("/^[a-zA-Z0-9]+$/", $new_password)) {
+                    if (strlen($new_password) > 5) {
+                        $hasher = new DefaultPasswordHasher();
+                        if ($hasher->check($old_password, $patronData['password'])) {
+                            if ($confirmation_password === $new_password) {
 
-            //password変更処理
-            //
-            //
-            //
+                                //password変更処理
+                                $patronTable = TableRegistry::get('Patron');
+                                $patron = $patronTable->get($patronData[0]['number']);
+                                $patron->password = $this->TOOL->_setPassword($new_password);
+                                $patronTable->save($patron);
 
-
-            //$result = $patron->query()->set(['password' => $new_mail])->where(['id' => $old_mail])->execute();
-            //print_r($result);
-
-            echo $old_password . "<br>";
-            echo $new_password . "<br>";
-            echo $confirmation_password;
-
-            $this->redirect(['action' => 'userinformation']);
+                                $this->redirect(['action' => 'userinformation']);
+                            } else {
+                                $errorMessage = '確認用パスワードが違います';
+                                $this->set('errorMessage', $errorMessage);
+                            }
+                        } else {
+                            $errorMessage = '現在のパスワードが違います';
+                            $this->set('errorMessage', $errorMessage);
+                        }
+                    } else {
+                        $errorMessage = '6文字以上でお願いします';
+                        $this->set('errorMessage', $errorMessage);
+                    }
+                } else {
+                    $errorMessage = '英数字のみでお願いします';
+                    $this->set('errorMessage', $errorMessage);
+                }
+            }
         }
     }
 
     public  function  mailChange(){
+        $this->TOOL->loginRedirect();
         $mail = $this->request->getData('email');
         $this->set('email',$mail);
 
@@ -96,6 +103,7 @@ class UserController extends AppController
     }
 
     public  function  idChange(){
+        $this->TOOL->loginRedirect();
         $id = $this->request->getData('id');
         $this->set('id',$id);
 
@@ -217,19 +225,28 @@ class UserController extends AppController
         if (!empty($number)) {
             if (!empty($this->request->getData('password')) && !empty($this->request->getData('confirmation'))) {
                 if ($this->request->getData('password') === $this->request->getData('confirmation')) {
+                    if (preg_match("/^[a-zA-Z0-9]+$/", $this->request->getData('password'))) {
+                        if(strlen($this->request->getData('password'))) {
+                            //password変更処理
+                            $patronTable = TableRegistry::get('Patron');
+                            $patron = $patronTable->get($number);
+                            $patron->password = $this->TOOL->_setPassword($this->request->getData('password'));
+                            $patronTable->save($patron);
 
-                    //password変更処理
-                    //
-                    //
-                    //
-                    $patron = TableRegistry::get('Patron');
-                    $patron->password = $this->TOOL->_setPassword($notHash);
+                            //uuid delete
+                            $this->Reset->query()
+                                ->delete()
+                                ->where(['Reset.uuid' => $this->request->getQuery('check')])
+                                ->execute();
+                        }else {
+                            $errorMessage = '6文字以上でお願いします';
+                            $this->set('errorMessage', $errorMessage);
+                        }
 
-                        //uuid delete
-                        $this->Reset->query()
-                            ->delete()
-                            ->where(['Reset.uuid' => $this->request->getQuery('check')])
-                            ->execute();
+                    }else{
+                        $errorMessage = '英数字のみでお願いします';
+                        $this->set('errorMessage', $errorMessage);
+                    }
                 } else {
                     $errorMessage = 'パスワードが確認と異なります';
                     $this->set('errorMessage', $errorMessage);
@@ -246,6 +263,7 @@ class UserController extends AppController
     }
 
     public function userinformation(){
+        $this->TOOL->loginRedirect();
         $personData = $this->TOOL->loadPersonData();
         $childData = $this->TOOL->loadChildData();
         $set_data['person_name'] = $personData['username'];
@@ -263,6 +281,7 @@ class UserController extends AppController
     // ユーザ問い合わせ一覧表示画面
     public function inquiryResponseList()
     {
+        $this->TOOL->loginRedirect();
         if ($this->request->is("ajax")){
             //問い合わせ情報を更新
             $inquiryTable = TableRegistry::get('Inquiries');

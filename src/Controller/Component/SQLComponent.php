@@ -11,14 +11,36 @@ namespace App\Controller\Component;
 use App\Model\Table\PhotosTable;
 use Cake\Controller\Component;
 use Cake\ORM\TableRegistry;
+use Cake\Core\Exception\Exception;
+
+
 
 class SQLComponent extends Component
 {
     //引数に渡されている親IDから子供IDを全件取得する
-    public function getChildrenID($id){
-        $children = TableRegistry::get('children');
+    public function getChildrenID($id,$child_id,$child_name,$child_class_id){
+        $this->TOOL->loginRedirect();
+        $result = $this->Children->find()->select('id')->where(['patron_number' => $id])
+            //名前検索
+            ->matching('Children', function ($q) use ($child_id,$child_name) {
+                $q->select(['Children.id', 'Children.username', 'Children.age', 'Children.deleted', 'Children.patron_number']);
+                if (!empty($child_id)) {
+                    $q->where(['Children.id' => $child_id]);
+                }
+                if (!empty($child_name)) {
+                    $q->where(['Children.username LIKE' => '%' . $child_name . '%']);
+                }
+                return $q;
+            })
+            //児童クラス
+            ->matching('Children.ChildClass', function ($q) use ($child_class_id){
+                $q->select(['ChildClass.class_name']);
+                if (!empty($child_class_id)) {
+                    $q->where(['ChildClass.id' => $child_class_id]);
+                }
+                return $q;
+            });
 
-        $result = $children->find()->select('id')->where(['patron_number' => $id])->all();
         $childrenId = array();
         foreach ($result as $childId){
             $childrenId[] = $childId['id'];
@@ -28,10 +50,45 @@ class SQLComponent extends Component
     }
 
     //引数に渡されている子ID(配列)に紐づけられている写真IDを全取得
-    public function getPhotoID($children_id){
+    public function getPhotoID($children_id,$events_id,$photos_gathered){
+        $this->TOOL->loginRedirect();
+        //、集合写真検索
+        $midstream = $this->Photos->find()
+            ->select('id')->all()
+            //お気に入り
+            ->matching('Favorite', function ($q){
+                $patronData = $this->TOOL->loadPersonData();
+                $q->select(['Favorite.photos_id']);
+                if (!empty($patron_number)&&!empty($favorite)) {
+                    $q->where(['Favorite.patron_number' => $patronData[0]['number']]);
+                }
+                return $q;
+            })
+            //イベント
+            ->matching('Photos.Events', function ($q) use ($events_id) {
+                $q->select(['Events.id']);
+                if (!empty($events_id)) {
+                    $q->where(['Events.id' => $events_id]);
+                }
+                return $q;
+            })
+            //集合写真
+        ->where( function ($a) use ($photos_gathered){
+            if(!empty($photos_gathered)){
+                $a->where(['gathered' => $photos_gathered]);
+            }
+            return $a;
+        });
+
+        $midstream_photosId = array();
+        foreach ($midstream as $midstream_photo){
+            $midstream_photosId[] = $midstream_photo['photos_id'];
+        }
+
+        //
         $face = TableRegistry::get('face');
 
-        $result = $face->find()->select('photos_id')->where(['children_id IN' => $children_id])->all();
+        $result = $face->find()->select('photos_id')->where(['children_id IN' => $children_id,'photos_id IN' => $midstream_photosId])->all();
         $photosId = array();
         foreach ($result as $photo){
             $photosId[] = $photo['photos_id'];
@@ -39,6 +96,8 @@ class SQLComponent extends Component
 
         return $photosId;
     }
+
+
 
     //引数に渡されている親IDに紐づけられている親情報を全取得
     public function getUserDate($id){
@@ -89,6 +148,7 @@ class SQLComponent extends Component
 
     //引数に渡されたユーザー名とアドレスと一致するアドレスが存在する場合trueを返す
     public function compAddress($address,$userName){
+        $this->TOOL->loginRedirect();
         $patron = TableRegistry::get('patron');
 
         $result = $patron->find()

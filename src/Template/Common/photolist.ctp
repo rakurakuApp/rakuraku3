@@ -26,10 +26,6 @@
                         }
                     }
                     ?>
-
-
-
-
                     <!-- モーダルウィンドウの中身 -->
                     <div class="modal fade" id="myModal">
                         <div class="modal-dialog">
@@ -76,16 +72,11 @@
         </div>
     </div>
 </div><!--/#contents-->
-
-
-<br><br><br><br><br><br><br><br><br><br><br>
-
 <?= $this->Paginator->first('<<first'); ?>
 <?= $this->Paginator->prev('<prev'); ?>
 <?= $this->Paginator->numbers(); ?>
 <?= $this->Paginator->next('next>'); ?>
 <?= $this->Paginator->last('last>>'); ?>
-
 <script>
     $("img[name='listImage']").on('click',function (e) {
         var modalImage = document.getElementById("dummy");

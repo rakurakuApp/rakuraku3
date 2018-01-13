@@ -44,6 +44,11 @@ class PhotosTable extends Table
             'foreignKey' => 'events_id',
             'joinType' => 'INNER'
         ]);
+
+//        $this->belongsTo('Face', [
+//            'foreignKey' => 'photos_id',
+//            'joinType' => 'INNER'
+//        ]);
     }
 
     /**
