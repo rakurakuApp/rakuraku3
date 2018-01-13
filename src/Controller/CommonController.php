@@ -46,35 +46,38 @@ class CommonController extends AppController
         $getChildrenQuery = $this->Children->find()
             ->select(['Children.id'])
             ->where(['Children.deleted' => 0])//未削除
+            ->andwhere(['Children.graduated' => 0])//未卒園
             ->andwhere(['Children.patron_number' => $this->request->getSession()->read('id')]); //ログイン中親アカウント
         if (!empty($this->request->getData('児童名選択'))) {  //児童名
             $getChildrenQuery->where(['Children.id' => ($this->request->getData('児童名選択(プルダウン)'))]);
         }
+
         //サブクエリ1
         $getFaceQuery = $this->Face->find()
-            ->select(['Face.id'])
-            ->where(['Face.children_id IN' => $getChildrenQuery]); //未削除
+            ->select(['Face.photos_id'])
+            ->where(['Face.children_id IN' => $getChildrenQuery]);
+
         //主クエリ
         $getPhotoQuery = $this->Photos->find()
             ->select(['Photos.id'])
             ->where(['Photos.deleted' => 0])//未削除
             ->andwhere(['Photos.id IN' => $getFaceQuery]);
         if (!empty($this->request->getData('イベントフォーム(プルダウン)'))) {  //イベント検索
-            $getPhotoQuery->where(['Photos.event_id' => $this->request->getData('イベントフォーム(プルダウン)')]);
+            $getPhotoQuery->andwhere(['Photos.event_id' => $this->request->getData('イベントフォーム(プルダウン)')]);
         }
         if (empty($this->request->getData('集合写真チェックフォーム'))) { //集合写真検索
-            $getPhotoQuery->where(['Photos.gathered' => 0]);
+            $getPhotoQuery->andwhere(['Photos.gathered' => 0]);
         } else {
-            $getPhotoQuery->where(['Photos.gathered' => 1]);
+            $getPhotoQuery->andwhere(['Photos.gathered' => 0]); // TODO:テスト後に必ず修正すること！
         }
         if (!empty($this->request->getData('お気に入りチェック'))) {  //お気に入り
             //サブクエリ3
             $getFavoriteQuery = $this->Favorite->find()
                 ->select(['Favorite.photos_id'])
                 ->where(['Favorite.patron_number' => $this->request->getSession()->read('id')]);
-            $getPhotoQuery->where(['Photos.id IN' => $getFavoriteQuery]);
+            $getPhotoQuery->andwhere(['Photos.id IN' => $getFavoriteQuery]);
         }
-        $this->set('array', $getPhotoQuery->toArray());
+        $this->set('array', $this->paginate($getPhotoQuery)->toArray());
 
         //(selectフォーム用)ログイン中の親の児童名とID取得
         $getChildrenQuery->select(['Children.username']);
@@ -170,7 +173,10 @@ class CommonController extends AppController
         }
     }
 
-    public function index(){}
+    public function index()
+    {
+    }
+
     public function deleterecord()
     {
         if ($this->request->is('post')) {
@@ -182,6 +188,12 @@ class CommonController extends AppController
             }
         }
     }
-    public function inquiry(){}
-    public function hoge(){}
+
+    public function inquiry()
+    {
+    }
+
+    public function hoge()
+    {
+    }
 }
