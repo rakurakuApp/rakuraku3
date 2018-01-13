@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var $childName //select用児童情報
  * @var $events //行事情報一覧
- * @var $photoData  //写真情報一覧
+ * @var $photoData //写真情報一覧
  */
 ?>
 
@@ -60,12 +60,12 @@
                                 <!-- イベント一覧取得 -->
                                 <?php foreach ($events as $eventData):; ?>
                                     <div class="col-xs-6 col-lg-4">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" value="<?= $eventData->id; ?>"
-                                                       name="eventChk[]">&nbsp;<?= $eventData->event; ?>
-                                            </label>
-                                        </div>
+                                        <label>
+                                            <input type="checkbox" class="checkbox_input"
+                                                   value="<?= $eventData->id; ?>" name="eventChk[]">
+                                            <span class="checkbox_parts_inside"></span>
+                                            <span class="checkbox_parts_outside"><?= $eventData->event; ?></span>
+                                        </label>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -160,17 +160,17 @@
 <div class="col-xs-12">
     <div class="col-xs-offset-6 size">
 
-        <?= $this->Paginator->numbers();?>
+        <?= $this->Paginator->numbers(); ?>
 
     </div>
 </div>
 <script>
-	$("img[name='listImage']").on('click', function (e) {
-		//画像に対してのID割振
-		var modalImage = document.getElementById("dummy");
-		modalImage.src = e.target.src;
-		//問い合わせ内容
-		var favorite = document.getElementsByName("dummy2").item([0]);
-		favorite.id = e.target.id;
-	})
+    $("img[name='listImage']").on('click', function (e) {
+        //画像に対してのID割振
+        var modalImage = document.getElementById("dummy");
+        modalImage.src = e.target.src;
+        //問い合わせ内容
+        var favorite = document.getElementsByName("dummy2").item([0]);
+        favorite.id = e.target.id;
+    })
 </script>
