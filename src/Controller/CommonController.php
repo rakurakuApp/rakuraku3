@@ -42,7 +42,7 @@ class CommonController extends AppController
         $photo = $this->SQL->getPhotoID($children);
         $photo_path = $this->Paginator->paginate($this->SQL->getPhotoPath($photo), $paginate);
 
-        $this->set('array', $photo_path->toList());
+//        $this->set('array', $photo_path->toList());
 
         //問い合わせ理由の一覧取得
         $reason = TableRegistry::get('reason');

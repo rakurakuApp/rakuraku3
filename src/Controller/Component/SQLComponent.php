@@ -21,7 +21,7 @@ class SQLComponent extends Component
         $result = $children->find()->select('id')->where(['patron_number' => $id])->all();
         $childrenId = array();
         foreach ($result as $childId){
-            $childrenId[] = $childId['id'];
+            $childrenId[] = $childId['id'];http://blog.webcreativepark.net/2015/12/21-204123.html
         }
 
         return $childrenId;
@@ -82,7 +82,7 @@ class SQLComponent extends Component
     public function getPhotoPath($id){
         $photos = TableRegistry::get('photos');
 
-        $result = $photos->find()->select('path')->select('id')->where(['id IN' => $id]);
+        $result = $photos->find()->select(['path','id'])->where(['id IN' => $id]);
 
         return $result;
     }
