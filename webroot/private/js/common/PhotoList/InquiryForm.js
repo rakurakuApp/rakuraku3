@@ -6,13 +6,13 @@ const color2 = '#A4A4A4';
 const left2 ='0px';
 // -------------------------------------
 var flg;
-flg = 1;
+flg = 0;
 
 //問い合わせメニュー
 $(function(){
     $("#flag").click(function(){
         if( flg == 1){
-            $('#drop').css('width','90%');
+            $('#drop').css('width','125%');
             flg = 0;
         }else{
             $('#drop').css('width','0%');
