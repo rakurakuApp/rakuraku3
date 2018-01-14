@@ -28,17 +28,18 @@
     <div class="loading_icon"></div>
 </div>
 
-<div class="col-md-12">
+<div class="container">
     <div class="row box">
         <!--検索フォーム form-horizontal form-inline-->
-        <form class="form-inline">
-            <!--子供の名前-->
+        <form class="form-inline" method="post">
+            <!-- 子供の名前 -->
             <div class="form-group">
                 <label for="child_data">児童選択</label>
                 <select id="child_data" class="form-control" name="child_data">
                     <option value="">未選択</option>
                     <?php foreach ($childName as $childData):; ?>
-                        <option value="<?= $childData->id; ?>"><?= $childData->username; ?></option>
+                        <option value="<?= $childData->id; ?>"
+                            <?php if ($childData->id == $this->request->getData('child_data')) echo 'selected'; ?>><?= $childData->username; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -77,16 +78,19 @@
                     </div>
                 </div>
             </div><!-- 行事選択モーダル -->
+
             <!--お気に入り-->
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" value="checked" name="favoriteChk">お気に入り写真表示
+                    <input type="checkbox" value="checked"
+                           name="favoriteChk"<?php if (!empty($this->request->getData('favoriteChk'))) echo 'checked' ?>>お気に入り写真表示
                 </label>
             </div>
             <!--集合写真-->
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" value="checked" name="gatheredChk">集合写真
+                    <input type="checkbox" value="checked"
+                           name="gatheredChk"<?php if (!empty($this->request->getData('gatheredChk'))) echo 'checked' ?>>集合写真
                 </label>
             </div>
             <button type="submit" class="btn btn-primary">検索</button>
@@ -154,16 +158,17 @@
                 </div>
             </div>
         </div>
-    </div>
-</div><!--/#contents-->
-
-<div class="col-xs-12">
-    <div class="col-xs-offset-6 size">
-
-        <?= $this->Paginator->numbers(); ?>
-
+    </div><!--/#contents-->
+</div>
+<div class="container">
+    <div class="col-xs-12" style="text-align: center">
+        <ul class="pagination">
+            <?= $this->Paginator->numbers(); ?>
+        </ul>
     </div>
 </div>
+<br><br><br><br>
+
 <script>
     $("img[name='listImage']").on('click', function (e) {
         //画像に対してのID割振
