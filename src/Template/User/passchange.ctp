@@ -1,5 +1,9 @@
 <?= $this->Html->css('/private/css/user/passchange.css') ?>
-
+<head>
+    <div>
+        <?= $this->element('common\header') ?>
+    </div>
+</head>
 <body>
 <div class="back">
     <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "","action"=>""]]); ?>

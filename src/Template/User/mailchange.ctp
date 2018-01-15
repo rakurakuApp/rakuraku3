@@ -1,8 +1,12 @@
 <?= $this->Html->css('/private/css/user/account.css') ?>
-
+<head>
+    <div>
+        <?= $this->element('common\header') ?>
+    </div>
+</head>
 <body>
 <div class="back">
-    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"mailChange"]]); ?>
+    <?php echo $this->Form->create("null",["type"=>"post","url"=>["controller" => "user","action"=>"mailchange"]]); ?>
     <div class="old" id="old-data">
         <label for="exampleInputPassword0">現在のメールアドレス</label>
         <input type="text"  class="form-control " id="exampleInputPassword0" name="oldMail" readonly value = <?= $email ?>>
