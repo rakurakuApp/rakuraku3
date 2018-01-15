@@ -1,14 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 15110011
- * Date: 2017/12/07
- * Time: 10:54
- */
 
 namespace App\Controller\Component;
 
-use App\Model\Table\PhotosTable;
 use Cake\Controller\Component;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Exception\Exception;
@@ -169,12 +162,19 @@ class SQLComponent extends Component
     public function searchChild($faceID){
         $face = TableRegistry::get('face');
 
+        $faceIdList = array();
+
+        foreach($faceID as $tmp){
+            $faceIdList[] = $tmp['FaceId'];
+        }
+
         $result = $face->find()
             ->select('children_id')
-            ->where(['id IN' => $faceID])
+            ->distinct('children_id')
+            ->where(['id IN' => $faceIdList])
             ->all();
 
-        return $result;
+        return $result->toArray();
     }
 
     //写真データを登録
@@ -183,14 +183,15 @@ class SQLComponent extends Component
         $id = null;
 
         $photo = TableRegistry::get('photos');
-
         $data = $photo->newEntity();
 
         $data->path = $path;
         $data->events_id = $eventId;
         $data->gathered = $gathered;
-        $data->deleted = false;
-        $data->authentication_image = false;
+        $data->deleted = 0;
+        $data->authentication_image = 0;
+        $data->created = null;
+        $data->uploaded = null;
 
         if($photo->save($data)){
             $id = $data->id;
@@ -200,29 +201,49 @@ class SQLComponent extends Component
     }
 
     //認証用画像登録
-    public function insertAuthPhoto($path,$childId,$faceId){
+    public function insertAuthPhoto($path){
         $photoId = null;
 
         $photo = TableRegistry::get('photos');
-
         $photoData = $photo->newEntity();
+
         $photoData->path = $path;
-        $photoData->events_id = -1;
-        $photoData->gathered = -1;
-        $photoData->deleted = -1;
+        $photoData->events_id = 1;
+        $photoData->gathered = 0;
+        $photoData->deleted = 0;
         $photoData->authentication_image = 1;
+        $photoData->created = null;
+        $photoData->uploaded = null;
 
         if($photo->save($photoData)){
             $photoId = $photoData->id;
         }
 
-        $face = TableRegistry::get('face');
-        $faceData = $face->newEntity();
-        $faceData->id = $faceId;
-        $faceData->children_id = $childId;
-        $faceData->photos_id = $photoId;
-
-        $face->save($photoData);
-
+        return $photoId;
     }
+
+    //faceテーブル登録処理
+    public function insertFaceTable($id,$childId,$photoId){
+        $face = TableRegistry::get('face');
+        if(is_null($id)){
+            $count = $face->find()->all()->count() + 1;
+            $face->query()
+                ->insert(['id','children_id','photos_id'])
+                ->values([
+                    'id'=>$count,
+                    'children_id'=>$childId,
+                    'photos_id'=>$photoId])
+                ->execute();
+        }
+        else {
+            $face->query()
+                ->insert(['id', 'children_id', 'photos_id'])
+                ->values([
+                    'id' => $id,
+                    'children_id' => $childId,
+                    'photos_id' => $photoId])
+                ->execute();
+        }
+    }
+
 }

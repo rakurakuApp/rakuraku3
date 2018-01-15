@@ -25,6 +25,7 @@ class ManagerController extends AppController
         $this->loadComponent('TOOL');
         $this->loadComponent('SQL');
         $this->loadComponent('Flash');
+        $this->loadComponent('RAWS');
     }
 
     public function index(){}
@@ -202,9 +203,7 @@ class ManagerController extends AppController
         $this->redirect($this->referer());
     }
 
-
-
-    public function upload_logic(){
+    public function uploadlogic(){
         $this->autoRender = false;
 
         $typeList = array('jpg', 'jpeg', 'gif', 'png');
@@ -222,6 +221,7 @@ class ManagerController extends AppController
                         // アルファベット以外を含む場合はファイル名を日時とする
                         $saveFileName = date("Ymd_His", time());
                     } else {
+                        $ret = null;
                         if (preg_match("/\.jpg$/ui", $name) == true) {
                             $ret = explode('.jpg', $name);
                         } elseif (preg_match("/\.gif$/ui", $name) == true) {
@@ -238,21 +238,29 @@ class ManagerController extends AppController
                         //アップロード処理
                         $result = $this->RAWS->SearchUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"ViewImage");
 
-                        $tmp = $this->SQL->searchChild($result[1]['FaceId']);
+                        $childId = $this->SQL->searchChild($result[0]);
 
-                        if(is_array($tmp)) {
-                            $this->SQL->insertPhoto($result[0], $_POST['eventId'], 1);
+//                        $eventId = $_POST['eventId'];
+                        $eventId = 1;
+
+                        if(count($childId) == 1) {
+                            $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 0);
+                            $this->SQL->insertFaceTable(null,$childId[0]['children_id'],$photoId);
                         }
                         else{
-                            $this->SQL->insertPhoto($result[0], $_POST['eventId'], 0);
+                            $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 1);
+                            foreach($childId as $number) {
+                                $this->SQL->insertFaceTable(null,$number['children_id'],$photoId);
+                            }
                         }
 
                         $this->redirect($this->referer());
-                    } else {
-                        //ファイル種類外処理
                     }
+                        //ファイル種類外処理
                 }
             }
         }
     }
+
+    public function upload(){}
 }
