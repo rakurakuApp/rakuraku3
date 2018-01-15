@@ -199,3 +199,4 @@ class CommonController extends AppController
 
     public function hoge(){}
 }
+
