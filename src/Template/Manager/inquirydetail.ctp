@@ -65,7 +65,7 @@
                         <?php //写真を非表示にするボタン?>
                         <button class="btn btn-primary btnsize" id="hide_btn" type="submit" name="photo_hide"
                                 formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetailphotohide',
-                                    'updetanam' => $parentInfo[0]['id']]) ?>">
+                                    'updatanam' => $parentInfo[0]['id'],'photosID' => $parentInfo[0]['photos']['id']]) ?>">
                             非表示
                         </button>
                     <?php else: ?>
@@ -73,7 +73,7 @@
                         <?php //写真を非表示から表示にするボタン?>
                         <button class="btn btn-primary btnsize" id="hide_btn" type="submit" name="photo_hide"
                                 formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetailphotohide',
-                                    'updetanam' => $parentInfo[0]['id']]) ?>">
+                                    'updatanam' => $parentInfo[0]['id'],'photosID' => $parentInfo[0]['photos']['id']]) ?>">
                             表示
                         </button>
                     <?php endif; ?>

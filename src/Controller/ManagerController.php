@@ -17,6 +17,7 @@ class ManagerController extends AppController
     {
         parent::initialize();
         $this->loadmodel('Patron');
+        $this->loadmodel('Photos');
         $this->loadmodel('Reason');
         $this->loadmodel('Children');
         $this->loadmodel('ChildClass');
@@ -126,6 +127,15 @@ class ManagerController extends AppController
         $this->set('reasons', $this->Reason->find('all'));
 
     }
+    //問合せ一覧の表示非表示ボタンの処理
+        public function inquiryswitching() {
+            $this->autoRender = false;
+            if ($this->request->is('post')) {
+
+                $this->Flash->success("更新しました");
+            }
+            $this->redirect($this->referer());
+        }
 
     //問い合わせ詳細画面
     public function inquirydetail()
@@ -159,43 +169,40 @@ class ManagerController extends AppController
         }
     }
 
-    //問合せ詳細画面の表示非表示ボタンが押された時、問合せ更新するボタン
+    //問合せ詳細画面の表示非表示ボタンの処理
     public function inquirydetailphotohide()
     {
         $this->autoRender = false;
         if ($this->request->is('post')) {
             try {
                 $InquiriesTable = TableRegistry::get('Inquiries');
-                $parentInfo = $InquiriesTable->get($this->request->getParam('updetanam'));
+                $parentInfo = $InquiriesTable->get($this->request->getParam('updatanam'));
                 if (!($parentInfo->already)) {
                     $parentInfo->already = true;
-                    $parentInfo->photos['deleted'] = 1;
                 }else{
                     $parentInfo->already = false;
-                    $parentInfo->photos['deleted'] = 0;
                 }
                 $InquiriesTable->save($parentInfo);
-                $this->Flash->success("更新しました。");
-            } catch (Exception $e) {
+
+                $photosTable = TableRegistry::get('Photos');
+                $parentInfo = $photosTable->get($this->request->getParam('photosID'));
+                if ($parentInfo->deleted == 0) {
+                    $this->log('aa');
+                    $parentInfo->deleted = 1;
+                }else{
+                    $this->log('bb');
+                    $parentInfo->deleted = 0;
+                }
+                $photosTable->save($parentInfo);
+                $this->Flash->success("更新しました");
+            }catch(Exception $e){
                 $this->Flash->success("更新に失敗しました");
             }
         }
         $this->redirect($this->referer());
     }
 
-    //問合わせ済みにボタン
-    public function inquiryswitching()
-    {
-        $this->autoRender = false;
-        if ($this->request->is('post')) {
-            try {
-                $this->Flash->success("更新しました");
-            } catch (Exception $e) {
-                $this->Flash->success("更新に失敗しました");
-            }
-        }
-        $this->redirect($this->referer());
-    }
+
 
     public function upload_logic(){
         $this->autoRender = false;
