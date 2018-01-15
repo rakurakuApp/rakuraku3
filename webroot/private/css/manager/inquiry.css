@@ -70,7 +70,6 @@ tr.already_info:hover #photoid{
 }
 
 /*td内のチェックボックスを真ん中に*/
-table .checkbox input[name="check"].custom-checkbox{
+table.checkbox input[name="check"].custom-checkbox{
     position: inherit; !important;
 }
-

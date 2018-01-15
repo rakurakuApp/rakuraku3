@@ -40,19 +40,24 @@ $this->end(); ?>
                 <!--保護者名-->
                 <td class="col-md-3">
                     <label class="Retrieval-table" for="patron-name">問合せ者名:</label>
-                    <input type="text" id="patron-name" class="form-control" name="patron_name">
+                    <input type="text" id="patron-name" class="form-control" name="patron_name"
+                           value="<?php if( !empty($_POST['patron_name']) ) {
+                               echo $_POST['patron_name'];
+                           } ?>">
                 </td>
-
                 <!--児童名-->
                 <td class="col-md-3">
                     <label class="Retrieval-table" for="children_name">児童名:</label>
-                    <input type="text" id="children_name" class="form-control" name="children_name">
+                    <input type="text" id="children_name" class="form-control" name="children_name"
+                           value="<?php if( !empty($_POST['children_name']) ) {
+                               echo $_POST['children_name'];
+                           } ?>">
                 </td>
                 <!--チェックボックス-->
                 <td class="col-md-2">
-                    <label for="remove-chk" class="checkbox">対応済み問合せを表示
-                        <input type="checkbox" id="remove-chk" class="checkbox" data-toggle="checkbox"
-                               name="remove_chk">
+                    <label for="remove-chk" class="checkbox" style="padding-left:5px;">
+                        <input type="checkbox" id="remove-chk" class="checkbox" name="remove_chk" value="1"
+                            <?php if( !empty($_POST['remove_chk']) && $_POST['remove_chk'] === "1" ){ echo 'checked'; } ?>> 対応済み問合わせを表示
                     </label>
                 </td>
 
@@ -61,7 +66,10 @@ $this->end(); ?>
                 <!--写真ID-->
                 <td class="col-md-3">
                     <label class="Retrieval-table" for="photo-id">写真ID:</label>
-                    <input type="text" id="photo-id" class="form-control" name="photo-id">
+                    <input type="text" id="photo-id" class="form-control" name="photo-id"
+                           value="<?php if( !empty($_POST['children_name']) ) {
+                               echo $_POST['children_name'];
+                           } ?>">
                 </td>
 
                 <!--問合せ内容-->
@@ -83,7 +91,7 @@ $this->end(); ?>
     </form>
 
     <!--テーブル-->
-    <form method="post">
+    <form method="post" name="form">
         <div class="row">
             <div class="Retrieval-table col-md-10 col-md-offset-1">
                 <table class="table table-bordered">
@@ -105,9 +113,9 @@ $this->end(); ?>
                             <label>写真ID</label></th>
 
                         <th class="col-md-1">
-                            <label class="checkbox">全て選択
+                            <label class="checkbox">
                                 <input type="checkbox" id="all" class="checkbox" data-toggle="checkbox"
-                                       name="all" onClick="AllChecked();">
+                                       name="all" onClick="AllChecked();"> 全て選択
                             </label>
                         </th>
                     </tr>
@@ -125,7 +133,6 @@ $this->end(); ?>
                         if ($value->already == 1) {
                             echo '<tr class = "already_info"';
                         } else {
-
                         } ?>
                         <tr>
                             <!--行番号-->
@@ -147,7 +154,7 @@ $this->end(); ?>
                                 $childName .= "&nbsp;&nbsp;,&nbsp;&nbsp;";
                                 $childName .= $Inquiries[$key + $cnt]['children']['username'];
                                 $cnt++;
-                            } ?>
+                            }?>
                             <td id="childusername" class="inquirylist"
                                 onclick="window.open('<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquirydetail', 'number' => $value->id]) ?>'
                                         ,'問合せ詳細','width=800,height=600')"><?= $childName ?>
@@ -164,11 +171,9 @@ $this->end(); ?>
                                         ,'問合せ詳細','width=800,height=600')"><?= $value['photos']['id'] ?>
                             </td>
                             <!--チェックボックス-->
-                            <td>
-                            <label class="checkbox">
+                            <td style="padding-left:20px;">
                                 <input class="checkbox" type="checkbox"  data-toggle="checkbox"
                                        name="check_<?= $line ?>[]" value=''>
-                            </label>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -101,7 +101,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
     //問合わせ変更
     $routes->connect(
-        '/inquirydetailphotohide/:updetanam',
+        '/inquirydetailphotohide/:updatanam/:photosID',
         ['controller'=>'manager','action'=>'inquirydetailphotohide'],
         ['updetanam'=>'\d+']
     );
