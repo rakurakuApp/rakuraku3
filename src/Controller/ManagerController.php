@@ -128,17 +128,24 @@ class ManagerController extends AppController
         $this->set('reasons', $this->Reason->find('all'));
 
     }
-    //問合せ一覧の表示非表示ボタンの処理
-        public function inquiryswitching() {
-            $this->autoRender = false;
-            if ($this->request->is('post')) {
+
+    //問合せ一覧画面の非表示にボタンの処理
+    public function inquiryswitching()
+    {
+        $this->autoRender = false;
+        if ($this->request->is('post')) {
+            try {
 
                 $this->Flash->success("更新しました");
+            }catch(Exception $e){
+                $this->Flash->success("更新に失敗しました");
             }
-            $this->redirect($this->referer());
-        }
 
-    //問い合わせ詳細画面
+        }
+        $this->redirect($this->referer());
+    }
+
+    //問合せ詳細画面
     public function inquirydetail()
     {
         if (!empty($this->request->getParam('number'))) {
