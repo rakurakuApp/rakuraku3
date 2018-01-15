@@ -13,7 +13,6 @@ use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
-
 class CommonController extends AppController
 {
     public $paginate = ['templetes'=>'paginator-templates'];
@@ -34,8 +33,6 @@ class CommonController extends AppController
         $this->loadModel('Events');
         $this->loadModel('Face');
         $this->loadModel('Photos');
-
-
     }
 
     public function photolist()
@@ -49,10 +46,10 @@ class CommonController extends AppController
         $getChildrenQuery = $this->Children->find()
             ->select(['Children.id'])
             ->where(['Children.deleted' => 0])//未削除
-            ->andwhere(['Children.graduated' => 0])//未卒園
-            ->andwhere(['Children.patron_number' => $this->request->getSession()->read('id')]); //ログイン中親アカウント
-        if (!empty($this->request->getData('児童名選択'))) { //児童名
-            $getChildrenQuery->where(['Children.id' => ($this->request->getData('児童名選択(プルダウン)'))]);
+            ->andwhere(['Children.graduated' => 0]);//未卒園
+        if (!empty($this->request->getData('child_data'))) { //児童名
+            $getChildrenQuery->andwhere(['Children.patron_number' => $this->request->getSession()->read('id')]);
+            $getChildrenQuery->andwhere(['Children.id' => ($this->request->getData('child_data'))]);
         }
 
         //サブクエリ1
@@ -63,17 +60,18 @@ class CommonController extends AppController
         //主クエリ
         $getPhotoQuery = $this->Photos->find()
             ->select(['Photos.id','Photos.path'])
-            ->where(['Photos.deleted' => 0])//未削除
+            ->where(['Photos.deleted' => 0])
+            ->andwhere(['Photos.authentication_image' => 0])
             ->andwhere(['Photos.id IN' => $getFaceQuery]);
-        if (!empty($this->request->getData('イベントフォーム(プルダウン)'))) {  //イベント検索
-            $getPhotoQuery->andwhere(['Photos.event_id' => $this->request->getData('イベントフォーム(プルダウン)')]);
+        if (!empty($this->request->getData('eventChk'))) {  //イベント検索
+            $getPhotoQuery->andwhere(['Photos.events_id IN' => $this->request->getData('eventChk')]);
         }
-        if (empty($this->request->getData('集合写真チェックフォーム'))) { //集合写真検索
+        if (empty($this->request->getData('gatheredChk'))) { //集合写真検索
             $getPhotoQuery->andwhere(['Photos.gathered' => 0]);
         } else {
-            $getPhotoQuery->andwhere(['Photos.gathered' => 0]); // TODO:テスト後に必ず修正すること！
+            $getPhotoQuery->andwhere(['Photos.gathered' => 1]);
         }
-        if (!empty($this->request->getData('お気に入りチェック'))) {  //お気に入り
+        if (!empty($this->request->getData('favoriteChk'))) { //お気に入り
             //サブクエリ3
             $getFavoriteQuery = $this->Favorite->find()
                 ->select(['Favorite.photos_id'])
@@ -89,8 +87,10 @@ class CommonController extends AppController
         }
 
         //(selectフォーム用)ログイン中の親の児童名とID取得
-        $getChildrenQuery->select(['Children.username']);
-        $this->set('childName', $getChildrenQuery->toArray());
+        $getChildrenData = $this-> Children ->find()
+        ->select(['Children.id','Children.username'])
+        ->where(['Children.patron_number' => $this->request->getSession()->read('id')]); ;
+        $this->set('childName', $getChildrenData->toArray());
 
         //(selectフォーム用)登録イベント名とID取得
         $getEventsQuery = $this->Events->find('all');
@@ -98,7 +98,7 @@ class CommonController extends AppController
 
         //問い合わせ理由の一覧取得
         $reason = TableRegistry::get('reason');
-        $detail = $reason->find()->select('detail')->all();
+        $detail = $reason->find()->select(['id','detail']);
         $this->set('detail', $detail->toArray());
 
         //ajax通信を受信した場合
@@ -151,7 +151,16 @@ class CommonController extends AppController
                 } catch (Exception $e) {
                     echo $e;
                 }
+            }
 
+            // 問い合わせ送信ボタンよりajax通信受信時処理
+            if(!empty($this->request->getData('inquiredID'))){
+                try{
+                    $inquiryTable = TableRegistry::get('Inquiry');
+                    $inquiry = $inquiryTable->get($this->request->getData('inquiredID'));
+                }catch (Exception $e){
+
+                }
             }
         }
     }
