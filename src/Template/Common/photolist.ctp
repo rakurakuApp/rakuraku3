@@ -179,3 +179,4 @@
         favorite.id = e.target.id;
     })
 </script>
+
