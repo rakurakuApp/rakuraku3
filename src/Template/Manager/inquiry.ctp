@@ -67,8 +67,8 @@ $this->end(); ?>
                 <td class="col-md-3">
                     <label class="Retrieval-table" for="photo-id">写真ID:</label>
                     <input type="text" id="photo-id" class="form-control" name="photo-id"
-                           value="<?php if( !empty($_POST['children_name']) ) {
-                               echo $_POST['children_name'];
+                           value="<?php if( !empty($_POST['photo-id']) ) {
+                               echo $_POST['photo-id'];
                            } ?>">
                 </td>
 
@@ -76,10 +76,11 @@ $this->end(); ?>
                 <td class="col-md-3">
                     <label class="control-label" for="inquiry-class">問合せ内容:</label>
                     <select id="inquiry_class" class="form-control " name="inquiry_class">
-                        <option value="">選択</option>
+                        <option value="">選択してください</option>
                         <?php foreach ($reasons as $reasons): ?>
                             <option value="<?= $reasons->id ?>"><?= $reasons->detail ?></option>
                         <?php endforeach; ?>
+
                     </select>
                 </td>
                 <!--検索ボタン-->
@@ -93,7 +94,6 @@ $this->end(); ?>
     <!--テーブル-->
     <form method="post" name="form">
         <div class="row">
-            <div class="Retrieval-table col-md-10 col-md-offset-1">
                 <table class="table table-bordered">
                     <thead class="bg-primary">
                     <tr>
@@ -113,10 +113,10 @@ $this->end(); ?>
                             <label>写真ID</label></th>
 
                         <th class="col-md-1">
-                            <label class="checkbox">
-                                <input type="checkbox" id="all" class="checkbox" data-toggle="checkbox"
-                                       name="all" onClick="AllChecked();"> 全て選択
-                            </label>
+<!--                            <label class="checkbox">-->
+<!--                                <input type="checkbox" id="all" class="checkbox" data-toggle="checkbox"-->
+<!--                                       name="all" onClick="AllChecked();"> 全て選択-->
+<!--                            </label>-->
                         </th>
                     </tr>
 
@@ -178,12 +178,18 @@ $this->end(); ?>
                         </tr>
                     <?php endforeach; ?>
                 </table>
+
+                <input name="a" value="haisya">
+                </input>
+
+                <input class="check" type="checkbox" value="false">
+                </input>
+
                 <!--右下のボタン-->
                 <button class="btn btn-primary inquirybtn" type="submit"
                         formaction="<?= $this->URL->build(['controller' => 'Manager', 'action' => 'inquiryswitching']) ?>">
                     問合せ済みに
                 </button>
-            </div>
         </div>
     </form>
 </div>
