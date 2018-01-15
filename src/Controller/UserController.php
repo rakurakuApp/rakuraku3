@@ -145,6 +145,16 @@ class UserController extends AppController
         //$mailer = new EmailMailer();
 
         //$mailer->resend('oic.k.koyama@gmail.com','kusamochi2','44444444','test');
+
+        $result = $this->TOOL->loadChildData();
+
+        $childData = array();
+        foreach($result as $tmp){
+            $childData[] = ['id' => $tmp['Id'],'name' => $tmp['username']];
+        }
+
+        $this->set('data',$childData);
+
     }
 
     public function inquiry(){}
@@ -325,8 +335,8 @@ class UserController extends AppController
                         //アップロード処理
                         $result = $this->RAWS->AuthUpload($saveFileName . "." . $fileTypes['extension'], $filePath,"Auth");
 
-//                        $childId = $_POST['childId'];
-                        $childId = 11;
+                        $childId = $_POST['childId'];
+//                        $childId = 11;
 
                         $photoId = $this->SQL->insertAuthPhoto($result['ObjectURL']);
                         $this->SQL->insertFaceTable($result['FaceId'],$childId,$photoId);

@@ -33,6 +33,8 @@ class CommonController extends AppController
         $this->loadModel('Events');
         $this->loadModel('Face');
         $this->loadModel('Photos');
+
+
     }
 
     public function photolist()
@@ -208,4 +210,3 @@ class CommonController extends AppController
 
     public function hoge(){}
 }
-

@@ -30,7 +30,12 @@ class ManagerController extends AppController
 
     public function index(){}
 
-    public function photoup(){}
+    public function photoup(){
+        $event = TableRegistry::get('events');
+        $result = $event->find()->select(['id','event'])->all();
+
+        $this->set('event',$result->toList());
+    }
 
     //問合せ一覧画面
     public function inquiry()
@@ -243,8 +248,7 @@ class ManagerController extends AppController
 
                         $childId = $this->SQL->searchChild($result[0]);
 
-//                        $eventId = $_POST['eventId'];
-                        $eventId = 1;
+                        $eventId = $_POST['eventId'];
 
                         if (count($childId) == 1) {
                             $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 0);
@@ -255,12 +259,16 @@ class ManagerController extends AppController
                                 $this->SQL->insertFaceTable(null, $number['children_id'], $photoId);
                             }
                         }
+                        $this->Flash->success('アップロード成功');
 
                         $this->redirect($this->referer());
                     }
                     //ファイル種類外処理
                 }
             }
+        }
+        else{
+            echo 'postできてない';
         }
     }
 
