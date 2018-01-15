@@ -10,7 +10,7 @@ use Cake\I18n\Time;
 use Cake\Chronos\Chronos;
 use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
-
+use Cake\Auth\DefaultPasswordHasher;
 
 class UserController extends AppController
 {
@@ -44,11 +44,9 @@ class UserController extends AppController
     {
         $this->TOOL->loginRedirect();
         $patronData = $this->TOOL->loadPersonData();
-
         $old_password = $this->request->getData('oldPassword');
         $new_password = $this->request->getData('newPassword');
         $confirmation_password = $this->request->getData('confirmationPassword');
-
         if (!empty($patronData)) {
             if (!empty($old_password) && !empty($new_password) && !empty($confirmation_password)) {
                 if (preg_match("/^[a-zA-Z0-9]+$/", $new_password)) {
@@ -56,13 +54,11 @@ class UserController extends AppController
                         $hasher = new DefaultPasswordHasher();
                         if ($hasher->check($old_password, $patronData['password'])) {
                             if ($confirmation_password === $new_password) {
-
                                 //password変更処理
                                 $patronTable = TableRegistry::get('Patron');
-                                $patron = $patronTable->get($patronData[0]['number']);
+                                $patron = $patronTable->get($patronData['number']);
                                 $patron->password = $this->TOOL->_setPassword($new_password);
                                 $patronTable->save($patron);
-
                                 $this->redirect(['action' => 'userinformation']);
                             } else {
                                 $errorMessage = '確認用パスワードが違います';

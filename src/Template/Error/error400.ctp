@@ -23,6 +23,7 @@ if (Configure::read('debug')) :
 <?php endif; ?>
 <?= $this->element('auto_table_warning') ?>
 <?php
+    $message = '404<br>Not Found';
 if (extension_loaded('xdebug')) :
     xdebug_print_function_stack();
 endif;
@@ -30,6 +31,7 @@ endif;
 $this->end();
 endif;
 ?>
+
 <h2><?= h($message) ?></h2>
 <p class="error" style="background-color: #30B1B6">
     <strong><?= __d('cake', '') ?> </strong>

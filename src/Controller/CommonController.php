@@ -48,24 +48,7 @@ class CommonController extends AppController
         //サブクエリ2
         $getChildrenQuery = $this->Children->find()
             ->select(['Children.id'])
-            ->where(['Children.deleted' => 0])//未削除
-            ->andwhere(['Children.graduated' => 0])//未卒園
-            ->andwhere(['Children.patron_number' => $this->request->getSession()->read('id')]); //ログイン中親アカウント
-        if (!empty($this->request->getData('児童名選択'))) { //児童名
-            $getChildrenQuery->where(['Children.id' => ($this->request->getData('児童名選択(プルダウン)'))]);
-        }
-
-        //サブクエリ1
-        $getFaceQuery = $this->Face->find()
-            ->select(['Face.photos_id'])
-            ->where(['Face.children_id IN' => $getChildrenQuery]);
-
-        //主クエリ
-        $getPhotoQuery = $this->Photos->find()
-            ->select(['Photos.id','Photos.path'])
-            ->where(['Photos.deleted' => 0])//未削除
-            ->andwhere(['Photos.id IN' => $getFaceQuery]);
-        if (!empty($this->request->getData('イベントフォーム(プルダウン)'))) {  //イベント検索
+       'イベントフォーム(プルダウン)'))) {  //イベント検索
             $getPhotoQuery->andwhere(['Photos.event_id' => $this->request->getData('イベントフォーム(プルダウン)')]);
         }
         if (empty($this->request->getData('集合写真チェックフォーム'))) { //集合写真検索

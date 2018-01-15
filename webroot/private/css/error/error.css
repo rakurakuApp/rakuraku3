@@ -1,0 +1,20 @@
+
+#sryimg{
+    float: right;
+}
+
+p{
+    float: right;
+    padding:7px 14px;
+    border-radius:3px;
+    box-shadow:1px 2px 4px rgba(0, 0, 0, 0.24);
+    color:#fff;
+    background-color: #30B1B6;
+}
+#box{
+    background-color: #1cc7ff;
+    padding: 10px 10px 10px 10px;
+    border:3px solid #0e84b5;
+    border-radius:5px;
+    box-shadow:1px 2px 4px rgba(0, 0, 0, 0.24);
+}
