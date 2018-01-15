@@ -246,7 +246,6 @@ class ManagerController extends AppController
                         $childId = $this->SQL->searchChild($result[0]);
 
                         $eventId = $_POST['eventId'];
-//                        $eventId = 1;
 
                         if(count($childId) == 1) {
                             $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 0);

@@ -90,8 +90,6 @@ class SQLComponent extends Component
         return $photosId;
     }
 
-
-
     //引数に渡されている親IDに紐づけられている親情報を全取得
     public function getUserDate($id){
         $patron = TableRegistry::get('patron');
