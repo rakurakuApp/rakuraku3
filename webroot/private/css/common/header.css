@@ -1,10 +1,10 @@
 /* ヘッダー画像サイズ */
-/*.navbar-brand{*/
-    /*background: url("../../../img/common/headerSample2.png") no-repeat left center;*/
-    /*background-size: contain;*/
-    /*width: 250px;*/
-    /*margin-bottom: 0;*/
-/*}*/
+.navbar-brand{
+    background: url("../../../img/common/headerSample2.png") no-repeat left center;
+    background-size: contain;
+    width: 250px;
+    margin-bottom: 0;
+}
 /* navbar配色設定*/
 .navbar-default {
     background-color: #f8f8f8;
