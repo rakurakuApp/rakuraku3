@@ -73,6 +73,9 @@ class UserController extends AppController
     }
 
     public  function  mailChange(){
+
+        $this->TOOL->loginRedirect();
+
         $mail = $this->request->getData('email');
         $this->set('email',$mail);
 
@@ -81,21 +84,24 @@ class UserController extends AppController
         $old_mail = $this->request->getData('oldMail');
         $new_mail = $this->request->getData('newMail');
 
-        //$result = $patron->query()->set(['id' => $new_mail])->where(['id' => $old_mail])->execute();
+        if (preg_match('|^[0-9a-z_./?-]+@([0-9a-z-]+\.)+[0-9a-z-]+$|', $new_mail)) {
 
-        //print_r($result);
+            $patronTable = TableRegistry::get('Patron');
+            $patron->mail = $this->request->getData('newMail');
+            $patronTable->save($patron);
 
-        echo $old_mail . "<br>";
-        echo $new_mail;
-
-        //        $this->redirect(['action' => 'userinformation']);
-
-        if (preg_match("/^([a-z0-9_]|\-|\.|\+)+@(([a-z0-9_]|\-)+\.)+[a-z]{2,6}$/i",$this->request->getData('email'))) {
-
+                   $this->redirect(['action' => 'userinformation']);
+        }else {
+            $errorMessage = 'メールアドレスを入力してください';
+            $this->set('errorMessage', $errorMessage);
         }
     }
 
     public  function  idChange(){
+
+        $this->TOOL->loginRedirect();
+        $this->TOOL->loadPersonData();
+
         $id = $this->request->getData('id');
         $this->set('id',$id);
 
@@ -104,14 +110,26 @@ class UserController extends AppController
         $old_id = $this->request->getData('oldData');
         $new_id = $this->request->getData('newData');
 
-        //$result = $patron->query()->set(['id' => $new_id])->where(['id' => $old_id])->execute();
+        if (preg_match('/^[a-zA-Z0-9]+$/', $new_id)) {
 
-        //print_r($result);
+            if(strlen($new_id) > 5){
+                $patronTable = TableRegistry::get('Patron');
+                $patron = $patronTable->get(1);
+                $patron->id = $this->request->getData('newData');
+                $patronTable->save($patron);
 
-        echo $old_id . "<br>";
-        echo $new_id;
+                $this->redirect(['action' => 'userinformation']);
+            }
+            else {
+                $errorMessage = '6文字以上で入力してください';
+                $this->set('errorMessage', $errorMessage);
+            }
+        } else {
+            $errorMessage = 'IDを入力してください';
+            $this->set('errorMessage', $errorMessage);
+        }
 
-//        $this->redirect(['action' => 'userinformation']);
+
     }
 
     public function upload(){
