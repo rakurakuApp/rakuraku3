@@ -99,6 +99,7 @@ class UserController extends AppController
         if (preg_match('|^[0-9a-z_./?-]+@([0-9a-z-]+\.)+[0-9a-z-]+$|', $new_mail)) {
 
             $patronTable = TableRegistry::get('Patron');
+            $patron = $patronTable->get('oldMail');
             $patron->mail = $this->request->getData('newMail');
             $patronTable->save($patron);
 
@@ -124,7 +125,7 @@ class UserController extends AppController
 
         if (preg_match('/^[a-zA-Z0-9]+$/', $new_id)) {
 
-            if(strlen($new_id) > 5){
+                if(strlen($new_id) > 5){
                 $patronTable = TableRegistry::get('Patron');
                 $patron = $patronTable->get(1);
                 $patron->id = $this->request->getData('newData');
