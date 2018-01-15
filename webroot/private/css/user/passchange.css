@@ -45,7 +45,7 @@ width: 400px;
 {
 float: left;
     margin-left: 30px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .CancelBox {
     width: 100px;
@@ -55,9 +55,16 @@ float: left;
 {
     float: right;
     margin-right:30px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .SaveBox{
     width:100px;
 
+}
+#errormessage{
+    color: red;
+    margin-left:25px;
+}
+#message2{
+    margin:auto;
 }

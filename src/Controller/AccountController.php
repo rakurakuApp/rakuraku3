@@ -37,6 +37,7 @@ class AccountController extends AppController
     public function accountList()
     {
         try {
+            $this->TOOL->loginRedirect();
             $this->paginate = [
                 'limit' => 10
             ];
@@ -91,6 +92,7 @@ class AccountController extends AppController
     //個人ユーザ情報編集画面
     public function individualInfo()
     {
+        $this->TOOL->loginRedirect();
         if (!empty($this->request->getParam('id'))) {
             $query = $this->Patron->find()
                 ->select(['Patron.number', 'Patron.id', 'Patron.username', 'Patron.email', 'Patron.deleted'])

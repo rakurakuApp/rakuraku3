@@ -1,8 +1,7 @@
 <?php
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
-
-$this->layout = 'error';
+$this->layout ='error';
 
 if (Configure::read('debug')) :
     $this->layout = 'dev_error';
@@ -32,7 +31,7 @@ $this->end();
 endif;
 ?>
 <h2><?= h($message) ?></h2>
-<p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= __d('cake', 'The requested address {0} was not found on this server.', "<strong>'{$url}'</strong>") ?>
+<p class="error" style="background-color: #30B1B6">
+    <strong><?= __d('cake', '') ?> </strong>
+    <?= __d('cake', '指定されたURL {0} は存在しません。', "<strong>'{$url}'</strong>") ?>
 </p>

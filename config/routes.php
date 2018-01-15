@@ -73,6 +73,11 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/resetCheck', ['controller' => 'user', 'action' => 'resetCheck']);
     /**
+     * passchange routing
+     */
+    $routes->connect('/user/passChange', ['controller' => 'user', 'action' => 'passChange']);
+
+    /**
      * Connect catchall routes for all controllers.
      *
      * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for

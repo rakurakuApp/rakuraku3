@@ -30,9 +30,12 @@ class CommonController extends AppController
         $this->loadModel('Patron');
         $this->loadmodel('Reason');
         $this->loadmodel('Favorite');
-        $this->loadmodel('Face');
-        $this->loadmodel('Photos');
-        $this->loadmodel('Events');
+        $this->loadmodel('ChildClass');
+        $this->loadModel('Events');
+        $this->loadModel('Face');
+        $this->loadModel('Photos');
+
+
     }
 
     public function photolist()
@@ -151,7 +154,6 @@ class CommonController extends AppController
 
             }
         }
-
     }
 
     public function inquirysend()
@@ -179,9 +181,7 @@ class CommonController extends AppController
         }
     }
 
-    public function index()
-    {
-    }
+    public function index(){}
 
     public function deleterecord()
     {
@@ -195,11 +195,7 @@ class CommonController extends AppController
         }
     }
 
-    public function inquiry()
-    {
-    }
+    public function inquiry(){}
 
-    public function hoge()
-    {
-    }
+    public function hoge(){}
 }
