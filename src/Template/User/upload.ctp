@@ -31,7 +31,6 @@
 
             <div id="dropArea">Drop or Click here!</div>
             <input name="upfile[]" id="fileInput" type="file" accept="image/*" multiple="multiple">
-            <!--            <input name="upfile[]" type="file" accept="image/*" multiple="multiple">-->
         </div>
         <div class="col-xs-6">
             <div class="box26 float-l scroll">
