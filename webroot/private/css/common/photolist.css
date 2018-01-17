@@ -174,7 +174,6 @@
 .box{
     border: 5px solid #F25E86;
     margin: 2em 0;
-    /*padding: 2em;*/
     position: relative;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px ;
@@ -189,14 +188,22 @@
     top: -1em;
 }
 /*検索フォームタイトル*/
-.title_serach_form h3{
+.title_search_form h3{
     margin-top: 0;
+    margin-bottom: 0;
     background-color: #F25E86;
     color: #FCDDE5;
     padding-left: 10px;
 }
 
-.title_serach_form .glyphicon{
+/* 検索フォームコンテンツ */
+.search_contents{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+.title_search_form .glyphicon{
     top: 4px;
     color: #FCDDE5;
     cursor: pointer;
