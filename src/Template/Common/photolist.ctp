@@ -32,7 +32,6 @@
 </div>
 
 <div class="container">
-    <h1>画像一覧</h1>
     <div class="box">
         <!--検索フォーム form-horizontal form-inline-->
         <form class="form-inline" method="post">

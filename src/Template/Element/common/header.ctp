@@ -24,9 +24,12 @@
         <?php if ($sessionData['role'] == '保護者'): ?>
             <!--ログインユーザが保護者の場合-->
             <ul class="nav navbar-nav">
-                <li><?= $this->Html->link('画像一覧', ['controller' => 'common', 'action' => 'photolist']); ?></li>
-                <li><?= $this->Html->link('ユーザ情報', ['controller' => 'user', 'action' => 'userinformation']) ?></li>
-                <li><?= $this->Html->link('問い合わせ一覧', ['controller' => 'user', 'action' => 'inquiryresponselist']) ?></li>
+                <li><a href="<?= $this->URL->build(['controller' => 'common', 'action' => 'photolist']); ?>">
+                        <span class="glyphicon glyphicon-book"></span>画像一覧</a></li>
+                <li><a href="<?= $this->URL->build(['controller' => 'user', 'action' => 'userinformation']); ?>">
+                        <span class="glyphicon glyphicon-user"></span>ユーザ情報</a></li>
+                <li><a href="<?= $this->URL->build(['controller' => 'user', 'action' => 'inquiryresponselist']); ?>">
+                        <span class="glyphicon glyphicon-earphone"></span>問い合わせ一覧</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -40,10 +43,14 @@
         <?php elseif ($sessionData['role'] == '管理者') : ?>
             <!--ログインユーザが管理者の場合-->
             <ul class="nav navbar-nav">
-                <li><?= $this->Html->link('ユーザ一覧', ['controller' => 'account', 'action' => 'accountlist']) ?></li>
-                <li><?= $this->Html->link('画像アップロード', ['controller' => 'manager', 'action' => 'photoup']) ?></li>
-                <li><?= $this->Html->link('画像一覧', ['controller' => 'common', 'action' => 'photolist']) ?></li>
-                <li><?= $this->Html->link('問い合わせ一覧', ['controller' => 'manager', 'action' => 'inquiry']) ?></li>
+                <li><a href="<?= $this->URL->build(['controller' => 'account', 'action' => 'accountlist']); ?>">
+                        <span class="glyphicon glyphicon-list"></span>ユーザ一覧</a></li>
+                <li><a href="<?= $this->URL->build(['controller' => 'manager', 'action' => 'photoup']); ?>">
+                        <span class="glyphicon glyphicon-circle-arrow-up"></span>画像アップロード</a></li>
+                <li><a href="<?= $this->URL->build(['controller' => 'common', 'action' => 'photolist']); ?>">
+                        <span class="glyphicon glyphicon-picture"></span>画像一覧</a></li>
+                <li><a href="<?= $this->URL->build(['controller' => 'manager', 'action' => 'inquiry']); ?>">
+                        <span class="glyphicon glyphicon-info-sign"></span>問い合わせ一覧</a></li>
             </ul>
             <!--ドロップダウンメニュー-->
             <ul class="nav navbar-nav navbar-right">
