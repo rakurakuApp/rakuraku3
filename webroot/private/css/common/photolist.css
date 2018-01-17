@@ -172,22 +172,36 @@
 
 /*検索フォームの外枠*/
 .box{
-    border: 2px solid #da4033;
-    border-radius: 4px;
+    border: 5px solid #F25E86;
     margin: 2em 0;
-    padding: 2em;
+    /*padding: 2em;*/
     position: relative;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px ;
 }
 .box::before {
     background-color: #fff;
-    color: #da4033;
-    content: "絞り込み検索";
+    color: #F25E86;
     font-weight: bold;
     left: 1em;
     padding: 0 .5em;
     position: absolute;
     top: -1em;
 }
+/*検索フォームタイトル*/
+.title_serach_form h3{
+    margin-top: 0;
+    background-color: #F25E86;
+    color: #FCDDE5;
+    padding-left: 10px;
+}
+
+.title_serach_form .glyphicon{
+    top: 4px;
+    color: #FCDDE5;
+    cursor: pointer;
+}
+
 /*子供の検索*/
 .form-w{
     width: 150px;

@@ -15,6 +15,8 @@
 <?= $this->Html->script('/private/js/common/PhotoList/InquiryForm.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/favorite.js') ?>
 <?= $this->Html->script('/private/js/common/PhotoList/resetEvents.js') ?>
+<?= $this->Html->script('/private/js/common/PhotoList/displayForm.js') ?>
+
 <?php $this->end(); ?>
 <?php $this->start('title'); ?>
 <?= '画像一覧'; ?>
@@ -30,10 +32,18 @@
 </div>
 
 <div class="container">
-    <div class="row box">
+    <h1>画像一覧</h1>
+    <div class="box">
         <!--検索フォーム form-horizontal form-inline-->
         <form class="form-inline" method="post">
             <div class="row">
+                <div class="title_serach_form">
+                    <h3>
+                        検索メニュー
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+
+                    </h3>
+                </div>
                 <!-- 子供の名前 -->
                 <div class="col-md-12">
                     <div class="form-group">
