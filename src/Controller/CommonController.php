@@ -61,7 +61,7 @@ class CommonController extends AppController
         $getPhotoQuery = $this->Photos->find()
             ->select(['Photos.id','Photos.path'])
             ->where(['Photos.deleted' => 0])
-            ->andwhere(['Photos.authentication_image' => 0])
+//            ->andwhere(['Photos.authentication_image' => 0])
             ->andwhere(['Photos.id IN' => $getFaceQuery]);
         if (!empty($this->request->getData('eventChk'))) {  //イベント検索
             $getPhotoQuery->andwhere(['Photos.events_id IN' => $this->request->getData('eventChk')]);
