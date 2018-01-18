@@ -15,6 +15,9 @@
 <?= 'ユーザ一覧'; ?>
 <?php $this->end(); ?>
 
+<?= $this->element('common\header') ?>
+
+
 <div class="container container-fluid">
     <div class="row">
         <div class="col-md-12 col-xs-12">
@@ -72,7 +75,7 @@
                 </td>
                 <td>
                     <button type="button" class="btn btn-warning full"
-                            onclick="window.open('<?= $this->URL->build(['controller' => 'Account', 'action' => 'addacount']);?>','アカウント追加','width=700,height=600')">
+                            onclick="window.open('<?= $this->URL->build(['controller' => 'Account', 'action' => 'addacount']);?>','アカウント追加','width=800,height=600')">
                         アカウント新規作成
                     </button>
                 </td>

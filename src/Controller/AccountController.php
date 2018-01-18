@@ -215,16 +215,19 @@ class AccountController extends AppController
                 $mailer->beginning($this->request->getData('email'), $id, $notHash, $$this->request->getData('patronName'));
             }
 
-            if ($this->SQL->compAddress($this->request->getData('email')))
+            if ($this->SQL->compAddress($this->request->getData('email'))) {
                 //children 子供情報追加
                 $childrenTable = TableRegistry::get('Child');
-            $children = $childrenTable->newEntity();
-            $children->patron_number = $patronNumber;
-            $children->username = $this->request->getData('childName');
-            $children->age = $this->request->getData('childAge');
-            $children->child_class_id = $this->request->getData('childAge');
-            $childrenTable->save($children);
+                $children = $childrenTable->newEntity();
+                $children->patron_number = $patronNumber;
+                $children->username = $this->request->getData('childName');
+                $children->age = $this->request->getData('childAge');
+                $children->child_class_id = $this->request->getData('childAge');
+                $childrenTable->save($children);
+            }
         }
-//        $this->redirect(['action' => 'accountlist']);
+        //子供が所属するクラス一覧取得
+        $childClass = $this->ChildClass->find()->all();
+        $this->set('childClass',$childClass ->toArray());
     }
 }

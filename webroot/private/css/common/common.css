@@ -97,6 +97,7 @@ ul.pagination .disabled:hover a {
 .is-hide{
     display:none;
 }
+
 .loading{
     position:fixed;
     top:0;
@@ -106,6 +107,7 @@ ul.pagination .disabled:hover a {
     background:rgba(0,0,0,.5);
     z-index: 999999999999999;
 }
+
 .loading::before{
     content:"";
     display:block;
@@ -120,6 +122,7 @@ ul.pagination .disabled:hover a {
     border-radius:5px;
     background:white;
 }
+
 .loading::after{
     content:"";
     display:block;
@@ -136,6 +139,7 @@ ul.pagination .disabled:hover a {
     border-right:4px solid white;
     animation: rotate 1s infinite linear;
 }
+
 @keyframes rotate {
     0%    { transform: rotate(0deg); }
     100%  { transform: rotate(360deg); }
