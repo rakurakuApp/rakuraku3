@@ -31,7 +31,9 @@ class AccountController extends AppController
         $this->loadComponent('Flash');//ページネーターの読み込み
     }
 
-    public function index(){}
+    public function index()
+    {
+    }
 
     //アカウント一覧表示アクション
     public function accountList()
@@ -201,7 +203,7 @@ class AccountController extends AppController
                 //Patron　親情報追加
                 $patronTable = TableRegistry::get('Patron');
                 $patron = $patronTable->newEntity();
-                $id =$this->TOOL->makeRandStr(8);
+                $id = $this->TOOL->makeRandStr(8);
                 $patron->id = $id;
                 $notHash = $this->TOOL->makeRandStr(8);
                 $patron->password = $this->TOOL->_setPassword($notHash);
@@ -210,7 +212,7 @@ class AccountController extends AppController
                 $patronTable->save($patron);
                 //めえーるそうしん
                 $mailer = new EmailMailer();
-                $mailer->beginning($this->request->getData('email'), $id,$notHash, $$this->request->getData('patronName'));
+                $mailer->beginning($this->request->getData('email'), $id, $notHash, $$this->request->getData('patronName'));
             }
 
             if ($this->SQL->compAddress($this->request->getData('email')))
@@ -223,6 +225,6 @@ class AccountController extends AppController
             $children->child_class_id = $this->request->getData('childAge');
             $childrenTable->save($children);
         }
-        $this->redirect(['action' => 'accountlist']);
+//        $this->redirect(['action' => 'accountlist']);
     }
 }

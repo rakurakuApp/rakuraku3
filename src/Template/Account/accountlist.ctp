@@ -14,7 +14,6 @@
 <?php $this->start('title'); ?>
 <?= 'ユーザ一覧'; ?>
 <?php $this->end(); ?>
-<?= $this->element('common\header') ?>
 
 <div class="container container-fluid">
     <div class="row">

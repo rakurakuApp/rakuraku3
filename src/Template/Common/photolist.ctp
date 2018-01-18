@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div><!-- 行事選択モーダル -->
+                    </div><!-- 行事選択モーダル -->aq
                     <div class="row">
                         <div class="col-md-12">
                             <!--お気に入り-->
