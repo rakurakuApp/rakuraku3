@@ -202,42 +202,42 @@ class AccountController extends AppController
 
     //アカウント追加項目確認画面
     public function confirmaddacount(){
-        if ($this->request->is('post')) {
-            //email,patronName,childName,childAge,childClass
-
-            //親情報の有無
-            $patronNumber = $this->Patron->find()
-                ->select(['Patron.number'])
-                ->where(['Patron.username LIKE' => $this->request->getData('patronName')])
-                ->where(['Patron.email LIKE' => $this->request->getData('email')])
-                ->first();
-
-            if (empty($patronNumber)) {
-                //Patron　親情報追加
-                $patronTable = TableRegistry::get('Patron');
-                $patron = $patronTable->newEntity();
-                $id = $this->TOOL->makeRandStr(8);
-                $patron->id = $id;
-                $notHash = $this->TOOL->makeRandStr(8);
-                $patron->password = $this->TOOL->_setPassword($notHash);
-                $patron->username = $this->request->getData('patronName');
-                $patron->email = $this->request->getData('email');
-                $patronTable->save($patron);
-                //めえーるそうしん
-                $mailer = new EmailMailer();
-                $mailer->beginning($this->request->getData('email'), $id, $notHash, $$this->request->getData('patronName'));
-            }
-
-            if ($this->SQL->compAddress($this->request->getData('email'))) {
-                //children 子供情報追加
-                $childrenTable = TableRegistry::get('Child');
-                $children = $childrenTable->newEntity();
-                $children->patron_number = $patronNumber;
-                $children->username = $this->request->getData('childName');
-                $children->age = $this->request->getData('childAge');
-                $children->child_class_id = $this->request->getData('childAge');
-                $childrenTable->save($children);
-            }
-        }
+//        if ($this->request->is('post')) {
+//            //email,patronName,childName,childAge,childClass
+//
+//            //親情報の有無
+//            $patronNumber = $this->Patron->find()
+//                ->select(['Patron.number'])
+//                ->where(['Patron.username LIKE' => $this->request->getData('patronName')])
+//                ->where(['Patron.email LIKE' => $this->request->getData('email')])
+//                ->first();
+//
+//            if (empty($patronNumber)) {
+//                //Patron　親情報追加
+//                $patronTable = TableRegistry::get('Patron');
+//                $patron = $patronTable->newEntity();
+//                $id = $this->TOOL->makeRandStr(8);
+//                $patron->id = $id;
+//                $notHash = $this->TOOL->makeRandStr(8);
+//                $patron->password = $this->TOOL->_setPassword($notHash);
+//                $patron->username = $this->request->getData('patronName');
+//                $patron->email = $this->request->getData('email');
+//                $patronTable->save($patron);
+//                //めえーるそうしん
+//                $mailer = new EmailMailer();
+//                $mailer->beginning($this->request->getData('email'), $id, $notHash, $$this->request->getData('patronName'));
+//            }
+//
+//            if ($this->SQL->compAddress($this->request->getData('email'))) {
+//                //children 子供情報追加
+//                $childrenTable = TableRegistry::get('Child');
+//                $children = $childrenTable->newEntity();
+//                $children->patron_number = $patronNumber;
+//                $children->username = $this->request->getData('childName');
+//                $children->age = $this->request->getData('childAge');
+//                $children->child_class_id = $this->request->getData('childAge');
+//                $childrenTable->save($children);
+//            }
+//        }
     }
 }

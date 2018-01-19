@@ -22,7 +22,7 @@
 
 <div class="container">
     <div class="formOutline">
-        <form action="" method="post" class="form form-inline">
+        <form action="" method="post" class="form form-inline" id="confirm">
             <div class="formOutlineTitle">
                 <!-- タイトル -->
                 <h2>追加項目選択</h2>
@@ -54,11 +54,11 @@
                 <ul>
                     <li>
                         <label for="user_username">ユーザー名</label>
-                        <input type="text" id="user_username">
+                        <input type="text" id="user_username" name="username">
                     </li>
                     <li>
                         <label for="user_email">メールアドレス</label>
-                        <input type="email" id="user_email">
+                        <input type="email" id="user_email" name="email">
                     </li>
                 </ul>
                 <div class="userType userForm">
@@ -68,11 +68,11 @@
                     <ul>
                         <li>
                             <label for="child_name">児童名</label>
-                            <input type="text" id="child_name" name="child_name[]">
+                            <input type="text" class="child_name" id="child_name" name="child_name[]">
                         </li>
                         <li>
                             <label for="child_age">年齢</label>
-                            <input type="text" id="child_age" name="child_age[]">
+                            <input type="text" class="child_age" id="child_age" name="child_age[]">
                         </li>
                         <li>
                             <label for="child_class">所属組</label>
@@ -104,16 +104,16 @@
                         <!--モーダルから取得した親情報表示-->
                     </li>
                     <li>
-                        <label for="child_name">児童名</label>
-                        <input type="text" id="child_name" name="child_name[]">
+                        <label for="individual_child_name">児童名</label>
+                        <input type="text" class="child_name" id="individual_child_name" name="child_name[]">
                     </li>
                     <li>
-                        <label for="child_age">年齢</label>
-                        <input type="text" id="child_age" name="child_age[]">
+                        <label for="individual_child_age">年齢</label>
+                        <input type="text" class="child_age" id="individual_child_age" name="child_age[]">
                     </li>
                     <li>
-                        <label for="child_class">所属組</label>
-                        <select name="child_class[]" id="child_class">
+                        <label for="individual_child_class">所属組</label>
+                        <select name="child_class[]" id="individual_child_class">
                             <option value="">選択</option>
                             <?php foreach ($childClass as $data):; ?>
                                 <?= "<option value=" . $data->id . ">" . $data->class_name . '</option>' ?>
@@ -164,7 +164,7 @@
                 </div>
                 <ul>
                     <li>
-                        <label for="manager_username">ユーザー名</label>
+                        <label for="manager_username">管理者名</label>
                         <input type="text" id="manager_username">
                     </li>
                     <li>

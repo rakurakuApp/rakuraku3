@@ -107,6 +107,13 @@
     width: 25%;
 }
 
+/*バリデーションエラーメッセージ*/
+.errorMsg{
+    font-size: small;
+    color: red;
+    margin: 0;
+}
+
 /*selectのサイズ設定上書き*/
 select {
     width: auto;
