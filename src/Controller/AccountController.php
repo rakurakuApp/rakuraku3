@@ -189,6 +189,19 @@ class AccountController extends AppController
     //アカウント追加
     public function addacount()
     {
+        //子供が所属するクラス一覧取得
+        $childClass = $this->ChildClass->find()->all();
+        $this->set('childClass', $childClass->toArray());
+
+        //登録済み保護者一覧取得
+        $patronData = $this->Patron->find()
+            ->select(['Patron.number', 'Patron.username'])
+            ->where(['Patron.deleted' => 0]);
+        $this->set('patronData', $patronData->toArray());
+    }
+
+    //アカウント追加項目確認画面
+    public function confirmaddacount(){
         if ($this->request->is('post')) {
             //email,patronName,childName,childAge,childClass
 
@@ -226,8 +239,5 @@ class AccountController extends AppController
                 $childrenTable->save($children);
             }
         }
-        //子供が所属するクラス一覧取得
-        $childClass = $this->ChildClass->find()->all();
-        $this->set('childClass',$childClass ->toArray());
     }
 }

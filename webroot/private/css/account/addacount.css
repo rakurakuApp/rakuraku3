@@ -1,107 +1,114 @@
 /* ラジオボタン設定がやばかったので上書き */
-.radio input[type="radio"]{
+.radio input[type="radio"] {
     position: relative;
     top: 1px;
     margin-right: 5px;
 }
 
 /*タイトル*/
-.title{
+.title {
     background-color: #60BFAE;
     text-align: center;
     color: #eff8f6;
     margin-top: 0;
     margin-bottom: 30px;
 }
+
 /*タイトルアイコン*/
-#glyphicon-user{
+#glyphicon-user {
     margin-right: 10px;
     top: 5px;
 }
 
 /*フォーム外枠*/
-.formOutline{
+.formOutline {
     border: 4px solid #F25E86;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
 }
 
 /*フォーム外枠タイトル*/
-.formOutlineTitle{
+.formOutlineTitle {
     background-color: #F25E86;
     margin-bottom: 0;
     margin-top: 0;
 }
 
 /*タイトル内h2*/
-.formOutlineTitle h2{
+.formOutlineTitle h2 {
     margin-top: 0;
     margin-left: 15px;
     color: #FEEFF3;
 }
 
 /*フォーム内コンテンツ　共通設定項目*/
-.formContents{
+.formContents {
     border: 4px solid;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
 }
 
+/*formContentsの見出し　共通設定項目*/
+.userType {
+    margin: 0;
+}
+
 /*formContentsとセットで付く　ユーザ向け設定*/
-.userContent{
+#userContent {
     margin: 15px;
     width: auto;
     border-color: #30B1B6;
 }
 
-/*formContentsの見出し　共通設定項目*/
-.userType{
-    margin: 0;
-}
-
 /*formContentsユーザ側設定*/
-.userForm h3{
+.userForm h3 {
     background-color: #30B1B6;
     margin: 0;
     padding-left: 10px;
     color: #FBFEFE;
 }
 
+/*formContents児童側設定*/
+#childContent {
+    margin: 15px;
+    width: auto;
+    border-color: #30B1B6;
+}
+
+/*formContentsとセットで付く　管理者向け設定*/
+#managerContent {
+    margin: 15px;
+    width: auto;
+    border-color: #F29F8D;
+}
+
 /*formContents管理者側設定*/
-.managerForm h3{
+#managerForm h3 {
     background-color: #F29F8D;
     margin: 0;
     padding-left: 10px;
     color: #ffffff;
 }
 
-/*formContentsとセットで付く　管理者向け設定*/
-.managerContent{
-    margin: 15px;
-    width: auto;
-    border-color: #F29F8D;
-}
-
 /*コンテンツが横並びで表示された時2つ目が高めに設定されるのを防ぐ*/
-.radio + .radio{
+.radio + .radio {
     margin-top: 0;
 }
 
 /*フォームコンテンツli*/
-.formContents li{
+.formContents li {
     list-style: none;
     margin-bottom: 10px;
 }
 
 /*各フォームについたlabel設定*/
-.formContents label{
+.formContents label {
     margin-right: 10px;
     width: 25%;
 }
 
-/*児童情報追加アイコン*/
-#glyphicon-plus-sign{
-    margin-left: 10px;
-    top: 5px;
-    cursor: pointer;
+/*selectのサイズ設定上書き*/
+select {
+    width: auto;
+!important;
 }

@@ -76,6 +76,9 @@ ul.pagination .disabled:hover a {
 .heavenBlue{
     background-color: #30B1B6;
 }
+.heavenBlue_fonts{
+    color: #ebf9fa;
+}
 
 .anotherBlue{
     background-color: #60BFAE;
@@ -148,4 +151,9 @@ ul.pagination .disabled:hover a {
 /* コンテンツを非表示にするクラス */
 .display{
     display: none;
+}
+
+/* コンテンツを要素いっぱいにするクラス */
+.full{
+    width: 100%;
 }
