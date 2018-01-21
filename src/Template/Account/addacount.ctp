@@ -58,7 +58,7 @@
                     </li>
                     <li>
                         <label for="user_email">メールアドレス</label>
-                        <input type="email" id="user_email" name="email">
+                        <input type="text" id="user_email" name="email">
                     </li>
                 </ul>
                 <div class="userType userForm">
@@ -68,11 +68,11 @@
                     <ul>
                         <li>
                             <label for="child_name">児童名</label>
-                            <input type="text" class="child_name" id="child_name" name="child_name[]">
+                            <input type="text" class="child_name" id="child_name" name="child_name">
                         </li>
                         <li>
                             <label for="child_age">年齢</label>
-                            <input type="text" class="child_age" id="child_age" name="child_age[]">
+                            <input type="text" class="child_age" id="child_age" name="child_age">
                         </li>
                         <li>
                             <label for="child_class">所属組</label>
@@ -105,11 +105,11 @@
                     </li>
                     <li>
                         <label for="individual_child_name">児童名</label>
-                        <input type="text" class="child_name" id="individual_child_name" name="child_name[]">
+                        <input type="text" class="child_name" id="individual_child_name" name="individual_child_name">
                     </li>
                     <li>
                         <label for="individual_child_age">年齢</label>
-                        <input type="text" class="child_age" id="individual_child_age" name="child_age[]">
+                        <input type="text" class="child_age" id="individual_child_age" name="individual_child_age">
                     </li>
                     <li>
                         <label for="individual_child_class">所属組</label>
@@ -144,7 +144,7 @@
                                             <td><?= $key+1;?></td>
                                             <td><?= $data->number;?></td>
                                             <td><?= $data->username;?></td>
-                                            <td><button type="button" class="btn btn-primary btn-sm full">選択</button></td>
+                                            <td><button type="button" class="btn btn-primary btn-sm full selectPatronBtn" id = '<?= $data->number;?>' value='<?= $data->username;?>' data-dismiss="modal">選択</button></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </table>
