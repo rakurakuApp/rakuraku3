@@ -83,13 +83,18 @@ ul.pagination .disabled:hover a {
 .anotherBlue{
     background-color: #60BFAE;
 }
-
+.anotherBlue_fonts{
+    color: #ebf9fa;
+}
 .vanillaMilk{
     background-color: #EFC897;
 }
 
 .blush{
     background-color: #F29F8D;
+}
+.blush_fonts{
+    color: #fdf5f3;
 }
 
 .rosePetalPink{
@@ -156,4 +161,16 @@ ul.pagination .disabled:hover a {
 /* コンテンツを要素いっぱいにするクラス */
 .full{
     width: 100%;
+}
+/* テキストを中央寄せにするクラス */
+.center{
+    text-align: center;
+}
+/* 要素を横並びにし、中央揃えにするクラス */
+.side_by_side{/* ul対象 */
+    margin: 0;
+    padding: 0;
+}
+.side_by_side li{
+    display: inline-block;
 }

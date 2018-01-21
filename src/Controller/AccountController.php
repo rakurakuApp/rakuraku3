@@ -8,6 +8,8 @@ use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 use Cake\Log\Log;
+use Cake\Core\Configure;
+use Cake\Database\Connection;
 use Cake\Datasource\ConnectionManager;
 use Cake\Auth\DefaultPasswordHasher;
 use function PMA\Util\get;
@@ -71,7 +73,7 @@ class AccountController extends AppController
                     return $q;
                 });
             if (!empty($this->request->getData('parent_name'))) {
-                $query->where(['Patron.username' => $this->request->getData('parent_name')]);
+                $query->where(['Patron.username LIKE' => '%' . $this->request->getData('parent_name') . '%']);
             }
             if (!empty($this->request->getData('remove_chk'))) {
                 $query->Where(['Patron.deleted' => '1'])
@@ -201,43 +203,74 @@ class AccountController extends AppController
     }
 
     //アカウント追加項目確認画面
-    public function confirmaddacount(){
-//        if ($this->request->is('post')) {
-//            //email,patronName,childName,childAge,childClass
-//
-//            //親情報の有無
-//            $patronNumber = $this->Patron->find()
-//                ->select(['Patron.number'])
-//                ->where(['Patron.username LIKE' => $this->request->getData('patronName')])
-//                ->where(['Patron.email LIKE' => $this->request->getData('email')])
-//                ->first();
-//
-//            if (empty($patronNumber)) {
-//                //Patron　親情報追加
-//                $patronTable = TableRegistry::get('Patron');
-//                $patron = $patronTable->newEntity();
-//                $id = $this->TOOL->makeRandStr(8);
-//                $patron->id = $id;
-//                $notHash = $this->TOOL->makeRandStr(8);
-//                $patron->password = $this->TOOL->_setPassword($notHash);
-//                $patron->username = $this->request->getData('patronName');
-//                $patron->email = $this->request->getData('email');
-//                $patronTable->save($patron);
-//                //めえーるそうしん
-//                $mailer = new EmailMailer();
-//                $mailer->beginning($this->request->getData('email'), $id, $notHash, $$this->request->getData('patronName'));
-//            }
-//
-//            if ($this->SQL->compAddress($this->request->getData('email'))) {
-//                //children 子供情報追加
-//                $childrenTable = TableRegistry::get('Child');
-//                $children = $childrenTable->newEntity();
-//                $children->patron_number = $patronNumber;
-//                $children->username = $this->request->getData('childName');
-//                $children->age = $this->request->getData('childAge');
-//                $children->child_class_id = $this->request->getData('childAge');
-//                $childrenTable->save($children);
-//            }
-//        }
+    public function confirmaddacount()
+    {
+        if ($this->request->is('post')) {
+            if ($this->request->getData('selectFormType') == 'user') {
+                //子供が所属するクラス一覧取得
+                $childClass = $this->ChildClass->find()
+                    ->select(['ChildClass.id', 'ChildClass.class_name'])
+                    ->where(['ChildClass.id' => $this->request->getData('child_class')]);
+                $this->set('childClass', $childClass->toArray());
+            }
+        }
+    }
+
+    public function registryaccount()
+    {
+        $this->autoRender = false;
+        if ($this->request->is('post')) {
+            if (!empty($this->request->getData('selectFormType'))) {
+                if ($this->request->getData('selectFormType') == 'user') {
+                    $connection = ConnectionManager::get('default');
+                    $connection->begin();
+                    try {
+                        //Patron　親情報追加
+                        $patronTable = TableRegistry::get('Patron');
+                        $patron = $patronTable->newEntity();
+                        //ID生成
+                        $id = $this->TOOL->makeRandStr(8);
+                        $patron->id = $id;
+                        //パスワード生成
+                        $notHash = $this->TOOL->makeRandStr(8);
+                        $patron->password = $this->TOOL->_setPassword($notHash);
+                        $patron->username = $this->request->getData('username');
+                        $patron->email = $this->request->getData('email');
+                        if ($patronTable->save($patron)) {
+                            $patronNumber = $connection->newQuery();
+                            $patronNumber->select('patron.number')
+                                ->from('patron')
+                                ->where(['patron.username LIKE' => $this->request->getData('username'),
+                                    'patron.email LIKE' => $this->request->getData('email')])
+                                ->limit(1);
+                            //children 子供情報追加
+                            $childrenTable = TableRegistry::get('Children');
+                            $children = $childrenTable->newEntity();
+                            $children->patron_number = $patronNumber;
+                            $children->username = $this->request->getData('child_name');
+                            $children->age = $this->request->getData('child_age');
+                            $children->child_class_id = $this->request->getData('child_class');
+                            if ($childrenTable->save($children)) {
+                                $connection->commit();
+                                //メール送信
+                                $mailer = new EmailMailer();
+                                $mailer->beginning($this->request->getData('email'), $id, $notHash, $this->request->getData('username'));
+                            } else {
+                                $connection->rollback();
+                            }
+                        } else {
+                            $this->log('親登録失敗');
+                            $connection->rollback();
+                        }
+                    } catch (Exception $e) {
+                        $this->log('子供登録失敗');
+                        $connection->rollback();
+                    }
+                } else {
+
+                }
+
+            }
+        }
     }
 }

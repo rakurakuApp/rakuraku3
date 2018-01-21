@@ -68,13 +68,6 @@
     color: #FBFEFE;
 }
 
-/*formContents児童側設定*/
-#childContent {
-    margin: 15px;
-    width: auto;
-    border-color: #30B1B6;
-}
-
 /*formContentsとセットで付く　管理者向け設定*/
 #managerContent {
     margin: 15px;

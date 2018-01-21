@@ -35,17 +35,11 @@
                     </label>
                 </div>
                 <div class="radio col-md-3 col-xs-3">
-                    <label for="selectChildRadio">
-                        <input type="radio" name="selectFormType" value="Child" id="selectChildRadio">児童
-                    </label>
-                </div>
-                <div class="radio col-md-3 col-xs-3">
                     <label for="selectManagerRadio">
                         <input type="radio" name="selectFormType" value="manager" id="selectManagerRadio">管理者
                     </label>
                 </div>
             </div>
-
             <!--保護者と児童同時に追加する場合-->
             <div class="formContents row" id="userContent">
                 <div class="userType userForm">
@@ -76,86 +70,15 @@
                         </li>
                         <li>
                             <label for="child_class">所属組</label>
-                            <select name="child_class[]" id="child_class">
+                            <select name="child_class" id="child_class">
                                 <option value="">選択</option>
                                 <?php foreach ($childClass as $data):; ?>
                                     <?= "<option value=" . $data->id . ">" . $data->class_name . '</option>' ?>
                                 <?php endforeach; ?>
                             </select>
                         </li>
-                        <li>
-
-                        </li>
                     </ul>
                 </div>
-            </div>
-            <!--既存の保護者に対して児童を追加する場合-->
-            <div class="formContents row display" id="childContent">
-                <div class="userType userForm">
-                    <h3>児童情報</h3>
-                </div>
-                <ul>
-                    <li>
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#selectPatronModal">
-                            保護者情報取得
-                        </button>
-                    </li>
-                    <li id="patron_info">
-                        <!--モーダルから取得した親情報表示-->
-                    </li>
-                    <li>
-                        <label for="individual_child_name">児童名</label>
-                        <input type="text" class="child_name" id="individual_child_name" name="individual_child_name">
-                    </li>
-                    <li>
-                        <label for="individual_child_age">年齢</label>
-                        <input type="text" class="child_age" id="individual_child_age" name="individual_child_age">
-                    </li>
-                    <li>
-                        <label for="individual_child_class">所属組</label>
-                        <select name="child_class[]" id="individual_child_class">
-                            <option value="">選択</option>
-                            <?php foreach ($childClass as $data):; ?>
-                                <?= "<option value=" . $data->id . ">" . $data->class_name . '</option>' ?>
-                            <?php endforeach; ?>
-                        </select>
-                    </li>
-                </ul>
-                <!-- モーダル・ダイアログ -->
-                <div class="modal fade" id="selectPatronModal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                                <h4 class="modal-title">保護者情報取得</h4>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr class="heavenBlue">
-                                        <th class="heavenBlue_fonts">#</th>
-                                        <th class="heavenBlue_fonts">保護者番号</th>
-                                        <th class="heavenBlue_fonts">保護者名</th>
-                                        <th class="heavenBlue_fonts">選択</th>
-                                    </tr>
-                                    </thead>
-                                    <?php foreach ($patronData as $key => $data):; ?>
-                                        <tr>
-                                            <td><?= $key+1;?></td>
-                                            <td><?= $data->number;?></td>
-                                            <td><?= $data->username;?></td>
-                                            <td><button type="button" class="btn btn-primary btn-sm full selectPatronBtn" id = '<?= $data->number;?>' value='<?= $data->username;?>' data-dismiss="modal">選択</button></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-                                <button type="button" class="btn btn-primary" id="select_patron_dataBtn">決定</button>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- モーダル・ダイアログ -->
             </div>
             <!--管理者を追加する場合-->
             <div class="formContents row display" id="managerContent">
@@ -165,11 +88,11 @@
                 <ul>
                     <li>
                         <label for="manager_username">管理者名</label>
-                        <input type="text" id="manager_username">
+                        <input type="text" id="manager_username" name="manager_username">
                     </li>
                     <li>
                         <label for="manager_password">パスワード</label>
-                        <input type="password" id="manager_password">
+                        <input type="password" id="manager_password" name="manager_password">
                     </li>
                     <li>
                         <label for="manager_ReEnter">パスワード再入力</label>
@@ -177,7 +100,10 @@
                     </li>
                 </ul>
             </div>
-            <button type="submit" formaction="<?=$this->URL->build(['controller'=>'account','action'=>'confirmaddacount']);?>" class="btn btn-primary btn-lg">決定</button>
+            <button type="submit"
+                    formaction="<?= $this->URL->build(['controller' => 'account', 'action' => 'confirmaddacount']); ?>"
+                    class="btn btn-primary btn-lg">決定
+            </button>
         </form>
     </div>
 </div>
