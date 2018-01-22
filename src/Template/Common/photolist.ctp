@@ -155,7 +155,7 @@
                                                 <ul id="left-to-right" class="dropmenu">
                                                     <li>
                                                         <ul class="col-xs-12" id="drop">
-                                                            <div class="balloon1-left" id="dummy">
+                                                            <div class="balloon1-left" name="dummy3">
                                                                 <li>
                                                                     <a id="<?= $detail[0]['id']; ?>"><?= $detail[0]['detail'] ?></a>
                                                                 </li>
@@ -207,6 +207,8 @@
 		//問い合わせ内容
 		var favorite = document.getElementsByName("dummy2").item([0]);
 		favorite.id = e.target.id;
+		var modalImage2 = document.getElementsByName("dummy3").item([0]);
+		modalImage2.id = e.target.id;
 	})
 </script>
 

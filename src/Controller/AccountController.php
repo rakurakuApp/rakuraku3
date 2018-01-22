@@ -27,6 +27,7 @@ class AccountController extends AppController
         $this->loadmodel('Inquiries');
         $this->loadmodel('Children');
         $this->loadmodel('ChildClass');
+        $this->loadmodel('Teachers');
         $this->loadComponent('TOOL');
         $this->loadComponent('SQL');
         $this->loadComponent('Paginator');//ページネーターの読み込み
@@ -218,7 +219,6 @@ class AccountController extends AppController
 
     public function registryaccount()
     {
-        $this->autoRender = false;
         if ($this->request->is('post')) {
             if (!empty($this->request->getData('selectFormType'))) {
                 if ($this->request->getData('selectFormType') == 'user') {
@@ -255,21 +255,43 @@ class AccountController extends AppController
                                 //メール送信
                                 $mailer = new EmailMailer();
                                 $mailer->beginning($this->request->getData('email'), $id, $notHash, $this->request->getData('username'));
+                                $this->Flash->success("作成したユーザアカウントに対し、メールを送信しました。");
                             } else {
                                 $connection->rollback();
                             }
                         } else {
-                            $this->log('親登録失敗');
                             $connection->rollback();
                         }
                     } catch (Exception $e) {
-                        $this->log('子供登録失敗');
                         $connection->rollback();
+                        $this->Flash->error("アカウントの作成に失敗しました。");
                     }
                 } else {
-
+                    try {
+                        $teacherTable = TableRegistry::get('Teachers');
+                        $teacher = $teacherTable->newEntity();
+                        $teacher->username = $this->request->getData('manager_username');
+                        $hash = $this->TOOL->_setPassword($this->request->getData('manager_password'));
+                        $teacher->password = $hash;
+                        if ($teacherTable->save($teacher)) {
+                            $this->Flash->success("管理者アカウントを作成しました。");
+                            $newAccountID = $this->Teachers->find()
+                                ->select(['Teachers.ID'])
+                                ->where(['Teachers.username LIKE' => $this->request->getData('manager_username'),
+                                    'Teachers.password LIKE' => $hash])
+                                ->order(['Teachers.ID' => 'ASC']);
+                            $newAccountID = $teacher->id;
+                            $this->set('newAccountID',$newAccountID/*->toarray()*/);
+                        }else{
+                            $this->Flash->error("管理者アカウントの作成に失敗しました。if");
+                        }
+                        $newAccountID = $teacher->id;
+                        $this->set('newAccountID',$newAccountID/*->toarray()*/);
+                    } catch (Exception $e) {
+                        echo $e;
+                        $this->Flash->error("管理者アカウントの作成に失敗しました。try");
+                    }
                 }
-
             }
         }
     }

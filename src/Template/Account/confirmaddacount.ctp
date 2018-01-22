@@ -72,12 +72,12 @@
                     <td><?= $this->request->getData('manager_username'); ?></td>
                 </tr>
                 <tr>
-                    <td>メールアドレス</td>
+                    <td>パスワード</td>
                     <td><?= $this->request->getData('manager_password'); ?></td>
                 </tr>
             </table>
-            <input type="hidden" value="<?= $this->request->getData('manager_username'); ?>">
-            <input type="hidden" value="<?= $this->request->getData('manager_password'); ?>">
+            <input type="hidden" value="<?= $this->request->getData('manager_username'); ?>" name="manager_username">
+            <input type="hidden" value="<?= $this->request->getData('manager_password'); ?>" name="manager_password">
         <?php endif; ?>
         <ul class="center side_by_side">
             <li>

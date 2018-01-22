@@ -127,7 +127,6 @@ class CommonController extends AppController
                         //Insert処理
                         $favoriteTable = TableRegistry::get('Favorite');
                         $favorite = $favoriteTable->newEntity();
-                        //データ項目の挿入
                         $favorite->photos_id = $this->request->getData('star');
                         $favorite->patron_number = $this->request->getSession()->read('id');
                         $favoriteTable->save($favorite);
@@ -156,8 +155,12 @@ class CommonController extends AppController
             // 問い合わせ送信ボタンよりajax通信受信時処理
             if(!empty($this->request->getData('inquiredID'))){
                 try{
+                    //データ項目の挿入(※patron_number photos_id reason_id)
                     $inquiryTable = TableRegistry::get('Inquiry');
-                    $inquiry = $inquiryTable->get($this->request->getData('inquiredID'));
+                    $inquiry = $inquiryTable->newEntity();
+                    $inquiry->reason_id = $inquiryTable->get($this->request->getData('inquiredID'));
+                    $inquiry->photos_id = $inquiryTable->get($this->request->getData('targetPhoto'));
+//                    $inquiry->patron_number =
                 }catch (Exception $e){
 
                 }

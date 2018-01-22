@@ -102,8 +102,9 @@
             </div>
             <button type="submit"
                     formaction="<?= $this->URL->build(['controller' => 'account', 'action' => 'confirmaddacount']); ?>"
-                    class="btn btn-primary btn-lg">決定
+                    class="btn btn-info btn-lg center-block" style="margin-bottom: 10px;width: 95%">決定
             </button>
         </form>
     </div>
+    <br><br><br>
 </div>

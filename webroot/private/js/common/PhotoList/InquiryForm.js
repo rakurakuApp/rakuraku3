@@ -7,7 +7,7 @@ const left2 = '0px';
 // -------------------------------------
 var flg = 0;
 var inquiredID = 0;//問い合わせ番号
-var targetPhoto;//問い合わせ対象画像
+var targetPhoto = '';//問い合わせ対象画像
 
 //問い合わせメニュー
 $(function () {
@@ -24,8 +24,7 @@ $(function () {
 	
 	$('#drop > div > li > a').click(function () {
 		inquiredID = $(this).attr('id');
-		targetPhoto = $("img[name='listImage']").
-		alert(targetPhoto);
+		targetPhoto = $('div[name = "dummy3"]').attr('id');
 		$('#drop > div > li > a').css({'background': color2, 'margin-left': left2});
 		$(this).css({'background': color1, 'margin-left': left1});
 	});
