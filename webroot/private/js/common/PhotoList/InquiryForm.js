@@ -41,9 +41,9 @@ $(function () {
 				},
 			type: 'post'
 		}).done(function (response) {
-		
+			alert(response);
 		}).fail(function (response) {
-		
+			alert(response);
 		});
 	});
 });

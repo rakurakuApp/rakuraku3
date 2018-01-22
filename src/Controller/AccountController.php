@@ -237,11 +237,10 @@ class AccountController extends AppController
                         $patron->username = $this->request->getData('username');
                         $patron->email = $this->request->getData('email');
                         if ($patronTable->save($patron)) {
-                            $patronNumber = $connection->newQuery();
-                            $patronNumber->select('patron.number')
-                                ->from('patron')
-                                ->where(['patron.username LIKE' => $this->request->getData('username'),
-                                    'patron.email LIKE' => $this->request->getData('email')])
+                            $patronNumber = $this->Patron->find()
+                                ->select(['Patron.number'])
+                                ->where(['Patron.username LIKE' => $this->request->getData('username'),
+                                    'Patron.email LIKE' => $this->request->getData('email')])
                                 ->limit(1);
                             //children 子供情報追加
                             $childrenTable = TableRegistry::get('Children');
@@ -251,11 +250,11 @@ class AccountController extends AppController
                             $children->age = $this->request->getData('child_age');
                             $children->child_class_id = $this->request->getData('child_class');
                             if ($childrenTable->save($children)) {
-                                $connection->commit();
                                 //メール送信
                                 $mailer = new EmailMailer();
                                 $mailer->beginning($this->request->getData('email'), $id, $notHash, $this->request->getData('username'));
                                 $this->Flash->success("作成したユーザアカウントに対し、メールを送信しました。");
+                                $connection->commit();
                             } else {
                                 $connection->rollback();
                             }
@@ -265,6 +264,7 @@ class AccountController extends AppController
                     } catch (Exception $e) {
                         $connection->rollback();
                         $this->Flash->error("アカウントの作成に失敗しました。");
+                        $this->log('unk');
                     }
                 } else {
                     try {
@@ -281,12 +281,12 @@ class AccountController extends AppController
                                     'Teachers.password LIKE' => $hash])
                                 ->order(['Teachers.ID' => 'ASC']);
                             $newAccountID = $teacher->id;
-                            $this->set('newAccountID',$newAccountID/*->toarray()*/);
-                        }else{
+                            $this->set('newAccountID', $newAccountID/*->toarray()*/);
+                        } else {
                             $this->Flash->error("管理者アカウントの作成に失敗しました。if");
                         }
                         $newAccountID = $teacher->id;
-                        $this->set('newAccountID',$newAccountID/*->toarray()*/);
+                        $this->set('newAccountID', $newAccountID/*->toarray()*/);
                     } catch (Exception $e) {
                         echo $e;
                         $this->Flash->error("管理者アカウントの作成に失敗しました。try");

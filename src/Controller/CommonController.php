@@ -15,7 +15,8 @@ use Cake\ORM\TableRegistry;
 
 class CommonController extends AppController
 {
-    public $paginate = ['templetes'=>'paginator-templates'];
+    public $paginate = ['templetes' => 'paginator-templates'];
+
     public function initialize()
     {
         /*初期化*/
@@ -33,6 +34,7 @@ class CommonController extends AppController
         $this->loadModel('Events');
         $this->loadModel('Face');
         $this->loadModel('Photos');
+        $this->loadModel('Inquiries');
     }
 
     public function photolist()
@@ -59,7 +61,7 @@ class CommonController extends AppController
 
         //主クエリ
         $getPhotoQuery = $this->Photos->find()
-            ->select(['Photos.id','Photos.path'])
+            ->select(['Photos.id', 'Photos.path'])
             ->where(['Photos.deleted' => 0])
 //            ->andwhere(['Photos.authentication_image' => 0])
             ->andwhere(['Photos.id IN' => $getFaceQuery]);
@@ -80,16 +82,16 @@ class CommonController extends AppController
         }
 
         //画像情報セット
-        try{
+        try {
             $this->set('photoData', $this->paginate($getPhotoQuery));
-        }catch(NotFoundException $e){
+        } catch (NotFoundException $e) {
             $this->redirect('');
         }
 
         //(selectフォーム用)ログイン中の親の児童名とID取得
-        $getChildrenData = $this-> Children ->find()
-        ->select(['Children.id','Children.username'])
-        ->where(['Children.patron_number' => $this->request->getSession()->read('id')]); ;
+        $getChildrenData = $this->Children->find()
+            ->select(['Children.id', 'Children.username'])
+            ->where(['Children.patron_number' => $this->request->getSession()->read('id')]);;
         $this->set('childName', $getChildrenData->toArray());
 
         //(selectフォーム用)登録イベント名とID取得
@@ -98,7 +100,7 @@ class CommonController extends AppController
 
         //問い合わせ理由の一覧取得
         $reason = TableRegistry::get('reason');
-        $detail = $reason->find()->select(['id','detail']);
+        $detail = $reason->find()->select(['id', 'detail']);
         $this->set('detail', $detail->toArray());
 
         //ajax通信を受信した場合
@@ -153,22 +155,26 @@ class CommonController extends AppController
             }
 
             // 問い合わせ送信ボタンよりajax通信受信時処理
-            if(!empty($this->request->getData('inquiredID'))){
-                try{
+            if (!empty($this->request->getData('inquiredID'))) {
+                try {
                     //データ項目の挿入(※patron_number photos_id reason_id)
-                    $inquiryTable = TableRegistry::get('Inquiry');
+                    $inquiryTable = TableRegistry::get('Inquiries');
                     $inquiry = $inquiryTable->newEntity();
-                    $inquiry->reason_id = $inquiryTable->get($this->request->getData('inquiredID'));
-                    $inquiry->photos_id = $inquiryTable->get($this->request->getData('targetPhoto'));
-//                    $inquiry->patron_number =
-                }catch (Exception $e){
-
+                    $inquiry->reason_id = $this->request->getData('inquiredID');
+                    $inquiry->photos_id = $this->request->getData('targetPhoto');
+                    $inquiry->patron_number = $this->request->getSession()->read('id');
+                    $inquiryTable->save($inquiry);
+                    echo 'この画像を管理者へ通報します。';
+                } catch
+                (Exception $e) {
+                    echo '通報失敗。';
                 }
             }
         }
     }
 
-    public function inquirysend()
+    public
+    function inquirysend()
     {
         $this->log('aaaa');
         $this->autoRender = FALSE; //ページの自動レンダリング機能をオフにする
@@ -193,9 +199,13 @@ class CommonController extends AppController
         }
     }
 
-    public function index(){}
+    public
+    function index()
+    {
+    }
 
-    public function deleterecord()
+    public
+    function deleterecord()
     {
         if ($this->request->is('post')) {
             try {
@@ -207,7 +217,13 @@ class CommonController extends AppController
         }
     }
 
-    public function inquiry(){}
+    public
+    function inquiry()
+    {
+    }
 
-    public function hoge(){}
+    public
+    function hoge()
+    {
+    }
 }
