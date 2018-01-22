@@ -100,12 +100,22 @@ class LoginController extends AppController
                     if (!empty($this->request->getData('teacher')) && $this->request->getData('teacher') === "on")
                     {
                         $this->TOOL->setSession($user['id'],$user['username'],'teacher');
+                        return $this->redirect($this->Auth->redirectUrl());
                     }
                     else
                     {
                         $this->TOOL->setSession($user['number'],$user['username'],'patron');
+
+                        //upload済みかチェックしてリダイレクト判断
+                        if($this->TOOL->uploadCheck()){
+                            //認証用アップロード画面
+                            $this->contlloer->redirect(['controller' => 'login','action' => 'login']);
+                        }else{
+                            return $this->redirect($this->Auth->redirectUrl());
+                        }
                     }
-                    return $this->redirect($this->Auth->redirectUrl());
+
+
                 }
                 else
                 {

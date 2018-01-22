@@ -5,15 +5,11 @@
  * Date: 2017/11/08
  * Time: 9:56
  */
-
 namespace App\Controller;
-
 use App\Model\Entity\Photo;
 use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
-
-
 class CommonController extends AppController
 {
     public $paginate = ['templetes'=>'paginator-templates'];
@@ -34,16 +30,12 @@ class CommonController extends AppController
         $this->loadModel('Events');
         $this->loadModel('Face');
         $this->loadModel('Photos');
-
-
     }
-
     public function photolist()
     {
         $this->paginate = [
             'limit' => 8
         ];
-
         //サブクエリ使用テスト
         //サブクエリ2
         $getChildrenQuery = $this->Children->find()
@@ -54,12 +46,10 @@ class CommonController extends AppController
         if (!empty($this->request->getData('児童名選択'))) { //児童名
             $getChildrenQuery->where(['Children.id' => ($this->request->getData('児童名選択(プルダウン)'))]);
         }
-
         //サブクエリ1
         $getFaceQuery = $this->Face->find()
             ->select(['Face.photos_id'])
             ->where(['Face.children_id IN' => $getChildrenQuery]);
-
         //主クエリ
         $getPhotoQuery = $this->Photos->find()
             ->select(['Photos.id','Photos.path'])
@@ -80,31 +70,25 @@ class CommonController extends AppController
                 ->where(['Favorite.patron_number' => $this->request->getSession()->read('id')]);
             $getPhotoQuery->andwhere(['Photos.id IN' => $getFavoriteQuery]);
         }
-
         //画像情報セット
         try{
             $this->set('photoData', $this->paginate($getPhotoQuery));
         }catch(NotFoundException $e){
             $this->redirect('');
         }
-
         //(selectフォーム用)ログイン中の親の児童名とID取得
         $getChildrenQuery->select(['Children.username']);
         $this->set('childName', $getChildrenQuery->toArray());
-
         //(selectフォーム用)登録イベント名とID取得
         $getEventsQuery = $this->Events->find('all');
         $this->set('events', $getEventsQuery);
-
         //問い合わせ理由の一覧取得
         $reason = TableRegistry::get('reason');
         $detail = $reason->find()->select('detail')->all();
         $this->set('detail', $detail->toArray());
-
         //ajax通信を受信した場合
         if ($this->request->is('ajax')) {
             $this->autoRender = false;
-
             //モーダルオープン時に対象写真のID取得
             if (!empty($this->request->getData('photoID'))) {
                 $query = $this->Favorite->find()
@@ -151,11 +135,9 @@ class CommonController extends AppController
                 } catch (Exception $e) {
                     echo $e;
                 }
-
             }
         }
     }
-
     public function inquirysend()
     {
         $this->log('aaaa');
@@ -165,37 +147,28 @@ class CommonController extends AppController
         $name = 'aa';
         $this->set(compact('data'));
         $this->set('_serialize', ['data']);;
-
         try //実行
         {
             $Inquirytable = TableRegistry::get('InquiryTable'); //テーブルを取得
             $query = $Inquirytable->query(); //テーブルでクエリ文を使用することを宣言
             $query->insert(['reason_id'])//NAMEとPWの二つのカラムにデータを挿入する文
-
             ->execute(); //実行
-
             echo('0'); //データ登録成功
         } catch (Exception $e) //例外
         {
             echo('1'); //データ登録失敗（0とか1に特に意味はない）
         }
     }
-
     public function index(){}
-
     public function deleterecord()
     {
         if ($this->request->is('post')) {
             try {
                 $entity = $this->Patron->get($this->request->getData('number'));
-
             } catch (Exception $e) {
-
             }
         }
     }
-
     public function inquiry(){}
-
     public function hoge(){}
 }

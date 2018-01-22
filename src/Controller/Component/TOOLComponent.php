@@ -27,9 +27,21 @@ class TOOLComponent extends Component
     //セッションに情報が無ければloginに強制リダイレクト
     public function loginRedirect(){
         if(empty($this->loadSessionId())) {
-            $this->contlloer->redirect(['controller' => 'login']);
+            $this->contlloer->redirect(['controller' => 'login','action' => 'login']);
         }
     }
+    //画像認証済みチェック
+    public  function uploadCheck(){
+        $childrenData = $this->loadChildData();
+        foreach ($childrenData as $child){
+            if($child['uploaded']== 1){
+                //upload画面にリダイレクト
+                $this->contlloer->redirect(['controller' => 'login','action' => 'login',$child['id']]);
+            }
+
+        }
+    }
+
 
     //セッションからidを読み出す
     public function loadSessionId(){

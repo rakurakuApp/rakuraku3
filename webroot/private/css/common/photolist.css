@@ -181,7 +181,7 @@
 .box::before {
     background-color: #fff;
     color: #da4033;
-    content: "検索フォーム";
+    content: "絞り込み検索";
     font-weight: bold;
     left: 1em;
     padding: 0 .5em;

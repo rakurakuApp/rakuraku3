@@ -30,7 +30,12 @@ class ManagerController extends AppController
 
     public function index(){}
 
-    public function photoup(){}
+    public function photoup(){
+        $event = TableRegistry::get('events');
+        $result = $event->find()->select(['id','event'])->all();
+
+        $this->set('event',$result->toList());
+    }
 
     //問合せ一覧画面
     public function inquiry()
@@ -39,7 +44,7 @@ class ManagerController extends AppController
         if ($this->request->is('post')) {
             try {
                 $query = $this->Inquiries->find()
-                    ->select(['Inquiries.id','Inquiries.already','patron.username','children.username','photos.id','reason.detail'])
+                    ->select(['Inquiries.id', 'Inquiries.already', 'patron.username', 'children.username', 'photos.id', 'reason.detail'])
                     ->join([
                         'table' => 'patron',
                         'type' => 'LEFT OUTER',
@@ -89,21 +94,21 @@ class ManagerController extends AppController
             (Exception $e) {
                 $this->Flash->error('missing');
             }
-        }else{
+        } else {
             //検索条件がない場合
             try {
                 $query = $this->Inquiries->find()
-                    ->select(['Inquiries.id','Inquiries.already','patron.username','children.username','photos.id','reason.detail'])
+                    ->select(['Inquiries.id', 'Inquiries.already', 'patron.username', 'children.username', 'photos.id', 'reason.detail'])
                     ->join([
                         'table' => 'patron',
                         'type' => 'LEFT OUTER',
                         'conditions' => 'Inquiries.patron_number = patron.number'
                     ])
                     ->join([
-                    'table' => 'reason',
-                    'type' => 'LEFT OUTER',
-                    'conditions' => ' Inquiries.reason_id=reason.id '
-                ])
+                        'table' => 'reason',
+                        'type' => 'LEFT OUTER',
+                        'conditions' => ' Inquiries.reason_id=reason.id '
+                    ])
                     ->join([
                         'table' => 'children',
                         'type' => 'LEFT OUTER',
@@ -119,7 +124,7 @@ class ManagerController extends AppController
                 } else {
                     $query->where(['Inquiries.already' => '0']);
                 }
-                $this->set('Inquiries',$query->toArray());
+                $this->set('Inquiries', $query->toArray());
             } catch (Exception $e) {
                 $this->Flash->error('missing');
             }
@@ -128,22 +133,24 @@ class ManagerController extends AppController
         $this->set('reasons', $this->Reason->find('all'));
 
     }
+
     //問合せ一覧の表示非表示ボタンの処理
-        public function inquiryswitching() {
-            $this->autoRender = false;
-            if ($this->request->is('post')) {
+    public function inquiryswitching()
+    {
+        $this->autoRender = false;
+        if ($this->request->is('post')) {
 
-                $this->Flash->success("更新しました");
-            }
-            $this->redirect($this->referer());
+            $this->Flash->success("更新しました");
         }
+        $this->redirect($this->referer());
+    }
 
-    //問い合わせ詳細画面
+    //問合せ詳細画面
     public function inquirydetail()
     {
         if (!empty($this->request->getParam('number'))) {
             $query = $this->Inquiries->find()
-                ->select(['Inquiries.id','Inquiries.already','patron.username','children.username','photos.id','reason.detail','photos.path','photos.deleted'])
+                ->select(['Inquiries.id', 'Inquiries.already', 'patron.username', 'children.username', 'photos.id', 'reason.detail', 'photos.path', 'photos.deleted'])
                 ->join([
                     'table' => 'reason',
                     'type' => 'LEFT OUTER',
@@ -166,7 +173,7 @@ class ManagerController extends AppController
                 ])
                 ->where(['Inquiries.id' => $this->request->getParam('number')]);
             $this->set('parentInfo', $query->toArray());
-        }else{
+        } else {
         }
     }
 
@@ -180,7 +187,7 @@ class ManagerController extends AppController
                 $parentInfo = $InquiriesTable->get($this->request->getParam('updatanam'));
                 if (!($parentInfo->already)) {
                     $parentInfo->already = true;
-                }else{
+                } else {
                     $parentInfo->already = false;
                 }
                 $InquiriesTable->save($parentInfo);
@@ -190,25 +197,26 @@ class ManagerController extends AppController
                 if ($parentInfo->deleted == 0) {
                     $this->log('aa');
                     $parentInfo->deleted = 1;
-                }else{
+                } else {
                     $this->log('bb');
                     $parentInfo->deleted = 0;
                 }
                 $photosTable->save($parentInfo);
                 $this->Flash->success("更新しました");
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 $this->Flash->success("更新に失敗しました");
             }
         }
         $this->redirect($this->referer());
     }
 
-    public function uploadlogic(){
+    public function uploadlogic()
+    {
         $this->autoRender = false;
 
         $typeList = array('jpg', 'jpeg', 'gif', 'png');
 
-        if(!empty($_FILES)){
+        if (!empty($_FILES)) {
             for ($i = 0; $i < count($_FILES['upfile']['tmp_name']); $i++) {
                 if (is_uploaded_file($_FILES['upfile']['tmp_name'][$i])) {
                     $name = $_FILES['upfile']['name'][$i];
@@ -240,25 +248,27 @@ class ManagerController extends AppController
 
                         $childId = $this->SQL->searchChild($result[0]);
 
-//                        $eventId = $_POST['eventId'];
-                        $eventId = 1;
+                        $eventId = $_POST['eventId'];
 
-                        if(count($childId) == 1) {
+                        if (count($childId) == 1) {
                             $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 0);
-                            $this->SQL->insertFaceTable(null,$childId[0]['children_id'],$photoId);
-                        }
-                        else{
+                            $this->SQL->insertFaceTable(null, $childId[0]['children_id'], $photoId);
+                        } else {
                             $photoId = $this->SQL->insertPhoto($result['ObjectURL'], $eventId, 1);
-                            foreach($childId as $number) {
-                                $this->SQL->insertFaceTable(null,$number['children_id'],$photoId);
+                            foreach ($childId as $number) {
+                                $this->SQL->insertFaceTable(null, $number['children_id'], $photoId);
                             }
                         }
+                        $this->Flash->success('アップロード成功');
 
                         $this->redirect($this->referer());
                     }
-                        //ファイル種類外処理
+                    //ファイル種類外処理
                 }
             }
+        }
+        else{
+            echo 'postできてない';
         }
     }
 

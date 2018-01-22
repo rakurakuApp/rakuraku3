@@ -95,7 +95,5 @@ document.addEventListener('DOMContentLoaded', function () {
         // ev.target.files に複数のファイルのリストが入っている
         organizeFiles(ev.target.files);
 
-        // 値のリセット
-        fileInput.value = '';
     });
 });
